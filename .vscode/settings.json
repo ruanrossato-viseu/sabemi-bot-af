@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/bffdb9b8-b6f1-49ae-ab4b-8b0cdb30ef66/resourceGroups/Teste1/providers/Microsoft.Web/sites/BotKitAPP",
+    "appService.deploySubpath": "."
+}
