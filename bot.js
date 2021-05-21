@@ -58,15 +58,14 @@ controller.ready(() => {
     });
 
     controller.interrupts("parar", "message", async (bot, message) => {
-        console.log("Execução interrompida")
-        await bot.reply(message, "Pediu pra parar");
+        
         await bot.cancelAllDialogs();
+        await bot.beginDialog("pararMenu");
     });
 
     controller.on("message", async (bot) => {  
         console.log("Início")      
         await bot.beginDialog("simulacao",{
-            simulationProcess:false
         });
     }); 
 

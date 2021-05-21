@@ -11,19 +11,19 @@ module.exports = function(controller) {
                     "mainFlow")
     flow.addQuestion("Se quiser saber mais, para segurança dos seus dados, preciso garantir que estou falando com a pessoa certa\
                     \n\n *João da Silva*, é você mesmo?😊\
-                    \n\nDigite *Sim*, se for você\
-                    \n\nDigite *Não*, se você não conhecer essa pessoa", 
+                    \n\nDigita 1 para: Sim, sou eu mesmo\
+                    \nDigita 2 para: Não conheço esta pessoa", 
                     async(response, flow, bot) =>{
-
-                        if(response.toLowerCase() == "sim" || response =="1"){
+                        //response = response.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                        if(response =="1"){
                         }
 
-                        else if(response.toLowerCase() == "não" || response.toLowerCase() == "nao"){
-                            await bot.beginDialog("notRightPerson");
+                        else if(response == "2"){
+                            await flow.gotoThread("notRightPerson");
                         }
 
                         else{
-                            await bot.say("Não entendi o que falou. Digite *Sim*, se for você ou *Não*, se você não conhecer essa pessoa")
+                            await bot.say("Não entendi o que falou. Digite *1*, se for você ou *2*, se você não conhecer essa pessoa")
                             await flow.repeat();
                         }
                         
@@ -108,15 +108,21 @@ module.exports = function(controller) {
 */
     
     flow.addMessage("Ah, se você preferir finalizar nossa conversa, basta digitar *PARAR* a qualquer momento, ok!? 🛑",
-                    "mainFlow")
+                    "mainFlow");
 
     flow.addMessage("Estamos quase lá! Estou checando as informações e validando a melhor proposta para você! 👩🏻‍💻",
-                    "mainFlow")
+                    "mainFlow");
 
     flow.addMessage("💡 Enquanto isso, {{vars.firstName}}, confira o *melhor plano para proteção* de toda a sua família!\
-                    \n\nEsse é o *plano XXX* com os *benefícios e vantagens XXX*, por apenas _R$ xxx/mês_",
-                    "mainFlow")
+                    \n\nConfira no vídeo abaixo todos os benefícios e vantagens deste plano Exclusivo para você! 👇🏻",
+                    "mainFlow");
+    
+    
+    flow.addAction("simulationResults","mainFlow");
 
+    flow.before("simulationResults",async(flow,bot)=>{
+        flow.setVar("simulationIteration",flow.vars.simulationIteration?flow.vars.simulationIteration+1:1)
+    });
 
     flow.addQuestion("Pronto! Dá uma olhada nas condições que consegui para você 💁🏻‍♀ \
     \n\n👉🏼 *Assistência Financeira de R$125.000,00* em 72 parcelas + *Seguro de Acidente Pessoal R$xx,xx*\
@@ -138,7 +144,7 @@ module.exports = function(controller) {
                             await flow.gotoThread("signUp")
                         }
                         else if(response =="3"){
-                            await flow.gotoThread("newSimulation");                
+                            await flow.gotoThread("clarifyInsurance");                
                         }
                         else if(response =="4"){
                             await flow.gotoThread("newSimulation");
@@ -149,12 +155,12 @@ module.exports = function(controller) {
                         }
                     },
                     "insitutionChoice",
-                    "mainFlow");
+                    "simulationResults");
 
 
     flow.addMessage("Continua comigo!\
                     \nVou te encaminhar um link para *formalizar sua contratação*\
-                    Nosso processo é ágil e 100% digital 📱😎",
+                    \nNosso processo é ágil e 100% digital 📱😎",
                     "signUp")
 
 
@@ -175,16 +181,20 @@ module.exports = function(controller) {
                     \nE Se precisar é só me chamar! Basta digitar *SOL* que eu volto 😊",
                     "signUp")
 
+    flow.addMessage("<inserir informações do seguro incluso>","clarifyInsurance");
+    flow.addMessage("Agora que ficou mais claro, vou reapresentar a proposta e você me diz o que achou","clarifyInsurance");
+    flow.addAction("simulationResults","clarifyInsurance")
+
     flow.addQuestion("Me conta sua motivação para uma nova simulação 🧐\
                     \nDigita *1* para: Valor *muito abaixo* do que espero\
-                    \nDigital *2* para: Valor *acima* do que preciso para o momento.",
+                    \nDigita *2* para: Valor *acima* do que preciso para o momento.",
 
                     async(response,flow,bot) =>{
                         if(response=="1"){
-                            await flow.gotoThread("higherValue")
+                            await flow.gotoThread("transferToHuman")
                         }
                         else if(response =="2"){
-                            await flow.gotoThread("transferToHuman")
+                            await flow.gotoThread("lowerValue")
                         }
                         else{
                             await bot.say("Por favor, *digite 1 ou 2*, correspondente à ação que quer tomar")
