@@ -58,9 +58,13 @@ controller.ready(() => {
     });
 
     controller.interrupts("parar", "message", async (bot, message) => {
-        
         await bot.cancelAllDialogs();
         await bot.beginDialog("pararMenu");
+    });
+    
+    controller.interrupts("sol", "message", async (bot, message) => {
+        await bot.cancelAllDialogs();
+        await bot.beginDialog("solMenu");
     });
 
     controller.on("message", async (bot) => {  

@@ -22,7 +22,7 @@ module.exports = function(controller) {
                 await flow.gotoThread("evaluation")
             }
             else if(response == "4"){
-                await bot.say("Obrigada por me avisar!Se desejar falar com a Sabemi, é só me chamar! Basta digital SOL que estarei pronta para te atender :)")                
+                await bot.say("Obrigada por me avisar!Se desejar falar com a Sabemi, é só me chamar! Basta digita SOL que estarei pronta para te atender :)")                
             }
             else{
                 await bot.say("Essa opção não é válida. Digite de 1 a 4 para seguir adiante");
@@ -37,7 +37,7 @@ module.exports = function(controller) {
     flow.addQuestion("Puxa, o que mudou? 😔 Me conta o motivo da sua mudança:\
                     \nDigita 1 para \"já contratei um Empréstimo Pessoal\"\
                     \nDigita 2 para \"prefiro utilizar outra forma de crédito (exemplo: cartão de crédito)\"\
-                    \nDigital 3 para \"não faz mais sentido contratar um Empréstimo Pessoal\"",
+                    \nDigita 3 para \"não faz mais sentido contratar um Empréstimo Pessoal\"",
                     async(response,flow,bot)=>{
                         await flow.gotoThread("evaluation")
                     },
