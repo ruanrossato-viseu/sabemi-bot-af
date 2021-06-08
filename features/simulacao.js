@@ -17,7 +17,7 @@ module.exports = function(controller) {
         // }
         // flow.setVar("user",user)
         flow.setVar("firstName",flow.vars.user.userName.split(" ")[0])
-        flow.setVar("maskedCPF","***.***.**"+flow.vars.user.cpf[flow.vars.user.cpf.length-3]+"-"+flow.vars.user.cpf.slice(-2))
+        flow.setVar("maskedCPF","xxx.xxx.xx"+flow.vars.user.cpf[flow.vars.user.cpf.length-3]+"-"+flow.vars.user.cpf.slice(-2))
         flow.setVar("retry",0)
     })
 
