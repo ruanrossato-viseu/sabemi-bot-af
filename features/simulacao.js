@@ -15,7 +15,7 @@ module.exports = function(controller) {
         //     "phoneNumber": "5511992448799",
         //     "codigo":"45875076879"
         // }
-        flow.setVar("user",user)
+        // flow.setVar("user",user)
         flow.setVar("firstName",flow.vars.user.userName.split(" ")[0])
         flow.setVar("maskedCPF","***.***.**"+flow.vars.user.cpf[flow.vars.user.cpf.length-3]+"-"+flow.vars.user.cpf.slice(-2))
         flow.setVar("retry",0)
