@@ -224,7 +224,7 @@ module.exports = function(controller) {
                     "signUp")
 
 
-    flow.addMessage("[signUp]+++Aqui esta o link que eu te falei 📲 *www.sabemidigital.com.br*\
+    flow.addMessage("[signUp]+++Aqui está o link que eu te falei 📲 *www.sabemidigital.com.br*\
                     \nAtravés dele você  dará *continuidade na sua contratação* e ficará ainda mais perto de *realizar os seus sonhos!*",
                     "signUp")
 
