@@ -37,7 +37,7 @@ module.exports = function(controller) {
     flow.addQuestion("[PARAR]+++Puxa, o que mudou? 😔 Me conta o motivo da sua mudança:\
                     \n\nDigite 1 para \"já contratei um Empréstimo Pessoal\"\
                     \nDigite 2 para \"prefiro utilizar outra forma de crédito (exemplo: cartão de crédito)\"\
-                    \nDigite 3 para \"não faz mais sentido contratar um Empréstimo Pessoal\"",
+                    \nDigite 3 para \"não faz mais sentido contratar um Empréstimo Pessoal agora\"",
                     async(response,flow,bot)=>{
                         await flow.gotoThread("evaluation")
                     },
@@ -56,6 +56,11 @@ module.exports = function(controller) {
                     async(response,flow,bot)=>{
                     },
                     "evaluation",
+                    "evaluation"
+    );
+
+    flow.addMessage("[PARAR]+++Obrigada! Se precisar falar comigo, é só falar \"Sol\"\
+                    \nBj e até a próxima!",
                     "evaluation"
     );
     
