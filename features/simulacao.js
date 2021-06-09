@@ -308,7 +308,7 @@ module.exports = function(controller) {
                         }     
                             
                         beautifiedValue = beautifiedValue+","+value.slice(-2)
-                        console.log(beautifiedValue)
+                        
                         flow.setVar("beautifiedValue",beautifiedValue)                           
                         
                         
