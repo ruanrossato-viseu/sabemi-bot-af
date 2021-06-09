@@ -25,8 +25,8 @@ module.exports = function(controller) {
                     \n\n *{{vars.firstName}}*\
                     \n CPF: {{vars.maskedCPF}}\
                     \n\nÉ você mesmo?😊\
-                    \n\nDigita 1 para: Sim, sou eu\
-                    \nDigita 2 para: Não conheço esta pessoa", 
+                    \n\nDigite 1 para: Sim, sou eu\
+                    \nDigite 2 para: Não conheço esta pessoa", 
                     async(response, flow, bot) =>{
                         if(response =="1"){
                         }
@@ -61,7 +61,7 @@ module.exports = function(controller) {
                     "userInfo");
 
     
-    flow.addQuestion(`[userInfo]+++Legal! Digita aqui pra mim os *3 primeiros dígitos do seu CPF*`,
+    flow.addQuestion(`[userInfo]+++Legal! Digite aqui pra mim os *3 primeiros dígitos do seu CPF*`,
                     async(response, flow, bot) =>{
                         let user = flow.vars.user;
                         let validatedUser = await sabemiFunctions.validateUser(user.codigo, response, flow.vars.name);
@@ -149,11 +149,11 @@ module.exports = function(controller) {
     });
 
     flow.addQuestion("[simulation]+++Pronto! Agora que você já conhece um pouco mais nossos produtos, veja as condições que consegui para você 💁🏻‍♀‍ \
-    \n\n👉🏼 *Assistência Financeira de R$ {{vars.simulationValueAP}}* em {{vars.simulationInstallmentsAP}} parcelas de R$ {{vars.simulationIntallmentsPriceAP}} + *Seguro de Acidente Pessoal R$ {{vars.simulationInsurancePriceAP}}*\
+    \n\n👉🏼 *Assistência Financeira de R$ {{vars.simulationValueAP}}* em {{vars.simulationInstallmentsAP}} parcelas de R$ {{vars.simulationIntallmentsPriceAP}} + *Seguro de Acidente Pessoal* R$ {{vars.simulationInsurancePriceAP}}\
     \n 👉🏼 *Assistência Financeira de R$ {{vars.simulationValue}}* em {{vars.simulationInstallments}} parcelas de R$ {{vars.simulationIntallmentsPrice}}\
-    \n\nDigita *1* para seguir com a contratação de Assistência Financeira + Seguro de Acidente Pessoal\
-    \nDigita *2* para seguir com a contratação de Assistência Financeira\
-    \nDigita *3* para saber mais sobre as vantagens do Seguro Sabemi\
+    \n\nDigite *1* para seguir com a contratação de Assistência Financeira + Seguro de Acidente Pessoal\
+    \nDigite *2* para seguir com a contratação de Assistência Financeira\
+    \nDigite *3* para saber mais sobre as vantagens do Seguro Sabemi\
     \n\nQuer uma nova simulação? É só digitar *4*",
 
                     async(response,flow,bot) =>{
@@ -216,7 +216,7 @@ module.exports = function(controller) {
                     "signUp")
 
 
-    flow.addMessage("[signUp]+++Ah, e já aproveita para deixar os seguintes documentos separados 📑\
+    flow.addMessage("[signUp]+++Ah, e já aproveite para deixar os seguintes documentos separados 📑\
                     \n- *Documento de identificação (RG, CNH)*\
                     \n- *Comprovante de residência*\
                     \n- *Contracheque*\
@@ -229,17 +229,18 @@ module.exports = function(controller) {
                     "signUp")
 
                     
-    flow.addMessage("[signUp]+++Ah! E se você não tem cadastro no Sabemi ou não lembra sua senha, pode deixar que vou enviar seus dados de acesso por SMS 📩\
+    flow.addMessage("[signUp]+++Ah! Você não tem cadastro no Sabemi Digital ou não lembra sua senha? Pode deixar que vou enviar seus dados de acesso por SMS 📩\
                     \nE se precisar é só me chamar! Basta digitar *SOL* que eu volto 😊",
                     "signUp")
+
 
     flow.addMessage("[clarifyInsurance]+++<inserir informações do seguro incluso>","clarifyInsurance");
     flow.addMessage("[clarifyInsurance]+++Agora que ficou mais claro, vou reapresentar a proposta e você me diz o que achou","clarifyInsurance");
     flow.addAction("simulationResults","clarifyInsurance")
 
     flow.addQuestion("[simulation]+++Me conta sua motivação para uma nova simulação 🧐\
-                    \nDigita *1* para: Valor *muito abaixo* do que espero\
-                    \nDigita *2* para: Valor *acima* do que preciso para o momento.",
+                    \nDigite *1* para: Valor *muito abaixo* do que espero\
+                    \nDigite *2* para: Valor *acima* do que preciso para o momento.",
 
                     async(response,flow,bot) =>{
                         if(response=="1"){
@@ -314,10 +315,10 @@ module.exports = function(controller) {
     flow.addQuestion("[newSimulation]+++{{vars.firstName}}, analisando aqui, verifiquei as possíveis opções para você 💁🏻‍♀\
                     \n👉🏼 Assistência Financeira de *R$125.000,00 em 72 parcelas* + *Seguro de Acidente Pessoal R$xx,xx*\
                     \n👉🏼 Assistência Financeira de *R$125.000,00 em 72 parcelas*\
-                    \n\nDigita *1* para seguir com a contratação de Assistência Financeira + Seguro de Acidente Pessoal\
-                    \nDigita *2* para seguir com a contratação de Assistência Financeira\
-                    \nDigita *3* para cancelar\
-                    \nDigita *4* para falar com um de nossos Especialistas :)",
+                    \n\nDigite *1* para seguir com a contratação de Assistência Financeira + Seguro de Acidente Pessoal\
+                    \nDigite *2* para seguir com a contratação de Assistência Financeira\
+                    \nDigite *3* para cancelar\
+                    \nDigite *4* para falar com um de nossos Especialistas :)",
                     async(response,flow,bot)=>{
                         if(response=="1"){
                             flow.setVar("af",true);
