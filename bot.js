@@ -53,7 +53,7 @@ controller.ready(() => {
     controller.loadModules(__dirname + '/features');
 
     controller.interrupts("STOP", "message", async (bot, message) => {
-        await bot.reply(message, "Interação interrompida");
+        await bot.reply(message, "[STOP]+++Interação interrompida");
         await bot.cancelAllDialogs();
     });
 

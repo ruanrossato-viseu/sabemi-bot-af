@@ -324,7 +324,7 @@ module.exports = function(controller) {
                     \nDigite *2* para trocar o valor",
                     async(response,flow,bot)=>{
                         if(response=="2"){
-                            await bot.say("Ok, vamos tentar de novo. Não se esqueça de *escrever somentes os números* e *separar os centavos com vírgula*")
+                            await bot.say("[simulation]+++Ok, vamos tentar de novo. Não se esqueça de *escrever somentes os números* e *separar os centavos com vírgula*")
                             await flow.gotoThread("lowerValue")
                             return
                         }
