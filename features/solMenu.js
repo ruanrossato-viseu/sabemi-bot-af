@@ -8,12 +8,12 @@ module.exports = function(controller) {
 
     flow.addQuestion("[SOL]+++Olá 🙋🏻 Olha, por aqui eu posso te ajudar com:\
                     \nDigite 1 para Link do APP Sabemi\
-                    \nDigite 2 para dúvida sobre minha simulação\
+                    \nDigite 2 para dúvida sobre minha simulação \
                     \nDigite 3 para já executei o processo no APP Sabemi\
-                    \nDigite 4 para Outros",
+                    \nDigite 4 para Outras dúvidas/Falar com atendente",
         async(response, flow, bot)=>{
             if(response == "1"){
-                await bot.say("[SOL]+++Ok! Aqui está o link do APP Sabemi Digital 📲 [Link para Download APP]\
+                await bot.say("[SOL]+++Ok! Aqui está o link do APP Sabemi Digital 📲 www.sabemi.com.br/appsabemidigital\
                 \nLembrando que é através dele que você dará continuidade na sua contratação e ficará ainda mais perto de realizar os seus sonhos!")
                 await flow.gotoThread("menu")        
             }
@@ -43,7 +43,7 @@ module.exports = function(controller) {
                     \nDigite 1 para Link do APP Sabemi\
                     \nDigite 2 para dúvida sobre minha simulação\
                     \nDigite 3 para já executei o processo no APP Sabemi\
-                    \nDigite 4 para Outros\
+                    \nDigite 4 para Outras dúvidas/Falar com atendente\
                     \nDigite 5 para finalizar",
         async(response, flow, bot)=>{
             if(response == "1"){
@@ -54,8 +54,9 @@ module.exports = function(controller) {
                 await flow.gotoThread("proposalInfo")                
             }
             else if(response == "3"){
-                await bot.say("[SOL]+++Então, se você já fez o processo de formalização digital no APP Sabemi, meus colegas devem estar cuidando e analisando sua proposta agora mesmo!\
-                            \nE o legal é que no APP Sabemi você consegue acompanhar o status da sua proposta, mas, se desejar falar com algum dos nossos especialistas, você tem um jeito fácil: basta digitar 1 para que eles entrem em contato 😊")
+                await bot.say("[SOL]+++Então, se você já fez o processo de formalização digital no APP Sabemi, meus colegas devem estar *cuidando e analisando sua proposta agora mesmo!*\
+                            \nE o legal é que no APP Sabemi você consegue acompanhar o status da sua proposta\
+                            \nSe desejar falar com algum dos nossos especialistas, basta digitar 4 no próximo menu 😊")
             }
             else if(response == "4"){
                 await bot.say("[SOL]+++Como sou uma Assistente Digital em treinamento, não consigo responder todas as dúvidas. Então vou te encaminhar para um de nossos especialistas, tudo bem?\
