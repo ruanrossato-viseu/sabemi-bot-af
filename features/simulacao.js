@@ -277,7 +277,7 @@ module.exports = function(controller) {
                     async(response,flow,bot)=>{
                         await bot.say("[newSimulation]+++Ok! Estou checando se conseguimos outro cenário para te apresentar 👩🏻‍💻")
 
-                        let simulation = await sabemiFunctions.firstSimulation(flow.vars.user.codigo)
+                        let simulation = await sabemiFunctions.simulatiom(flow.vars.user.codigo)
        
                         if(simulation.sucesso){
                             flow.setVar("simulacao",simulation)
@@ -345,6 +345,6 @@ module.exports = function(controller) {
                     "newSimulationChoice",
                     "newSimulationResults")
     
-    flow.addMessage("Sempre que quiser falar comigo, é só me chamar mandando *Sol* 🌞! Até a próxima","endConversation")
+    flow.addMessage("Se dsejar falar com a Sabemi, é só me chamar! Basta digitar *Sol* que estarei pronta para atender 😉!","endConversation")
     controller.addDialog(flow);
 };

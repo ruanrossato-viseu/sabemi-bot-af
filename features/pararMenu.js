@@ -7,7 +7,7 @@ module.exports = function(controller) {
     flow.addAction("menu");
 
     flow.addQuestion("Certo! Tudo bem! Me conta o que você prefere fazer agora:\
-        \nDigita 1 para \"mudei meus planos\"\
+        \n\nDigita 1 para \"mudei meus planos\"\
         \nDigita 2 para \"quero falar com um especialista\" \
         \nDigita 3 para \"já contratei um Empréstimo Pessoal\"\
         \nDigita 4 para \"não quero mais ter contato com a Sabemi\"",
@@ -22,7 +22,7 @@ module.exports = function(controller) {
                 await flow.gotoThread("evaluation")
             }
             else if(response == "4"){
-                await bot.say("Obrigada por me avisar!Se desejar falar com a Sabemi, é só me chamar! Basta digita SOL que estarei pronta para te atender :)")                
+                await bot.say("Obrigada por me avisar!\nSe desejar falar com a Sabemi, é só me chamar! Basta digitar SOL que estarei pronta para te atender :)")                
             }
             else{
                 await bot.say("Essa opção não é válida. Digite de 1 a 4 para seguir adiante");
@@ -35,7 +35,7 @@ module.exports = function(controller) {
     )
 
     flow.addQuestion("Puxa, o que mudou? 😔 Me conta o motivo da sua mudança:\
-                    \nDigita 1 para \"já contratei um Empréstimo Pessoal\"\
+                    \n\nDigita 1 para \"já contratei um Empréstimo Pessoal\"\
                     \nDigita 2 para \"prefiro utilizar outra forma de crédito (exemplo: cartão de crédito)\"\
                     \nDigita 3 para \"não faz mais sentido contratar um Empréstimo Pessoal\"",
                     async(response,flow,bot)=>{
@@ -48,7 +48,7 @@ module.exports = function(controller) {
     flow.addQuestion("Obrigada por compartilhar isso comigo! Posso te pedir uma ajudinha?\
                     \nVocê poderia avaliar este atendimento?\
                     \nJuro que é rapidinho e vai me ajudar a te atender cada vez melhor 😃\
-                    \nDigita 1 para: muito satisfeito\
+                    \n\nDigita 1 para: muito satisfeito\
                     \nDigita 2 para: satisfeito\
                     \nDigita 3 para: não me ajudou\
                     \nDigita 4 para: péssimo\

@@ -32,7 +32,6 @@ module.exports = function(controller) {
                 await bot.say("Essa opção não é válida. Digite de 1 a 4 para seguir adiante");
                 await flow.repeat()                
             }
-
         },
         "menuChoice",
         "menu"
@@ -60,8 +59,8 @@ module.exports = function(controller) {
     flow.addQuestion("Verifiquei aqui que o valor da sua proposta é de\
                     \nR$xx.xxx,xx em y parcelas\
                     \nDigita 1 para seguir a contratação de Empréstimo Pessoal\
-                    \nDigita 3 para cancelar\
-                    \nDigita 4 para falar com algum de nossos especialistas",
+                    \nDigita 2 para cancelar\
+                    \nDigita 3 para falar com algum de nossos especialistas",
                     async(response,flow,bot)=>{
                         if(response =="1"){
                             await bot.cancelAllDialogs();

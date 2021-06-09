@@ -121,3 +121,58 @@ module.exports.firstSimulation = async function firstSimulation(CodigoPessoaFisi
 
     return addressInfo
 }
+
+module.exports.simulatiom = async function simulation(CodigoPessoaFisica,valor){
+
+
+    var data = JSON.stringify({
+        "CodigoPessoaFisica": CodigoPessoaFisica,
+        "Valor":valor
+    });
+
+    var config = {
+            method: 'post',
+            url: 'https://api.sabemi.com.br/dsv/ApiIntegracaoSol/v1/simulacao/',
+            headers: { 
+                    'Content-Type': 'application/json'
+            },
+            data : data
+    };
+    return {
+            "tabelas": [
+                {
+                    "codigoTabela": 22010,
+                    "prazo": "72",
+                    "valorVenda": "39.969,71",
+                    "valorLiquido": "39.969,71",
+                    "valorParcela": "950,00",
+                    "taxa": "1,53",
+                    "valorPeculio": "0,00",
+                    "valorAP": "0,00"
+                },
+                {
+                    "codigoTabela": 22017,
+                    "prazo": "72",
+                    "valorVenda": "39.781,76",
+                    "valorLiquido": "39.781,76",
+                    "valorParcela": "926,00",
+                    "taxa": "1,46",
+                    "valorPeculio": "0,00",
+                    "valorAP": "24,00"
+                }
+            ],
+            "chaveSimulacao": "51894351134",
+            "sucesso": true,
+            "mensagem": "OK"
+        }
+    let addressInfo = await axios(config)
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            console.log(error)
+            return (false);
+        });
+
+    return addressInfo
+}
