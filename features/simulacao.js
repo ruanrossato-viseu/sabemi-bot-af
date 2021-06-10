@@ -107,7 +107,25 @@ module.exports = function(controller) {
 
     flow.addAction("preSimulation","userInfo")
     flow.before("preSimulation", async(flow,bot)=>{
-       
+    });
+
+    flow.addMessage("[preSimulation]+++Ah, se você preferir finalizar nossa conversa, basta digitar *PARAR* a qualquer momento, ok!? 🛑",
+                    "preSimulation");
+
+    flow.addMessage("[preSimulation]+++Estamos quase lá! Estou checando as informações e validando a melhor proposta para você! 👩🏻‍💻",
+                    "preSimulation");
+
+    flow.addMessage("[preSimulation]+++💡 Enquanto isso, {{vars.firstName}}, confira o *melhor plano para proteção* de toda a sua família!\
+                    \n\nConfira no vídeo abaixo todos os benefícios e vantagens deste plano Exclusivo para você! 👇🏻",
+                    "preSimulation");
+    
+    
+    flow.addAction("simulationResults","preSimulation");
+
+    flow.before("simulationResults",async(flow,bot)=>{
+        setTimeout(async () => {
+            next();
+          },5000);
         let simulation = await sabemiFunctions.firstSimulation(flow.vars.user.codigo)
         console.log(simulation)
 
@@ -135,6 +153,8 @@ module.exports = function(controller) {
                             flow.setVar("simulationTableAP", tabela);
                         }
                     }
+                    
+                    bot.say("[SIMULACAO]+++"+JSON.stringify(flow.vars.simulacao))
                 }
                 catch(error){
                     console.log(error)
@@ -149,23 +169,6 @@ module.exports = function(controller) {
             bot.say("[preSimulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
             flow.gotoThread("endConversation")
         }
-    });
-
-    flow.addMessage("[preSimulation]+++Ah, se você preferir finalizar nossa conversa, basta digitar *PARAR* a qualquer momento, ok!? 🛑",
-                    "preSimulation");
-
-    flow.addMessage("[preSimulation]+++Estamos quase lá! Estou checando as informações e validando a melhor proposta para você! 👩🏻‍💻",
-                    "preSimulation");
-
-    flow.addMessage("[preSimulation]+++💡 Enquanto isso, {{vars.firstName}}, confira o *melhor plano para proteção* de toda a sua família!\
-                    \n\nConfira no vídeo abaixo todos os benefícios e vantagens deste plano Exclusivo para você! 👇🏻",
-                    "preSimulation");
-    
-    
-    flow.addAction("simulationResults","preSimulation");
-
-    flow.before("simulationResults",async(flow,bot)=>{
-        bot.say("[SIMULACAO]+++"+JSON.stringify(flow.vars.simulacao))
     });
 
     flow.addQuestion("[simulation]+++Pronto! Agora que você já conhece um pouco mais nossos produtos, veja as condições que consegui para você 💁🏻‍♀‍ \
@@ -205,7 +208,7 @@ module.exports = function(controller) {
         var signUpMessage = "";
 
         let closeContract = await sabemiFunctions.closeContract(flow.vars.user.codigo,flow.vars.table,flow.vars.simulationKey)
-        
+
         flow.setVar("urlContract",String(closeContract.url))
 
         if(flow.vars.tableChoice == "1"){
