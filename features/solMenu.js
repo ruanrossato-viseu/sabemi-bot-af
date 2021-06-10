@@ -39,7 +39,7 @@ module.exports = function(controller) {
         "intro"
     )
 
-    flow.addQuestion("[SOL]+++Com o que posso ajudar agora?:\
+    flow.addQuestion("[SOL]+++Com o que posso ajudar agora?\
                     \nDigite 1 para Link do APP Sabemi\
                     \nDigite 2 para dúvida sobre minha simulação\
                     \nDigite 3 para já executei o processo no APP Sabemi\

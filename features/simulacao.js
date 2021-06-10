@@ -25,7 +25,7 @@ module.exports = function(controller) {
         flow.setVar("retry",0)
     })
 
-    flow.addQuestion("[introduction]+++Antes de iniciar nossa conversa, para segurança dos seus dados, preciso garantir que estou falando com a pessoa certa\
+    flow.addQuestion("[introduction]+++Antes de iniciar nossa conversa, para segurança dos seus dados, preciso garantir que estou falando com a pessoa certa:\
                     \n\n *{{vars.firstName}}*\
                     \n CPF: {{vars.maskedCPF}}\
                     \n\nÉ você mesmo?😊\
@@ -48,8 +48,8 @@ module.exports = function(controller) {
                     "rightPerson",
                     "intro");
        
-    flow.addMessage("[ending]+++Ops! Peço desculpas pelo incômodo. Obrigado por avisar!","notRightPerson")
-    flow.addAction("endConversation","notRightPerson")
+    flow.addMessage("[notRightPerson]+++Ops! Peço desculpas pelo incômodo. Obrigado por avisar!","notRightPerson")
+    flow.addMessage("[FINISH]+++[notRightPerson]","notRightPerson")
 
     flow.addMessage("[introduction]+++Que bom! Para que eu possa apresentar uma proposta na medida, vou precisar que você me informe alguns dos seus dados pessoais.\
                 \n\nMas fique tranquilo: este é um ambiente seguro e seus dados estão protegidos e guardados, tudo de acordo com a Lei Geral de Proteção de Dados (LGPD) e Direito do Consumidor 🔒. Para saber mais sobre LGPD 👉🏼 https://www.sabemi.com.br/politica-de-privacidade",
@@ -112,20 +112,20 @@ module.exports = function(controller) {
        
         if(simulation.sucesso){
             flow.setVar("simulacao",simulation)
-            flow.setVar("simulationKey", simulation.chaveSimulacao);
+            flow.setVar("simulationKey", simulation.ChaveSimulacao);
        
             for (let tabela of simulation.tabelas){
                 if(tabela.valorAP == "0,00"){
-                    flow.setVar("simulationValue", tabela.valorLiquido );
-                    flow.setVar("simulationInstallments", tabela.prazo);
-                    flow.setVar("simulationIntallmentsPrice", tabela.valorParcela);
+                    flow.setVar("simulationValue", tabela.ValorLiquido );
+                    flow.setVar("simulationInstallments", tabela.Prazo);
+                    flow.setVar("simulationIntallmentsPrice", tabela.ValorParcela);
                     flow.setVar("simulationTable", tabela);
                 }
                 else{
-                    flow.setVar("simulationValueAP", tabela.valorLiquido );
-                    flow.setVar("simulationInstallmentsAP", tabela.prazo);
-                    flow.setVar("simulationIntallmentsPriceAP", tabela.valorParcela);
-                    flow.setVar("simulationInsurancePriceAP", tabela.valorAP);
+                    flow.setVar("simulationValueAP", tabela.ValorLiquido );
+                    flow.setVar("simulationInstallmentsAP", tabela.Prazo);
+                    flow.setVar("simulationIntallmentsPriceAP", tabela.ValorParcela);
+                    flow.setVar("simulationInsurancePriceAP", tabela.ValorAP);
                     flow.setVar("simulationTableAP", tabela);
                 }
             }
@@ -188,6 +188,8 @@ module.exports = function(controller) {
     flow.before("signUp", async(flow,bot)=>{
         var signUpMessage = "";
 
+        let closeContract = await sabemiFunctions.closeContract(flow.vars.user.codigo,flow.vars.table,flow.vars.simulationKey)
+        flow.setVar("urlContract",closeContract.url)
         if(flow.vars.tableChoice == "1"){
             signUpMessage = `Confira aqui o resumo do plano escolhido:\
             \n\n_Assistência Financeira_\
@@ -228,7 +230,7 @@ module.exports = function(controller) {
                     "signUp")
 
 
-    flow.addMessage("[signUp]+++Aqui está o link que eu te falei 📲 *www.sabemidigital.com.br*\
+    flow.addMessage("[signUp]+++Aqui está o link que eu te falei 📲 *{{vars.urlContract}}*\
                     \nAtravés dele você dará *continuidade na sua contratação* e ficará ainda mais perto de *realizar os seus sonhos!* 😍",
                     "signUp")
 
@@ -277,7 +279,7 @@ module.exports = function(controller) {
             );
     flow.addMessage("[transferToHuman]+++{{vars.messageTransfer}}","transferToHuman");
 
-    flow.addQuestion("[simulation]+++Entendi! Me conta qual *valor você precisa*? 😄\
+    flow.addQuestion("[simulation]+++Entendi! Me conta qual *valor total que você precisa*? 😄\
                     \nAh, para eu compreender, *digite somente os números, com os centavos separados por vírgula*, combinado!?",
                     async(response,flow,bot)=>{
                         value=response.replace(".", "")
@@ -375,11 +377,13 @@ module.exports = function(controller) {
                         if(response=="1"){
                             flow.setVar("af",true);
                             flow.setVar("seguro",true)
+                            flow.setVar("table",flow.vars.simulationTableAP)
                             await flow.gotoThread("signUp")
                         }
                         else if(response =="2"){
                             flow.setVar("af",true);
                             flow.setVar("seguro",false)
+                            flow.setVar("table",flow.vars.simulationTable)
                             await flow.gotoThread("signUp")
                         }
                         else if(response =="3"){
@@ -399,5 +403,6 @@ module.exports = function(controller) {
                     "newSimulationResults")
     
     flow.addMessage("[ending]+++Se desejar falar com a Sabemi, é só me chamar! Basta digitar *Sol* que estarei pronta para atender 😉!","endConversation")
+    flow.addMessage("[FINISH]+++[ending]","endConversation")
     controller.addDialog(flow);
 };

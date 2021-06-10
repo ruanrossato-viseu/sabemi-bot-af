@@ -36,14 +36,7 @@ const controller = new Botkit({
     storage
 });
 
-/*
-if (process.env.CMS_URI) {
-    controller.usePlugin(new BotkitCMSHelper({
-        uri: process.env.CMS_URI,
-        token: process.env.CMS_TOKEN,
-    }));
-}
- */
+
 
 // Once the bot has booted up its internal services, you can use them to do stuff.
 controller.ready(() => {
@@ -74,23 +67,3 @@ controller.ready(() => {
     }); 
 
 });
-/*
-controller.middleware.send.use((bot, message, next) => {
-    //console.log(message.text)
-    
-    let delay = message.text.length*10
-    
-    
-    if(message.text.includes("[DELAY]")){
-        delay = 5000
-        message.text = message.text.replace("[DELAY]","")
-    }
-    //console.log(delay)
-
-    setTimeout(async () => {
-      next();
-    },delay);
-  });
-*/
-
-

@@ -59,7 +59,7 @@ module.exports = function(controller) {
                     "evaluation"
     );
 
-    flow.addMessage("[PARAR]+++Obrigada! Se precisar falar comigo, é só falar \"Sol\"\
+    flow.addMessage("[PARAR]+++Obrigada! Se precisar falar comigo, é só digitar \"Sol\"\
                     \nBj e até a próxima!",
                     "evaluation"
     );
