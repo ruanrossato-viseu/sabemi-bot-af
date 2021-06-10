@@ -109,6 +109,8 @@ module.exports = function(controller) {
     flow.before("preSimulation", async(flow,bot)=>{
        
         let simulation = await sabemiFunctions.firstSimulation(flow.vars.user.codigo)
+        console.log(simulation)
+        
         if(simulation){
             if(simulation.sucesso){
                 flow.setVar("simulacao",simulation)
@@ -345,7 +347,7 @@ module.exports = function(controller) {
                         await bot.say("[newSimulation]+++Ok! Estou checando se conseguimos outro cenário para te apresentar 👩🏻‍💻")
                         var valor  = parseFloat(flow.vars.beautifiedValue.replace(",",".").replace(".",""))
                         let simulation = await sabemiFunctions.newSimulation(flow.vars.user.codigo,valor)
-       
+                        console.log(simulation)
                         if(simulation){
                             if(simulation.sucesso){
                                 flow.setVar("simulacao",simulation)
