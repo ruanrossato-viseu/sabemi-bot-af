@@ -38,6 +38,9 @@ module.exports = function(controller) {
                         else if(response == "2"){
                             await flow.gotoThread("notRightPerson");
                         }
+                        else if(response == "teste interno viseu"){
+                            await bot.say("link: https://www.google.com.br/")
+                        }
 
                         else{
                             await bot.say("[introduction]+++Não entendi o que falou. Digite *1*, se for você ou *2*, se você não conhecer essa pessoa")
@@ -209,12 +212,8 @@ module.exports = function(controller) {
 
         let closeContract = await sabemiFunctions.closeContract(flow.vars.user.codigo,flow.vars.table,flow.vars.simulationKey)
 
-        let urlContractList = closeContract.url.replace("//","/").split("/")
-        console.log(flow.vars.urlContractList)
-        let urlContract = urlContractList[0]+"//"+urlContractList[1]
-        console.log(flow.vars.urlContract)
 
-        flow.setVar("urlContract",urlContract)
+        flow.setVar("urlContract",closeContract.url)
         console.log(flow.vars.urlContract)
 
         if(flow.vars.tableChoice == "1"){
