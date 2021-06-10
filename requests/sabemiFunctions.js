@@ -130,14 +130,14 @@ module.exports.closeContract = async function closeContract(CodigoPessoaFisica,t
 
     var data = JSON.stringify({
         "CodigoPessoaFisica": parseInt(CodigoPessoaFisica),
-        "TabelaSelecionada": parseInt(tabela.CodigoTabela),
+        "TabelaSelecionada": parseInt(tabela.codigoTabela),
         "ChaveSimulacao": simulationKey,
-        "Prazo": parseInt(tabela.Prazo),
-        "ValorVenda": parseInt(tabela.ValorVenda),
-        "ValorLiquido": parseInt(tabela.ValorLiquido),
-        "ValorParcela": parseInt(tabela.ValorParcela),
-        "ValorPlano": parseInt(tabela.ValorAP),
-        "ValorTaxa": parseInt(tabela.Taxa),
+        "Prazo": parseInt(tabela.prazo),
+        "ValorVenda": parseInt(tabela.valorVenda),
+        "ValorLiquido": parseInt(tabela.valorLiquido),
+        "ValorParcela": parseInt(tabela.valorParcela),
+        "ValorPlano": parseInt(tabela.valorAP),
+        "ValorTaxa": parseInt(tabela.taxa),
         "DataSimulacao": String(moment().toISOString())
       });
 
