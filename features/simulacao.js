@@ -138,7 +138,7 @@ module.exports = function(controller) {
                 }
                 catch(error){
                     console.log(error)
-                    await bot.say("Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
+                    await bot.say("[preSimulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
                     flow.gotoThread("endConversation")
                 }
             }
@@ -146,7 +146,7 @@ module.exports = function(controller) {
         }
         else{
             console.log("entrou 3")
-            await bot.say("Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
+            bot.say("[preSimulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
             flow.gotoThread("endConversation")
         }
     });
@@ -373,14 +373,14 @@ module.exports = function(controller) {
                                     }
                                 }
                                 catch(error){
-                                    await bot.say("Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
+                                    await bot.say("[simulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
                                     flow.gotoThread("endConversation")
                                 }
                                 flow.gotoThread("newSimulationResults")
                             }
                         }
                         else{
-                            await bot.say("Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
+                            await bot.say("[simulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
                             flow.gotoThread("endConversation")
                         }
                     },
