@@ -342,8 +342,8 @@ module.exports = function(controller) {
                             return
                         }
                         await bot.say("[newSimulation]+++Ok! Estou checando se conseguimos outro cenário para te apresentar 👩🏻‍💻")
-
-                        let simulation = await sabemiFunctions.simulation(flow.vars.user.codigo)
+                        var valor  = parseFloat(flow.vars.beautifiedValue.replace(",",".").replace(".",""))
+                        let simulation = await sabemiFunctions.newSimulation(flow.vars.user.codigo,valor)
        
                         if(simulation.sucesso){
                             flow.setVar("simulacao",simulation)
