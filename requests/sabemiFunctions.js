@@ -25,8 +25,8 @@ module.exports.validateUser = async function validateUser(CodigoPessoaFisica, Pr
 
     let addressInfo = await axios(config)
         .then((response) => {
-            return response.data;
             console.log(response.data)
+            return response.data;
         })
         .catch((error) => {
             console.log(error)
@@ -54,8 +54,8 @@ module.exports.optIn = async function optIn(CodigoPessoaFisica){
     };
     let addressInfo = await axios(config)
         .then((response) => {
-            return response.data;
             console.log(response.data)
+            return response.data;
         })
         .catch((error) => {
             console.log(error)

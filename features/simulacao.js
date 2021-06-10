@@ -115,6 +115,7 @@ module.exports = function(controller) {
             flow.setVar("simulationKey", simulation.ChaveSimulacao);
        
             try{
+                console.log(simulation.Tabelas)
                 for (let tabela of simulation.Tabelas){
                     if(tabela.valorAP == "0,00"){
                         flow.setVar("simulationValue", tabela.ValorLiquido );
@@ -132,6 +133,7 @@ module.exports = function(controller) {
                 }
             }
             catch(error){
+                console.log(error)
                 await bot.say("Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
                 flow.gotoThread("endConversation")
             }
