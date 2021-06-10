@@ -26,6 +26,7 @@ module.exports.validateUser = async function validateUser(CodigoPessoaFisica, Pr
     let addressInfo = await axios(config)
         .then((response) => {
             return response.data;
+            console.log(response.data)
         })
         .catch((error) => {
             console.log(error)
@@ -54,6 +55,7 @@ module.exports.optIn = async function optIn(CodigoPessoaFisica){
     let addressInfo = await axios(config)
         .then((response) => {
             return response.data;
+            console.log(response.data)
         })
         .catch((error) => {
             console.log(error)
@@ -81,6 +83,7 @@ module.exports.firstSimulation = async function firstSimulation(CodigoPessoaFisi
 
     let addressInfo = await axios(config)
         .then((response) => {
+            console.log(response.data)
             return response.data;
         })
         .catch((error) => {
@@ -111,6 +114,7 @@ module.exports.simulation = async function simulation(CodigoPessoaFisica,valor){
     let addressInfo = await axios(config)
         .then((response) => {
             return response.data;
+            console.log(response.data)
         })
         .catch((error) => {
             console.log(error)
@@ -149,6 +153,7 @@ module.exports.closeContract = async function closeContract(CodigoPessoaFisica,t
     let addressInfo = await axios(config)
         .then((response) => {
             return response.data;
+            console.log(response.data)
         })
         .catch((error) => {
             console.log(error)
