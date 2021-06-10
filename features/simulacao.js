@@ -131,7 +131,8 @@ module.exports = function(controller) {
             }
         }
         else{
-            //TODO falha na requisição
+            await bot.say("Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
+            flow.gotoThread("endConversation")
         }
     });
 
@@ -356,7 +357,8 @@ module.exports = function(controller) {
                             flow.gotoThread("newSimulationResults")
                         }
                         else{
-                            //TODO falha na requisição
+                            await bot.say("Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
+                            flow.gotoThread("endConversation")
                         }
                     },
                     "neededValue",
