@@ -124,7 +124,7 @@ module.exports = function(controller) {
 
     flow.before("simulationResults",async(flow,bot)=>{
         setTimeout(async () => {
-            next();
+            
           },5000);
         let simulation = await sabemiFunctions.firstSimulation(flow.vars.user.codigo)
         console.log(simulation)
@@ -209,7 +209,7 @@ module.exports = function(controller) {
 
         let closeContract = await sabemiFunctions.closeContract(flow.vars.user.codigo,flow.vars.table,flow.vars.simulationKey)
 
-        flow.setVar("urlContract",String(closeContract.url))
+        flow.setVar("urlContract",closeContract.url.replace("/","\/"))
 
         if(flow.vars.tableChoice == "1"){
             signUpMessage = `Confira aqui o resumo do plano escolhido:\
