@@ -127,8 +127,8 @@ module.exports = function(controller) {
 
     flow.before("simulationResults",async(flow,bot)=>{
         setTimeout(async () => {
-            
-          },5000);
+            next()
+          },15000);
         let simulation = await sabemiFunctions.firstSimulation(flow.vars.user.codigo)
         console.log(simulation)
 
