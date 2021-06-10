@@ -88,7 +88,7 @@ module.exports.firstSimulation = async function firstSimulation(CodigoPessoaFisi
         })
         .catch((error) => {
             console.log(error)
-            return (false);
+            return false;
         });
 
     return addressInfo
@@ -118,7 +118,7 @@ module.exports.newSimulation = async function newSimulation(CodigoPessoaFisica,v
         })
         .catch((error) => {
             console.log(error)
-            return (false);
+            return false;
         });
 
     return addressInfo

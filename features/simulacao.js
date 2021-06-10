@@ -110,9 +110,11 @@ module.exports = function(controller) {
        
         let simulation = await sabemiFunctions.firstSimulation(flow.vars.user.codigo)
         console.log(simulation)
-        
+
         if(simulation){
+            console.log("entrou 1")
             if(simulation.sucesso){
+                console.log("entrou 2")
                 flow.setVar("simulacao",simulation)
                 flow.setVar("simulationKey", simulation.chaveSimulacao);
         
@@ -143,6 +145,7 @@ module.exports = function(controller) {
             
         }
         else{
+            console.log("entrou 3")
             await bot.say("Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
             flow.gotoThread("endConversation")
         }
