@@ -112,22 +112,22 @@ module.exports = function(controller) {
        
         if(simulation.sucesso){
             flow.setVar("simulacao",simulation)
-            flow.setVar("simulationKey", simulation.ChaveSimulacao);
+            flow.setVar("simulationKey", simulation.chaveSimulacao);
        
             try{
-                console.log(simulation.Tabelas)
-                for (let tabela of simulation.Tabelas){
+                console.log(simulation.tabelas)
+                for (let tabela of simulation.tabelas){
                     if(tabela.valorAP == "0,00"){
-                        flow.setVar("simulationValue", tabela.ValorLiquido );
-                        flow.setVar("simulationInstallments", tabela.Prazo);
-                        flow.setVar("simulationIntallmentsPrice", tabela.ValorParcela);
+                        flow.setVar("simulationValue", tabela.valorLiquido );
+                        flow.setVar("simulationInstallments", tabela.prazo);
+                        flow.setVar("simulationIntallmentsPrice", tabela.valorParcela);
                         flow.setVar("simulationTable", tabela);
                     }
                     else{
-                        flow.setVar("simulationValueAP", tabela.ValorLiquido );
-                        flow.setVar("simulationInstallmentsAP", tabela.Prazo);
-                        flow.setVar("simulationIntallmentsPriceAP", tabela.ValorParcela);
-                        flow.setVar("simulationInsurancePriceAP", tabela.ValorAP);
+                        flow.setVar("simulationValueAP", tabela.valorLiquido );
+                        flow.setVar("simulationInstallmentsAP", tabela.prazo);
+                        flow.setVar("simulationIntallmentsPriceAP", tabela.valorParcela);
+                        flow.setVar("simulationInsurancePriceAP", tabela.valorAP);
                         flow.setVar("simulationTableAP", tabela);
                     }
                 }
@@ -347,20 +347,20 @@ module.exports = function(controller) {
        
                         if(simulation.sucesso){
                             flow.setVar("simulacao",simulation)
-                            flow.setVar("simulationKey", simulation.ChaveSimulacao);
+                            flow.setVar("simulationKey", simulation.chaveSimulacao);
                             try{
-                                for (let tabela of simulation.Tabelas){
+                                for (let tabela of simulation.tabelas){
                                     if(tabela.valorAP == "0,00"){
-                                        flow.setVar("simulationValue", tabela.ValorLiquido );
-                                        flow.setVar("simulationInstallments", tabela.Prazo);
-                                        flow.setVar("simulationIntallmentsPrice", tabela.ValorParcela);
+                                        flow.setVar("simulationValue", tabela.valorLiquido );
+                                        flow.setVar("simulationInstallments", tabela.prazo);
+                                        flow.setVar("simulationIntallmentsPrice", tabela.valorParcela);
                                         flow.setVar("simulationTable", tabela);
                                     }
                                     else{
-                                        flow.setVar("simulationValueAP", tabela.ValorLiquido );
-                                        flow.setVar("simulationInstallmentsAP", tabela.Prazo);
-                                        flow.setVar("simulationIntallmentsPriceAP", tabela.ValorParcela);
-                                        flow.setVar("simulationInsurancePriceAP", tabela.ValorAP);
+                                        flow.setVar("simulationValueAP", tabela.valorLiquido );
+                                        flow.setVar("simulationInstallmentsAP", tabela.prazo);
+                                        flow.setVar("simulationIntallmentsPriceAP", tabela.valorParcela);
+                                        flow.setVar("simulationInsurancePriceAP", tabela.valorAP);
                                         flow.setVar("simulationTableAP", tabela);
                                     }
                                 }
