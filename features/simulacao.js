@@ -191,6 +191,7 @@ module.exports = function(controller) {
 
         let closeContract = await sabemiFunctions.closeContract(flow.vars.user.codigo,flow.vars.table,flow.vars.simulationKey)
         flow.setVar("urlContract",closeContract.url)
+        
         if(flow.vars.tableChoice == "1"){
             signUpMessage = `Confira aqui o resumo do plano escolhido:\
             \n\n_Assistência Financeira_\
