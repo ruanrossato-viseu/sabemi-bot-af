@@ -32,6 +32,7 @@ module.exports.validateUser = async function validateUser(CodigoPessoaFisica, Pr
             console.log(error)
             return (false);
         });
+    return addressInfo
 }
 
 module.exports.optIn = async function optIn(CodigoPessoaFisica){
@@ -59,6 +60,7 @@ module.exports.optIn = async function optIn(CodigoPessoaFisica){
             console.log(error)
             return (false);
         });
+        return addressInfo
 
 }
 
@@ -87,6 +89,7 @@ module.exports.firstSimulation = async function firstSimulation(CodigoPessoaFisi
             console.log(error)
             return false;
         });
+        return addressInfo
 }
 
 module.exports.newSimulation = async function newSimulation(CodigoPessoaFisica,valor){
@@ -115,6 +118,7 @@ module.exports.newSimulation = async function newSimulation(CodigoPessoaFisica,v
             console.log(error)
             return false;
         });
+        return addressInfo
 }
 
 
@@ -152,4 +156,5 @@ module.exports.closeContract = async function closeContract(CodigoPessoaFisica,t
             console.log(error)
             return (false);
         });
+        return addressInfo
 }
