@@ -109,33 +109,34 @@ module.exports = function(controller) {
     flow.before("preSimulation", async(flow,bot)=>{
        
         let simulation = await sabemiFunctions.firstSimulation(flow.vars.user.codigo)
-       
-        if(simulation.sucesso){
-            flow.setVar("simulacao",simulation)
-            flow.setVar("simulationKey", simulation.chaveSimulacao);
-       
-            try{
-                console.log(simulation.tabelas)
-                for (let tabela of simulation.tabelas){
-                    if(tabela.valorAP == "0,00"){
-                        flow.setVar("simulationValue", tabela.valorLiquido );
-                        flow.setVar("simulationInstallments", tabela.prazo);
-                        flow.setVar("simulationIntallmentsPrice", tabela.valorParcela);
-                        flow.setVar("simulationTable", tabela);
-                    }
-                    else{
-                        flow.setVar("simulationValueAP", tabela.valorLiquido );
-                        flow.setVar("simulationInstallmentsAP", tabela.prazo);
-                        flow.setVar("simulationIntallmentsPriceAP", tabela.valorParcela);
-                        flow.setVar("simulationInsurancePriceAP", tabela.valorAP);
-                        flow.setVar("simulationTableAP", tabela);
+        if(simulation){
+            if(simulation.sucesso){
+                flow.setVar("simulacao",simulation)
+                flow.setVar("simulationKey", simulation.chaveSimulacao);
+        
+                try{
+                    console.log(simulation.tabelas)
+                    for (let tabela of simulation.tabelas){
+                        if(tabela.valorAP == "0,00"){
+                            flow.setVar("simulationValue", tabela.valorLiquido );
+                            flow.setVar("simulationInstallments", tabela.prazo);
+                            flow.setVar("simulationIntallmentsPrice", tabela.valorParcela);
+                            flow.setVar("simulationTable", tabela);
+                        }
+                        else{
+                            flow.setVar("simulationValueAP", tabela.valorLiquido );
+                            flow.setVar("simulationInstallmentsAP", tabela.prazo);
+                            flow.setVar("simulationIntallmentsPriceAP", tabela.valorParcela);
+                            flow.setVar("simulationInsurancePriceAP", tabela.valorAP);
+                            flow.setVar("simulationTableAP", tabela);
+                        }
                     }
                 }
-            }
-            catch(error){
-                console.log(error)
-                await bot.say("Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
-                flow.gotoThread("endConversation")
+                catch(error){
+                    console.log(error)
+                    await bot.say("Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
+                    flow.gotoThread("endConversation")
+                }
             }
             
         }
@@ -345,31 +346,33 @@ module.exports = function(controller) {
                         var valor  = parseFloat(flow.vars.beautifiedValue.replace(",",".").replace(".",""))
                         let simulation = await sabemiFunctions.newSimulation(flow.vars.user.codigo,valor)
        
-                        if(simulation.sucesso){
-                            flow.setVar("simulacao",simulation)
-                            flow.setVar("simulationKey", simulation.chaveSimulacao);
-                            try{
-                                for (let tabela of simulation.tabelas){
-                                    if(tabela.valorAP == "0,00"){
-                                        flow.setVar("simulationValue", tabela.valorLiquido );
-                                        flow.setVar("simulationInstallments", tabela.prazo);
-                                        flow.setVar("simulationIntallmentsPrice", tabela.valorParcela);
-                                        flow.setVar("simulationTable", tabela);
-                                    }
-                                    else{
-                                        flow.setVar("simulationValueAP", tabela.valorLiquido );
-                                        flow.setVar("simulationInstallmentsAP", tabela.prazo);
-                                        flow.setVar("simulationIntallmentsPriceAP", tabela.valorParcela);
-                                        flow.setVar("simulationInsurancePriceAP", tabela.valorAP);
-                                        flow.setVar("simulationTableAP", tabela);
+                        if(simulation){
+                            if(simulation.sucesso){
+                                flow.setVar("simulacao",simulation)
+                                flow.setVar("simulationKey", simulation.chaveSimulacao);
+                                try{
+                                    for (let tabela of simulation.tabelas){
+                                        if(tabela.valorAP == "0,00"){
+                                            flow.setVar("simulationValue", tabela.valorLiquido );
+                                            flow.setVar("simulationInstallments", tabela.prazo);
+                                            flow.setVar("simulationIntallmentsPrice", tabela.valorParcela);
+                                            flow.setVar("simulationTable", tabela);
+                                        }
+                                        else{
+                                            flow.setVar("simulationValueAP", tabela.valorLiquido );
+                                            flow.setVar("simulationInstallmentsAP", tabela.prazo);
+                                            flow.setVar("simulationIntallmentsPriceAP", tabela.valorParcela);
+                                            flow.setVar("simulationInsurancePriceAP", tabela.valorAP);
+                                            flow.setVar("simulationTableAP", tabela);
+                                        }
                                     }
                                 }
+                                catch(error){
+                                    await bot.say("Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
+                                    flow.gotoThread("endConversation")
+                                }
+                                flow.gotoThread("newSimulationResults")
                             }
-                            catch(error){
-                                await bot.say("Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
-                                flow.gotoThread("endConversation")
-                            }
-                            flow.gotoThread("newSimulationResults")
                         }
                         else{
                             await bot.say("Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
