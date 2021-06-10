@@ -39,7 +39,7 @@ module.exports = function(controller) {
                             await flow.gotoThread("notRightPerson");
                         }
                         else if(response == "teste interno viseu"){
-                            await bot.say("link: https://www.google.com.br/")
+                            await bot.say("[teste]+++link: https://www.google.com.br/")
                         }
 
                         else{
