@@ -132,12 +132,12 @@ module.exports.closeContract = async function closeContract(CodigoPessoaFisica,t
         "CodigoPessoaFisica": parseInt(CodigoPessoaFisica),
         "TabelaSelecionada": parseInt(tabela.codigoTabela),
         "ChaveSimulacao": simulationKey,
-        "Prazo": parseInt(tabela.prazo.replace(",",".").replace(".","")),
-        "ValorVenda": parseFloat(tabela.valorVenda.replace(",",".").replace(".","")),
-        "ValorLiquido": parseFloat(tabela.valorLiquido.replace(",",".").replace(".","")),
-        "ValorParcela": parseFloat(tabela.valorParcela.replace(",",".").replace(".","")),
-        "ValorPlano": parseFloat(tabela.valorAP.replace(",",".").replace(".","")),
-        "ValorTaxa": parseFloat(tabela.taxa.replace(",",".").replace(".","")),
+        "Prazo": parseInt(tabela.prazo.replace(".","").replace(",",".")),
+        "ValorVenda": parseFloat(tabela.valorVenda.replace(".","").replace(",",".")),
+        "ValorLiquido": parseFloat(tabela.valorLiquido.replace(".","").replace(",",".")),
+        "ValorParcela": parseFloat(tabela.valorParcela.replace(".","").replace(",",".")),
+        "ValorPlano": parseFloat(tabela.valorAP.replace(".","").replace(",",".")),
+        "ValorTaxa": parseFloat(tabela.taxa.replace(".","").replace(",",".")),
         "DataSimulacao": String(moment().toISOString())
       });
 

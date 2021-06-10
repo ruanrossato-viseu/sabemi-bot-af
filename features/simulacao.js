@@ -74,20 +74,20 @@ module.exports = function(controller) {
                             let optIn = await sabemiFunctions.optIn(user.codigo);
                         }
                         else{
-                            if(flow.vars.retry = 0){
+                            if(flow.vars.retry == 0){
                                 await bot.say("[userInfo]+++Ops! Não foi possível validar esta informação.\
                                             \nDigite seu *nome completo*, sem abreviações e *apenas os 3 primeiros dígitos do seu CPF*, ok!?");
                                 flow.setVar("retry",1);
                                 await flow.gotoThread("userInfo");
                             }
-                            else if(flow.vars.retry = 1){
+                            else if(flow.vars.retry == 1){
                                 await bot.say("[userInfo]+++Ops! Não foi possível validar esta informação de novo.\
                                             \nVamos tentar mais uma vez?\
                                             \nDigite seu *nome completo*, sem abreviações e *apenas os 3 primeiros dígitos do seu CPF*, ok!?");
                                 flow.setVar("retry",2);
                                 await flow.gotoThread("userInfo");
                             }
-                            else if(flow.vars.retry = 2){
+                            else if(flow.vars.retry == 2){
                                 if(await utils.workingHours()){
                                     bot.say("[userInfo]+++Puxa! Não consegui validar os seus dados.\
                                             \nVou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗");
@@ -209,7 +209,13 @@ module.exports = function(controller) {
 
         let closeContract = await sabemiFunctions.closeContract(flow.vars.user.codigo,flow.vars.table,flow.vars.simulationKey)
 
-        flow.setVar("urlContract",closeContract.url.replace("/","\/"))
+        let urlContractList = closeContract.url.replace("//","/").split("/")
+        console.log(flow.vars.urlContractList)
+        let urlContract = urlContractList[0]+"//"+urlContractList[1]
+        console.log(flow.vars.urlContract)
+
+        flow.setVar("urlContract",urlContract)
+        console.log(flow.vars.urlContract)
 
         if(flow.vars.tableChoice == "1"){
             signUpMessage = `Confira aqui o resumo do plano escolhido:\
