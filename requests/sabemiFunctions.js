@@ -117,7 +117,7 @@ module.exports.firstSimulation = async function firstSimulation(CodigoPessoaFisi
     return addressInfo
 }
 
-module.exports.simulatiom = async function simulation(CodigoPessoaFisica,valor){
+module.exports.simulation = async function simulation(CodigoPessoaFisica,valor){
 
 
     var data = JSON.stringify({

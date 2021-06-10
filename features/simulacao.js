@@ -74,20 +74,20 @@ module.exports = function(controller) {
                             let optIn = await sabemiFunctions.optIn(user.codigo);
                         }
                         else{
-                            if(flow.vars.reply = 0){
+                            if(flow.vars.retry = 0){
                                 await bot.say("[userInfo]+++Ops! Não foi possível validar esta informação.\
                                             \nDigite seu *nome completo*, sem abreviações e *apenas os 3 primeiros dígitos do seu CPF*, ok!?");
-                                flow.setVar("reply",1);
+                                flow.setVar("retry",1);
                                 await flow.gotoThread("userInfo");
                             }
-                            else if(flow.vars.reply = 1){
+                            else if(flow.vars.retry = 1){
                                 await bot.say("[userInfo]+++Ops! Não foi possível validar esta informação de novo.\
                                             \nVamos tentar mais uma vez?\
                                             \nDigite seu *nome completo*, sem abreviações e *apenas os 3 primeiros dígitos do seu CPF*, ok!?");
-                                flow.setVar("reply",2);
+                                flow.setVar("retry",2);
                                 await flow.gotoThread("userInfo");
                             }
-                            else if(flow.vars.reply = 2){
+                            else if(flow.vars.retry = 2){
                                 if(await utils.workingHours()){
                                     bot.say("[userInfo]+++Puxa! Não consegui validar os seus dados.\
                                             \nVou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗");
@@ -114,7 +114,7 @@ module.exports = function(controller) {
             flow.setVar("simulacao",simulation)
             flow.setVar("simulationKey", simulation.ChaveSimulacao);
        
-            for (let tabela of simulation.tabelas){
+            for (let tabela of simulation.Tabelas){
                 if(tabela.valorAP == "0,00"){
                     flow.setVar("simulationValue", tabela.ValorLiquido );
                     flow.setVar("simulationInstallments", tabela.Prazo);
@@ -155,7 +155,7 @@ module.exports = function(controller) {
 
     flow.addQuestion("[simulation]+++Pronto! Agora que você já conhece um pouco mais nossos produtos, veja as condições que consegui para você 💁🏻‍♀‍ \
     \n\n👉🏼 *Assistência Financeira de R$ {{vars.simulationValueAP}}* em {{vars.simulationInstallmentsAP}} parcelas de R$ {{vars.simulationIntallmentsPriceAP}} + *Seguro de Acidente Pessoal* por R$ {{vars.simulationInsurancePriceAP}}\
-    \n 👉🏼 *Assistência Financeira de R$ {{vars.simulationValue}}* em {{vars.simulationInstallments}} parcelas de R$ {{vars.simulationIntallmentsPrice}}\
+    \n\n 👉🏼 *Assistência Financeira de R$ {{vars.simulationValue}}* em {{vars.simulationInstallments}} parcelas de R$ {{vars.simulationIntallmentsPrice}}\
     \n\nDigite *1* para seguir com a contratação de Assistência Financeira + Seguro de Acidente Pessoal\
     \nDigite *2* para seguir com a contratação de Assistência Financeira\
     \nDigite *3* para saber mais sobre as vantagens do Seguro Sabemi\
@@ -327,30 +327,30 @@ module.exports = function(controller) {
                     \nDigite *2* para trocar o valor",
                     async(response,flow,bot)=>{
                         if(response=="2"){
-                            await bot.say("[simulation]+++Ok, vamos tentar de novo. Não se esqueça de *escrever somentes os números* e *separar os centavos com vírgula*")
+                            await bot.say("[simulation]+++Ok, vamos tentar de novo. Não se esqueça de *escrever somente os números* e *separar os centavos com vírgula*")
                             await flow.gotoThread("lowerValue")
                             return
                         }
                         await bot.say("[newSimulation]+++Ok! Estou checando se conseguimos outro cenário para te apresentar 👩🏻‍💻")
 
-                        let simulation = await sabemiFunctions.simulatiom(flow.vars.user.codigo)
+                        let simulation = await sabemiFunctions.simulation(flow.vars.user.codigo)
        
                         if(simulation.sucesso){
                             flow.setVar("simulacao",simulation)
-                            flow.setVar("simulationKey", simulation.chaveSimulacao);
+                            flow.setVar("simulationKey", simulation.ChaveSimulacao);
                        
-                            for (let tabela of simulation.tabelas){
+                            for (let tabela of simulation.Tabelas){
                                 if(tabela.valorAP == "0,00"){
-                                    flow.setVar("simulationValue", tabela.valorLiquido );
-                                    flow.setVar("simulationInstallments", tabela.prazo);
-                                    flow.setVar("simulationIntallmentsPrice", tabela.valorParcela);
+                                    flow.setVar("simulationValue", tabela.ValorLiquido );
+                                    flow.setVar("simulationInstallments", tabela.Prazo);
+                                    flow.setVar("simulationIntallmentsPrice", tabela.ValorParcela);
                                     flow.setVar("simulationTable", tabela);
                                 }
                                 else{
-                                    flow.setVar("simulationValueAP", tabela.valorLiquido );
-                                    flow.setVar("simulationInstallmentsAP", tabela.prazo);
-                                    flow.setVar("simulationIntallmentsPriceAP", tabela.valorParcela);
-                                    flow.setVar("simulationInsurancePriceAP", tabela.valorAP);
+                                    flow.setVar("simulationValueAP", tabela.ValorLiquido );
+                                    flow.setVar("simulationInstallmentsAP", tabela.Prazo);
+                                    flow.setVar("simulationIntallmentsPriceAP", tabela.ValorParcela);
+                                    flow.setVar("simulationInsurancePriceAP", tabela.ValorAP);
                                     flow.setVar("simulationTableAP", tabela);
                                 }
                             }
@@ -370,11 +370,11 @@ module.exports = function(controller) {
     });
     flow.addQuestion("[newSimulation]+++{{vars.firstName}}, analisando aqui, verifiquei as possíveis opções para você 💁🏻‍♀‍ \
                     \n\n👉🏼 *Assistência Financeira de R$ {{vars.simulationValueAP}}* em {{vars.simulationInstallmentsAP}} parcelas de R$ {{vars.simulationIntallmentsPriceAP}} + *Seguro de Acidente Pessoal* por R$ {{vars.simulationInsurancePriceAP}}\
-                    \n 👉🏼 *Assistência Financeira de R$ {{vars.simulationValue}}* em {{vars.simulationInstallments}} parcelas de R$ {{vars.simulationIntallmentsPrice}}\
+                    \n\n 👉🏼 *Assistência Financeira de R$ {{vars.simulationValue}}* em {{vars.simulationInstallments}} parcelas de R$ {{vars.simulationIntallmentsPrice}}\
                     \n\nDigite *1* para seguir com a contratação de Assistência Financeira + Seguro de Acidente Pessoal\
                     \nDigite *2* para seguir com a contratação de Assistência Financeira\
                     \nDigite *3* para cancelar\
-                    \n\nDigite *4* para falar com um de nossos Especialistas*",
+                    \n\nDigite *4* para falar com um de nossos Especialistas 😀",
                     async(response,flow,bot)=>{
                         if(response=="1"){
                             flow.setVar("af",true);
