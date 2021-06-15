@@ -19,7 +19,6 @@ module.exports = function(controller) {
         // }
         // flow.setVar("user",user)
 
-
         flow.setVar("firstName",flow.vars.user.userName.split(" ")[0])
         flow.setVar("maskedCPF","xxx.xxx.xx"+flow.vars.user.cpf[flow.vars.user.cpf.length-3]+"-"+flow.vars.user.cpf.slice(-2))
         flow.setVar("retry",0)
@@ -28,7 +27,7 @@ module.exports = function(controller) {
     flow.addQuestion("[introduction]+++Antes de iniciar nossa conversa, para segurança dos seus dados, preciso garantir que estou falando com a pessoa certa:\
                     \n\n *{{vars.firstName}}*\
                     \n CPF: {{vars.maskedCPF}}\
-                    \n\nÉ você?😊\
+                    \n\nÉ você? 😊\
                     \n\nDigite 1 para: Sim, sou eu\
                     \nDigite 2 para: Não conheço esta pessoa", 
                     async(response, flow, bot) =>{
@@ -66,7 +65,7 @@ module.exports = function(controller) {
     "introRetry");
 
     flow.addMessage("[notRightPerson]+++Ops! Peço desculpas pelo incômodo. Obrigado por avisar!","notRightPerson")
-    flow.addMessage("[notRightPerson]+++Se desejar falar com a Sabemi, é só me chamar! Basta digitar *Sol* que estarei pronta para atender 😉!","notRightPerson")
+    flow.addMessage("[notRightPerson]+++Se desejar falar com a Sabemi, é só me chamar! Basta digitar *Sol* que estarei pronta para atender! 😉","notRightPerson")
     flow.addMessage("[FINISH]+++[notRightPerson]","notRightPerson")
 
     flow.addMessage("[introduction]+++Que bom! Para que eu possa apresentar uma proposta na medida, vou precisar que você me informe alguns dos seus dados pessoais.\
@@ -139,8 +138,8 @@ module.exports = function(controller) {
                     \n\nConfira nas imagens abaixo todos os benefícios e vantagens deste plano Exclusivo para você! 👇🏻",
                     "preSimulation");
     
-    flow.addMessage("[IMAGE]+++https://media-sabemi.s3.sa-east-1.amazonaws.com/Bot+Vendas_1.png")
-    flow.addMessage("[IMAGE]+++https://media-sabemi.s3.sa-east-1.amazonaws.com/Bot+Vendas_2.png")
+    flow.addMessage("[IMAGE]+++https://media-sabemi.s3.sa-east-1.amazonaws.com/Bot+Vendas_1.png","preSimulation")
+    flow.addMessage("[IMAGE]+++https://media-sabemi.s3.sa-east-1.amazonaws.com/Bot+Vendas_2.png","preSimulation")
     
     
     flow.addAction("simulationResults","preSimulation");
