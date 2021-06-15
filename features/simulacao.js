@@ -38,20 +38,34 @@ module.exports = function(controller) {
                         else if(response == "2"){
                             await flow.gotoThread("notRightPerson");
                         }
-                        else if(response == "teste interno viseu"){
-                            await bot.say("[teste]+++link: https://www.google.com.br/")
-                        }
 
                         else{
-                            await bot.say("[introduction]+++Não entendi o que falou. Digite *1*, se for você ou *2*, se você não conhecer essa pessoa")
-                            await flow.repeat();
+                            flow.gotoThread("introRetry")
                         }
                         
                     },
                     "rightPerson",
                     "intro");
-       
+
+    flow.addQuestion("[introduction]+++Puxa😕 Essa opção não é válida. Vamos tentar novamente?",
+        async(response, flow, bot) =>{
+                    if(response =="1"){
+                        flow.gotoThread("userInfo")
+                    }
+
+                    else if(response == "2"){
+                        await flow.gotoThread("notRightPerson");
+                    }
+                    else{
+                        await flow.gotoThread("transferToHuman")
+                    }
+                    
+                },
+    "rightPerson",
+    "introRetry");
+
     flow.addMessage("[notRightPerson]+++Ops! Peço desculpas pelo incômodo. Obrigado por avisar!","notRightPerson")
+    flow.addMessage("[notRightPerson]+++Se desejar falar com a Sabemi, é só me chamar! Basta digitar *Sol* que estarei pronta para atender 😉!","notRightPerson")
     flow.addMessage("[FINISH]+++[notRightPerson]","notRightPerson")
 
     flow.addMessage("[introduction]+++Que bom! Para que eu possa apresentar uma proposta na medida, vou precisar que você me informe alguns dos seus dados pessoais.\
@@ -72,7 +86,9 @@ module.exports = function(controller) {
                     async(response, flow, bot) =>{
                         let user = flow.vars.user;
                         let validatedUser = await sabemiFunctions.validateUser(user.codigo, response, flow.vars.name);
-                        console.log(validatedUser)
+                        
+                        // let validatedUser={"sucesso":true};
+                        
                         if(validatedUser.sucesso){
                             let optIn = await sabemiFunctions.optIn(user.codigo);
                         }
@@ -128,6 +144,32 @@ module.exports = function(controller) {
     flow.before("simulationResults",async(flow,bot)=>{
         await new Promise(r => setTimeout(r, 15000));
         let simulation = await sabemiFunctions.firstSimulation(flow.vars.user.codigo)
+        // let simulation = {
+        //                     "tabelas": [
+        //                     {
+        //                     "codigoTabela": 5154836,
+        //                     "prazo": "72",
+        //                     "valorVenda": "100.000,00",
+        //                     "valorLiquido": "100.000,00",
+        //                     "valorParcela": "850",
+        //                     "taxa": "1,3",
+        //                     "valorPeculio": "0",
+        //                     "valorAP": "0,00"
+        //                     },
+        //                     {
+        //                         "codigoTabela": 5154836,
+        //                         "prazo": "72",
+        //                         "valorVenda": "100.000,00",
+        //                         "valorLiquido": "100.000,00",
+        //                         "valorParcela": "850",
+        //                         "taxa": "1,3",
+        //                         "valorPeculio": "0,00",
+        //                         "valorAP": "50,00"
+        //                         },
+        //                     ],
+        //                     "chaveSimulacao": "irure elit Duis",
+        //                     "sucesso": true
+        //                 }
         console.log(simulation)
 
         if(simulation){
@@ -197,20 +239,42 @@ module.exports = function(controller) {
                             await flow.gotoThread("newSimulation");
                         }
                         else{
-                            await bot.say("[simulation]+++Por favor, *digite um número de 1 a 4*, correspondente à ação que quer tomar")
-                            await flow.repeat()
+                            await flow.gotoThread("simulationRetry")
                         }
                     },
                     "tableChoice",
                     "simulationResults");
 
-
+    flow.addQuestion("[simulation]+++Puxa😕 Essa opção não é válida. Vamos tentar novamente?",
+        async(response, flow, bot) =>{
+                    if(response=="1"){
+                            flow.setVar("table",flow.vars.simulationTableAP)
+                            console.log(flow.vars)
+                            await flow.gotoThread("signUp")
+                        }
+                        else if(response =="2"){
+                            flow.setVar("table",flow.vars.simulationTable)
+                            await flow.gotoThread("signUp")
+                        }
+                        else if(response =="3"){
+                            await flow.gotoThread("clarifyInsurance");                
+                        }
+                        else if(response =="4"){
+                            await flow.gotoThread("newSimulation");
+                        }
+                        else{
+                            await flow.gotoThread("transferToHuman")
+                        }
+                },
+    "tableChoice",
+    "simulationRetry");
+    
     flow.before("signUp", async(flow,bot)=>{
         var signUpMessage = "";
 
         let closeContract = await sabemiFunctions.closeContract(flow.vars.user.codigo,flow.vars.table,flow.vars.simulationKey)
 
-
+        // let closeContract = {"url":"https://www.sabemiFunctions.com.br"}
         flow.setVar("urlContract",closeContract.url)
         console.log(flow.vars.urlContract)
 
@@ -223,12 +287,12 @@ module.exports = function(controller) {
             \nCobertura de Morte acidental\
             \nPrêmio mensal de R$ ${flow.vars.simulationInsurancePriceAP}\
             \n\nServiços e benefícios:\
-            \n✔️ Assistência. Funeral Individual\
+            \n✔️ Assistência Funeral Individual\
             \n✔️ Assistência Residencial\
             \n✔️ Assistência Pet Básica\
             \n✔️ Assistência Proteção Pessoal\
-            \n✔️ TEM Saúde\
-            \n✔️ Clube de Vantagens Sabemi`;
+            \n✔️ Clube de Vantagens Sabemi\
+            \n✔️ TEM Saúde – Descontos de até 80% na compra de medicamentos, e até 70% de economia em consultas e exames.`;
         }
         else{
             signUpMessage = `Confira aqui o resumo do plano escolhido:\
@@ -280,28 +344,27 @@ module.exports = function(controller) {
                             await flow.gotoThread("lowerValue")
                         }
                         else{
-                            await bot.say("[simulation]+++Por favor, *digite 1 ou 2*, correspondente à ação que quer tomar")
-                            await flow.repeat()
+                            await flow.gotoThread("newSimulationRetry")
                         }
                     },
                     "insitutionChoice",
                     "newSimulation");
+    
+    flow.addQuestion("[simulation]+++Puxa😕 Essa opção não é válida. Vamos tentar novamente?",
+        async(response, flow, bot) =>{
+                    if(response=="1"){
+                            await flow.gotoThread("transferToHuman")
+                        }
+                        else if(response =="2"){
+                            await flow.gotoThread("lowerValue")
+                        }
+                        else{
+                            await flow.gotoThread("transferToHuman")
+                        }
+                },
+    "insitutionChoice",
+    "newSimulationRetry");
 
-    flow.before("transferToHuman", 
-                async(flow,bot)=>{
-                    if(await utils.workingHours()){
-                        flow.setVar("messageTransfer",
-                                    "Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
-                    }
-                    else{
-                        flow.setVar("messageTransfer",
-                                    "Puxa! ⏱ No momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente\
-                                    \nRetorne com um alô, por aqui mesmo, no próximo dia útil entre *09h e 18h*, de *segunda a sexta-feira* e estaremos prontos para te ajudar!\
-                                    \nBjs e até breve")
-                    }
-                }
-            );
-    flow.addMessage("[transferToHuman]+++{{vars.messageTransfer}}","transferToHuman");
 
     flow.addQuestion("[simulation]+++Entendi! Me conta qual *valor total que você precisa*? 😄\
                     \nAh, para eu compreender, *digite somente os números, com os centavos separados por vírgula*, combinado!?",
@@ -349,11 +412,61 @@ module.exports = function(controller) {
                     \n\nDigite *1* para seguir com a simulação nesse valor\
                     \nDigite *2* para trocar o valor",
                     async(response,flow,bot)=>{
-                        if(response=="2"){
+                        if(response=="1"){
+                            await bot.say("[newSimulation]+++Ok! Estou checando se conseguimos outro cenário para te apresentar 👩🏻‍💻")
+                            var valor  = parseFloat(flow.vars.beautifiedValue.replace(",",".").replace(".",""))
+                            let simulation = await sabemiFunctions.newSimulation(flow.vars.user.codigo,valor)
+                            console.log(simulation)
+                            if(simulation){
+                                if(simulation.sucesso){
+                                    flow.setVar("simulacao",simulation)
+                                    flow.setVar("simulationKey", simulation.chaveSimulacao);
+                                    try{
+                                        for (let tabela of simulation.tabelas){
+                                            if(tabela.valorAP == "0,00"){
+                                                flow.setVar("simulationValue", tabela.valorLiquido );
+                                                flow.setVar("simulationInstallments", tabela.prazo);
+                                                flow.setVar("simulationIntallmentsPrice", tabela.valorParcela);
+                                                flow.setVar("simulationTable", tabela);
+                                            }
+                                            else{
+                                                flow.setVar("simulationValueAP", tabela.valorLiquido );
+                                                flow.setVar("simulationInstallmentsAP", tabela.prazo);
+                                                flow.setVar("simulationIntallmentsPriceAP", tabela.valorParcela);
+                                                flow.setVar("simulationInsurancePriceAP", tabela.valorAP);
+                                                flow.setVar("simulationTableAP", tabela);
+                                            }
+                                        }
+                                    }
+                                    catch(error){
+                                        await bot.say("[simulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
+                                        flow.gotoThread("endConversation")
+                                    }
+                                    flow.gotoThread("newSimulationResults")
+                                }
+                            }
+                            else{
+                                await bot.say("[simulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
+                                flow.gotoThread("endConversation")
+                            }
+                        }
+                        else if(response=="2"){
                             await bot.say("[simulation]+++Ok, vamos tentar de novo. Não se esqueça de *escrever somente os números* e *separar os centavos com vírgula*")
                             await flow.gotoThread("lowerValue")
                             return
                         }
+                        else{
+                            flow.gotoThread("lowerValueSimulationRetry")
+                        }
+                        
+                    },
+                    "neededValue",
+                    "lowerValueSimulation"
+    );
+
+    flow.addQuestion("[simulation]+++Puxa😕 Essa opção não é válida. Vamos tentar novamente?",
+        async(response, flow, bot) =>{
+                    if(response=="1"){
                         await bot.say("[newSimulation]+++Ok! Estou checando se conseguimos outro cenário para te apresentar 👩🏻‍💻")
                         var valor  = parseFloat(flow.vars.beautifiedValue.replace(",",".").replace(".",""))
                         let simulation = await sabemiFunctions.newSimulation(flow.vars.user.codigo,valor)
@@ -390,10 +503,18 @@ module.exports = function(controller) {
                             await bot.say("[simulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
                             flow.gotoThread("endConversation")
                         }
-                    },
-                    "neededValue",
-                    "lowerValueSimulation"
-    );
+                    }
+                    else if(response=="2"){
+                        await bot.say("[simulation]+++Ok, vamos tentar de novo. Não se esqueça de *escrever somente os números* e *separar os centavos com vírgula*")
+                        await flow.gotoThread("lowerValue")
+                        return
+                    }
+                    else{
+                        flow.gotoThread("transferToHuman")
+                    }
+                },
+    "tableChoice",
+    "lowerValueSimulationRetry");
 
     flow.before("newSimulationResults",async(flow,bot)=>{
         bot.say("[SIMULACAO]+++"+JSON.stringify(flow.vars.simulacao))
@@ -427,13 +548,55 @@ module.exports = function(controller) {
                             await flow.gotoThread("transferToHuman");
                         }
                         else{
-                            await bot.say("[newSimulation]+++Por favor, *digite um número de 1 a 4*, correspondente à ação que quer tomar")
-                            await flow.repeat()
+                            await flow.gotoThread("newSimulationRetry")
                         }
                     },
                     "tableChoice",
                     "newSimulationResults")
-    
+
+    flow.addQuestion("[simulation]+++Puxa😕 Essa opção não é válida. Vamos tentar novamente?",
+        async(response, flow, bot) =>{
+                    if(response=="1"){
+                            flow.setVar("table",flow.vars.simulationTableAP)
+                            console.log(flow.vars)
+                            await flow.gotoThread("signUp")
+                        }
+                        else if(response =="2"){
+                            flow.setVar("table",flow.vars.simulationTable)
+                            await flow.gotoThread("signUp")
+                        }
+                        else if(response =="3"){
+                            await bot.say("[newSimulation]+++Puxa, que pena! 😕\nEspero que a gente converse em outro momento!\
+                            \nSe você desejar falar com algum colega Especialista, pode ligar no *0800 000 000*, e estaremos prontos para te atender!\
+                            \nAté a próxima!! 🙋🏻");             
+                        }
+                        else if(response =="4"){
+                            await flow.gotoThread("transferToHuman");
+                        }
+                        else{
+                            await flow.gotoThread("transferToHuman")
+                        }
+                },
+    "tableChoice",
+    "newSimulationRetry");
+
+    flow.before("transferToHuman", 
+                async(flow,bot)=>{
+                    if(await utils.workingHours()){
+                        flow.setVar("messageTransfer","Para falar com um de nossos atendentes, é só acessar nosso suporte no link https://api.whatsapp.com/send?phone=555131037420&text=Ol%C3%A1!%20Estava%20falando%20com%20a%20Sol%20e%20preciso%20de%20ajuda.%20C%C3%B3digo:{{flow.vars.user.codigo}} . Tudo será resolvido por lá 😁")
+                        // flow.setVar("messageTransfer",
+                        //             "Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
+                    }
+                    else{
+                        flow.setVar("messageTransfer",
+                                    "Puxa! ⏱ No momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente\
+                                    \nRetorne com um alô, por aqui mesmo, no próximo dia útil entre *09h e 18h*, de *segunda a sexta-feira* e estaremos prontos para te ajudar!\
+                                    \nBjs e até breve")
+                    }
+                }
+            );
+    flow.addMessage("[transferToHuman]+++{{vars.messageTransfer}}","transferToHuman");
+
     flow.addMessage("[ending]+++Se desejar falar com a Sabemi, é só me chamar! Basta digitar *Sol* que estarei pronta para atender 😉!","endConversation")
     flow.addMessage("[FINISH]+++[ending]","endConversation")
     controller.addDialog(flow);

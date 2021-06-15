@@ -7,14 +7,14 @@ module.exports = function(controller) {
     flow.addAction("intro");
 
     flow.addQuestion("[SOL]+++Olá 🙋🏻 Olha, por aqui eu posso te ajudar com:\
-                    \nDigite 1 para Link do APP Sabemi\
+                    \n\nDigite 1 para Link do APP Sabemi\
                     \nDigite 2 para dúvida sobre minha simulação \
                     \nDigite 3 para já executei o processo no APP Sabemi\
                     \nDigite 4 para Outras dúvidas/Falar com atendente",
         async(response, flow, bot)=>{
             if(response == "1"){
                 await bot.say("[SOL]+++Ok! Aqui está o link do APP Sabemi Digital 📲 www.sabemi.com.br/appsabemidigital\
-                \nLembrando que é através dele que você dará continuidade na sua contratação e ficará ainda mais perto de realizar os seus sonhos!")
+                \n\nLembrando que é através dele que você dará continuidade na sua contratação e ficará ainda mais perto de realizar os seus sonhos!")
                 await flow.gotoThread("menu")        
             }
             else if(response == "2"){
@@ -22,12 +22,11 @@ module.exports = function(controller) {
             }
             else if(response == "3"){
                 await bot.say("[SOL]+++Então, se você já fez o processo de formalização digital no APP Sabemi, meus colegas devem estar cuidando e analisando sua proposta agora mesmo!\
-                            \nE o legal é que no APP Sabemi você consegue acompanhar o status da sua proposta, mas, se desejar falar com algum dos nossos especialistas, você tem um jeito fácil: basta digitar 1 para que eles entrem em contato 😊")
+                            \n\nE o legal é que no APP Sabemi você consegue acompanhar o status da sua proposta, mas, se desejar falar com algum dos nossos especialistas, você tem um jeito fácil: basta digitar 1 para que eles entrem em contato 😊")
                 await flow.gotoThread("menu")        
             }
             else if(response == "4"){
-                await bot.say("[SOL]+++Como sou uma Assistente Digital em treinamento, não consigo responder todas as dúvidas. Então vou te encaminhar para um de nossos especialistas, tudo bem?\
-                            \nDigite aqui qual a sua dúvida, por favor");       
+                await bot.say("[SOL]+++Como sou uma Assistente Digital em treinamento, não consigo responder todas as dúvidas. Então vou te encaminhar para um de nossos especialistas, tudo bem?");       
                 await flow.gotoThread("transferToHuman");            
             }
             else{
@@ -40,11 +39,10 @@ module.exports = function(controller) {
     )
 
     flow.addQuestion("[SOL]+++Com o que posso ajudar agora?\
-                    \nDigite 1 para Link do APP Sabemi\
+                    \n\nDigite 1 para Link do APP Sabemi\
                     \nDigite 2 para dúvida sobre minha simulação\
                     \nDigite 3 para já executei o processo no APP Sabemi\
-                    \nDigite 4 para Outras dúvidas/Falar com atendente\
-                    \nDigite 5 para finalizar",
+                    \nDigite 4 para Outras dúvidas/Falar com atendente",
         async(response, flow, bot)=>{
             if(response == "1"){
                 await bot.say("[SOL]+++Ok! Aqui está o link do APP Sabemi Digital 📲 [Link para Download APP]\
@@ -55,8 +53,8 @@ module.exports = function(controller) {
             }
             else if(response == "3"){
                 await bot.say("[SOL]+++Então, se você já fez o processo de formalização digital no APP Sabemi, meus colegas devem estar *cuidando e analisando sua proposta agora mesmo!*\
-                            \nE o legal é que no APP Sabemi você consegue acompanhar o status da sua proposta\
-                            \nSe desejar falar com algum dos nossos especialistas, basta digitar 4 no próximo menu 😊")
+                            \n\nE o legal é que no APP Sabemi você consegue acompanhar o status da sua proposta\
+                            \n\nSe desejar falar com algum dos nossos especialistas, basta digitar 4 no próximo menu 😊")
             }
             else if(response == "4"){
                 await bot.say("[SOL]+++Como sou uma Assistente Digital em treinamento, não consigo responder todas as dúvidas. Então vou te encaminhar para um de nossos especialistas, tudo bem?\
@@ -122,7 +120,9 @@ module.exports = function(controller) {
                 async(flow,bot)=>{
                     if(await utils.workingHours()){
                         flow.setVar("messageTransfer",
-                                    "[SOL]+++Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
+                                    "[SOL]+++Para falar com um de nossos atendentes, é só acessar nosso suporte no link https://api.whatsapp.com/send?phone=555131037420&text=Ol%C3%A1!%20Estava%20falando%20com%20a%20Sol%20e%20preciso%20de%20ajuda.%20C%C3%B3digo:{{flow.vars.user.codigo}} . Tudo será resolvido por lá 😁")
+                        // flow.setVar("messageTransfer",
+                        //             "[SOL]+++Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
                     }
                     else{
                         flow.setVar("messageTransfer",

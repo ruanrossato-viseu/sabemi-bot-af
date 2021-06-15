@@ -22,7 +22,8 @@ module.exports = function(controller) {
                 await flow.gotoThread("evaluation")
             }
             else if(response == "4"){
-                await bot.say("[PARAR]+++Obrigada por me avisar!\nSe desejar falar com a Sabemi, é só me chamar! Basta digitar SOL que estarei pronta para te atender :)")                
+                await bot.say("[PARAR]+++Obrigada por me avisar!\nSe desejar falar com a Sabemi, é só me chamar! Basta digitar SOL que estarei pronta para te atender :)")   
+                await flow.gotoThread("evaluation")             
             }
             else{
                 await bot.say("[PARAR]+++Essa opção não é válida. Digite de 1 a 4 para seguir adiante");
@@ -69,7 +70,9 @@ module.exports = function(controller) {
                 async(flow,bot)=>{
                     if(await utils.workingHours()){
                         flow.setVar("messageTransfer",
-                                    "[PARAR]+++Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
+                                "[PARAR]+++Para falar com um de nossos atendentes, é só acessar nosso suporte no link https://api.whatsapp.com/send?phone=555131037420&text=Ol%C3%A1!%20Estava%20falando%20com%20a%20Sol%20e%20preciso%20de%20ajuda.%20C%C3%B3digo:{{flow.vars.user.codigo}} . Tudo será resolvido por lá 😁")
+                        // flow.setVar("messageTransfer",
+                        //             "[PARAR]+++Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
                     }
                     else{
                         flow.setVar("messageTransfer",
