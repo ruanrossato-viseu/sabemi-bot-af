@@ -135,8 +135,11 @@ module.exports = function(controller) {
                     "preSimulation");
 
     flow.addMessage("[preSimulation]+++💡 Enquanto isso, {{vars.firstName}}, confira o *melhor plano para proteção* de toda a sua família!\
-                    \n\nConfira no vídeo abaixo todos os benefícios e vantagens deste plano Exclusivo para você! 👇🏻",
+                    \n\nConfira nas imagens abaixo todos os benefícios e vantagens deste plano Exclusivo para você! 👇🏻",
                     "preSimulation");
+    
+    flow.addMessage("[IMAGE]+++https://media-sabemi.s3.sa-east-1.amazonaws.com/Bot+Vendas_1.png")
+    flow.addMessage("[IMAGE]+++https://media-sabemi.s3.sa-east-1.amazonaws.com/Bot+Vendas_2.png")
     
     
     flow.addAction("simulationResults","preSimulation");
