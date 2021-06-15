@@ -17,6 +17,7 @@ const { WebAdapter } = require('botbuilder-adapter-web');
 // Load process.env values from .env file
 require('dotenv').config();
 
+const moment = require("moment");
 let request = require("request");
 
 let storage = null;
@@ -40,7 +41,10 @@ const controller = new Botkit({
 
 // Once the bot has booted up its internal services, you can use them to do stuff.
 controller.ready(() => {
-    console.log("\n==========================================\n\n Sabemi Bot is Running \n\n==========================================")
+    console.log("\n========================================== \
+                \n\nSabemi Bot is Running\n")
+    console.log(String(moment().toISOString()))
+    console.log("\n==========================================")
 
     // load traditional developer-created local custom feature modules
     controller.loadModules(__dirname + '/features');
