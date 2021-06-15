@@ -28,7 +28,7 @@ module.exports = function(controller) {
     flow.addQuestion("[introduction]+++Antes de iniciar nossa conversa, para segurança dos seus dados, preciso garantir que estou falando com a pessoa certa:\
                     \n\n *{{vars.firstName}}*\
                     \n CPF: {{vars.maskedCPF}}\
-                    \n\nÉ você mesmo?😊\
+                    \n\nÉ você?😊\
                     \n\nDigite 1 para: Sim, sou eu\
                     \nDigite 2 para: Não conheço esta pessoa", 
                     async(response, flow, bot) =>{
@@ -47,7 +47,8 @@ module.exports = function(controller) {
                     "rightPerson",
                     "intro");
 
-    flow.addQuestion("[introduction]+++Puxa😕 Essa opção não é válida. Vamos tentar novamente?",
+    flow.addQuestion("[introduction]+++Puxa 😕 Essa opção não é válida.\
+                    \n Vamos tentar novamente?",
         async(response, flow, bot) =>{
                     if(response =="1"){
                         flow.gotoThread("userInfo")
@@ -248,7 +249,8 @@ module.exports = function(controller) {
                     "tableChoice",
                     "simulationResults");
 
-    flow.addQuestion("[simulation]+++Puxa😕 Essa opção não é válida. Vamos tentar novamente?",
+    flow.addQuestion("[simulation]+++Puxa😕 Essa opção não é válida.\
+                    \n Vamos tentar novamente?",
         async(response, flow, bot) =>{
                     if(response=="1"){
                             flow.setVar("table",flow.vars.simulationTableAP)
@@ -353,7 +355,8 @@ module.exports = function(controller) {
                     "insitutionChoice",
                     "newSimulation");
     
-    flow.addQuestion("[simulation]+++Puxa😕 Essa opção não é válida. Vamos tentar novamente?",
+    flow.addQuestion("[simulation]+++Puxa😕 Essa opção não é válida. \
+                    \nVamos tentar novamente?",
         async(response, flow, bot) =>{
                     if(response=="1"){
                             await flow.gotoThread("transferToHuman")
@@ -467,7 +470,8 @@ module.exports = function(controller) {
                     "lowerValueSimulation"
     );
 
-    flow.addQuestion("[simulation]+++Puxa😕 Essa opção não é válida. Vamos tentar novamente?",
+    flow.addQuestion("[simulation]+++Puxa😕 Essa opção não é válida. \
+                    \nVamos tentar novamente?",
         async(response, flow, bot) =>{
                     if(response=="1"){
                         await bot.say("[newSimulation]+++Ok! Estou checando se conseguimos outro cenário para te apresentar 👩🏻‍💻")
@@ -496,14 +500,14 @@ module.exports = function(controller) {
                                     }
                                 }
                                 catch(error){
-                                    await bot.say("[simulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
+                                    await bot.say("[simulation]+++Infelizmente, não foi possível gerar uma simulação para você agora. 😕 Tente novamente mais tarde, ok?")
                                     flow.gotoThread("endConversation")
                                 }
                                 flow.gotoThread("newSimulationResults")
                             }
                         }
                         else{
-                            await bot.say("[simulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
+                            await bot.say("[simulation]+++Infelizmente, não foi possível gerar uma simulação para você agora. 😕 Tente novamente mais tarde, ok?")
                             flow.gotoThread("endConversation")
                         }
                     }
@@ -557,7 +561,8 @@ module.exports = function(controller) {
                     "tableChoice",
                     "newSimulationResults")
 
-    flow.addQuestion("[simulation]+++Puxa😕 Essa opção não é válida. Vamos tentar novamente?",
+    flow.addQuestion("[simulation]+++Puxa😕 Essa opção não é válida. \
+                \nVamos tentar novamente?",
         async(response, flow, bot) =>{
                     if(response=="1"){
                             flow.setVar("table",flow.vars.simulationTableAP)
@@ -586,7 +591,7 @@ module.exports = function(controller) {
     flow.before("transferToHuman", 
                 async(flow,bot)=>{
                     if(await utils.workingHours()){
-                        flow.setVar("messageTransfer","Para falar com um de nossos atendentes, é só acessar nosso suporte no link https://api.whatsapp.com/send?phone=555131037420&text=Ol%C3%A1!%20Estava%20falando%20com%20a%20Sol%20e%20preciso%20de%20ajuda.%20C%C3%B3digo:{{flow.vars.user.codigo}} . Tudo será resolvido por lá 😁")
+                        flow.setVar("messageTransfer",`Para falar com um de nossos atendentes, é só acessar nosso suporte no link https://api.whatsapp.com/send?phone=555131037420&text=Ol%C3%A1!%20Estava%20falando%20com%20a%20Sol%20e%20preciso%20de%20ajuda.%20C%C3%B3digo:${flow.vars.user.codigo} . Tudo será resolvido por lá 😁`)
                         // flow.setVar("messageTransfer",
                         //             "Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
                     }
@@ -600,7 +605,7 @@ module.exports = function(controller) {
             );
     flow.addMessage("[transferToHuman]+++{{vars.messageTransfer}}","transferToHuman");
 
-    flow.addMessage("[ending]+++Se desejar falar com a Sabemi, é só me chamar! Basta digitar *Sol* que estarei pronta para atender 😉!","endConversation")
+    flow.addMessage("[ending]+++Se desejar falar com a Sabemi, é só me chamar! Basta digitar *Sol* que estarei pronta para atender! 😉","endConversation")
     flow.addMessage("[FINISH]+++[ending]","endConversation")
     controller.addDialog(flow);
 };
