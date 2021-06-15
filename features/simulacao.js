@@ -145,7 +145,7 @@ module.exports = function(controller) {
     flow.addAction("simulationResults","preSimulation");
 
     flow.before("simulationResults",async(flow,bot)=>{
-        await new Promise(r => setTimeout(r, 15000));
+        await new Promise(r => setTimeout(r, 25000));
         let simulation = await sabemiFunctions.firstSimulation(flow.vars.user.codigo)
         // let simulation = {
         //                     "tabelas": [
