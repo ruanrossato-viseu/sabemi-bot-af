@@ -20,7 +20,7 @@ module.exports = function(controller) {
                     "intro"
     )
 
-    flow.addMessage("[Receptivo]+++Se quiser saber maism, é só clicar nesse link para acessar nossas políticas e termos sobre a Lei Geral de Proteção de Dados: 👉 https://www.sabemi.com.br/politica-de-privacidade","intro")
+    flow.addMessage("[Receptivo]+++Se quiser saber mais, é só clicar nesse link para acessar nossas políticas e termos sobre a Lei Geral de Proteção de Dados: 👉 https://www.sabemi.com.br/politica-de-privacidade","intro")
     
     flow.addQuestion("[Receptivo]+++Vamos lá!? Me conta qual é o seu nome completo?",
                     async(response,flow,bot)=>{
