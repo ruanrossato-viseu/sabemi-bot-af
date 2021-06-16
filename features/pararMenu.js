@@ -46,14 +46,15 @@ module.exports = function(controller) {
                     "changeOfPlans"
     );
 
-    flow.addQuestion("[PARAR]+++Obrigada por compartilhar isso comigo! Posso te pedir uma ajudinha?\
+    flow.addQuestion("[PARAR]+++Obrigada por compartilhar isso comigo!\
+                    \n\n Posso te pedir uma ajudinha?\
                     \nVocê poderia avaliar este atendimento?\
                     \nJuro que é rapidinho e vai me ajudar a te atender cada vez melhor 😃\
                     \n\nDigite 1 para: muito satisfeito\
                     \nDigite 2 para: satisfeito\
                     \nDigite 3 para: não me ajudou\
                     \nDigite 4 para: péssimo\
-                    \nBj e até a próxima!",
+                    \n\nBj e até a próxima!",
                     async(response,flow,bot)=>{
                     },
                     "evaluation",

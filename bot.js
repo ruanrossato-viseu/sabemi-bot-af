@@ -64,6 +64,11 @@ controller.ready(() => {
         await bot.beginDialog("solMenu");
     });
 
+    controller.interrupts("PASSIVE-CONTACT", "message", async (bot, message) => {
+        await bot.cancelAllDialogs();
+        await bot.beginDialog("passiveContact");
+    });
+
     controller.on("message", async (bot) => {  
         console.log("Início")      
         await bot.beginDialog("simulacao",{
