@@ -146,7 +146,7 @@ module.exports = function(controller) {
 
     flow.before("simulationResults",async(flow,bot)=>{
         await new Promise(r => setTimeout(r, 20000));
-        
+
         let simulation = await sabemiFunctions.firstSimulation(flow.vars.user.codigo)
         
         console.log(simulation)
@@ -313,7 +313,7 @@ module.exports = function(controller) {
     flow.addAction("simulationResults","clarifyInsurance")
 
     flow.addQuestion("[simulation]+++Me conta sua motivação para uma nova simulação 🧐\
-                    \nDigite *1* para: Valor *muito abaixo* do que espero\
+                    \n\nDigite *1* para: Valor *muito abaixo* do que espero\
                     \nDigite *2* para: Valor *acima* do que preciso para o momento.",
 
                     async(response,flow,bot) =>{
