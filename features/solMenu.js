@@ -13,7 +13,7 @@ module.exports = function(controller) {
                     \nDigite 4 para Outras dúvidas/Falar com atendente",
         async(response, flow, bot)=>{
             if(response == "1"){
-                await bot.say("[SOL]+++Ok! Aqui está o link do APP Sabemi Digital 📲 www.sabemi.com.br/appsabemidigital\
+                await bot.say("[SOL]+++Ok! Aqui está o link do APP Sabemi Digital 📲 https://digital.dsv.sabemi.com.br/\
                 \n\nLembrando que é através dele que você dará continuidade na sua contratação e ficará ainda mais perto de realizar os seus sonhos!")
                 await flow.gotoThread("menu")        
             }
@@ -45,8 +45,9 @@ module.exports = function(controller) {
                     \nDigite 4 para Outras dúvidas/Falar com atendente",
         async(response, flow, bot)=>{
             if(response == "1"){
-                await bot.say("[SOL]+++Ok! Aqui está o link do APP Sabemi Digital 📲 [Link para Download APP]\
+                await bot.say("[SOL]+++Ok! Aqui está o link do APP Sabemi Digital 📲 https://digital.dsv.sabemi.com.br/\
                 \nLembrando que é através dele que você dará continuidade na sua contratação e ficará ainda mais perto de realizar os seus sonhos!")
+                await flow.repeat()
             }
             else if(response == "2"){
                 await flow.gotoThread("proposalInfo")                
@@ -55,6 +56,7 @@ module.exports = function(controller) {
                 await bot.say("[SOL]+++Então, se você já fez o processo de formalização digital no APP Sabemi, meus colegas devem estar *cuidando e analisando sua proposta agora mesmo!*\
                             \n\nE o legal é que no APP Sabemi você consegue acompanhar o status da sua proposta\
                             \n\nSe desejar falar com algum dos nossos especialistas, basta digitar 4 no próximo menu 😊")
+                await flow.repeat()  
             }
             else if(response == "4"){
                 await bot.say("[SOL]+++Como sou uma Assistente Digital em treinamento, não consigo responder todas as dúvidas. Então vou te encaminhar para um de nossos especialistas, tudo bem?\

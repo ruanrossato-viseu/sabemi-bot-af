@@ -49,7 +49,7 @@ controller.ready(() => {
     // load traditional developer-created local custom feature modules
     controller.loadModules(__dirname + '/features');
 
-    controller.interrupts("STOP", "message", async (bot, message) => {
+    controller.interrupts("CLOSED", "message", async (bot, message) => {
         await bot.reply(message, "[STOP]+++Interação interrompida");
         await bot.cancelAllDialogs();
     });

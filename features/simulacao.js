@@ -145,34 +145,9 @@ module.exports = function(controller) {
     flow.addAction("simulationResults","preSimulation");
 
     flow.before("simulationResults",async(flow,bot)=>{
-        await new Promise(r => setTimeout(r, 25000));
+        await new Promise(r => setTimeout(r, 15000));
         let simulation = await sabemiFunctions.firstSimulation(flow.vars.user.codigo)
-        // let simulation = {
-        //                     "tabelas": [
-        //                     {
-        //                     "codigoTabela": 5154836,
-        //                     "prazo": "72",
-        //                     "valorVenda": "100.000,00",
-        //                     "valorLiquido": "100.000,00",
-        //                     "valorParcela": "850",
-        //                     "taxa": "1,3",
-        //                     "valorPeculio": "0",
-        //                     "valorAP": "0,00"
-        //                     },
-        //                     {
-        //                         "codigoTabela": 5154836,
-        //                         "prazo": "72",
-        //                         "valorVenda": "100.000,00",
-        //                         "valorLiquido": "100.000,00",
-        //                         "valorParcela": "850",
-        //                         "taxa": "1,3",
-        //                         "valorPeculio": "0,00",
-        //                         "valorAP": "50,00"
-        //                         },
-        //                     ],
-        //                     "chaveSimulacao": "irure elit Duis",
-        //                     "sucesso": true
-        //                 }
+        
         console.log(simulation)
 
         if(simulation){
@@ -221,8 +196,8 @@ module.exports = function(controller) {
     \n\n👉🏼 *Assistência Financeira de R$ {{vars.simulationValueAP}}* em {{vars.simulationInstallmentsAP}} parcelas de R$ {{vars.simulationIntallmentsPriceAP}} + *Seguro de Acidente Pessoal* por R$ {{vars.simulationInsurancePriceAP}}\
     \n\n 👉🏼 *Assistência Financeira de R$ {{vars.simulationValue}}* em {{vars.simulationInstallments}} parcelas de R$ {{vars.simulationIntallmentsPrice}}\
     \n\nDigite *1* para seguir com a contratação de Assistência Financeira + Seguro de Acidente Pessoal\
-    \nDigite *2* para seguir com a contratação de Assistência Financeira\
-    \nDigite *3* para saber mais sobre as vantagens do Seguro Sabemi\
+    \n\nDigite *2* para seguir com a contratação de Assistência Financeira\
+    \n\nDigite *3* para saber mais sobre as vantagens do Seguro Sabemi\
     \n\nQuer uma nova simulação? É só digitar *4*",
 
                     async(response,flow,bot) =>{
@@ -315,7 +290,7 @@ module.exports = function(controller) {
 
 
     flow.addMessage("[signUp]+++Ah, e já aproveite para deixar os seguintes documentos separados 📑\
-                    \n- *Documento de identificação (RG, CNH)*\
+                    \n\n- *Documento de identificação (RG, CNH)*\
                     \n- *Comprovante de residência*\
                     \n- *Contracheque*\
                     \n\n👉🏼 Logo precisaremos deles!",
@@ -323,12 +298,12 @@ module.exports = function(controller) {
 
 
     flow.addMessage("[signUp]+++Aqui está o link que eu te falei 📲 *{{vars.urlContract}}*\
-                    \nAtravés dele você dará *continuidade na sua contratação* e ficará ainda mais perto de *realizar os seus sonhos!* 😍",
+                    \n\nAtravés dele você dará *continuidade na sua contratação* e ficará ainda mais perto de *realizar os seus sonhos!* 😍",
                     "signUp")
 
                     
     flow.addMessage("[signUp]+++Ah! Você não tem cadastro no Sabemi Digital ou não lembra sua senha? Pode deixar que vou enviar seus dados de acesso por SMS 📩\
-                    \nE se precisar é só me chamar! Basta digitar *SOL* que eu volto 😊",
+                    \n\nE se precisar é só me chamar! Basta digitar *SOL* que eu volto 😊",
                     "signUp")
 
 
@@ -529,8 +504,8 @@ module.exports = function(controller) {
                     \n\n👉🏼 *Assistência Financeira de R$ {{vars.simulationValueAP}}* em {{vars.simulationInstallmentsAP}} parcelas de R$ {{vars.simulationIntallmentsPriceAP}} + *Seguro de Acidente Pessoal* por R$ {{vars.simulationInsurancePriceAP}}\
                     \n\n 👉🏼 *Assistência Financeira de R$ {{vars.simulationValue}}* em {{vars.simulationInstallments}} parcelas de R$ {{vars.simulationIntallmentsPrice}}\
                     \n\nDigite *1* para seguir com a contratação de Assistência Financeira + Seguro de Acidente Pessoal\
-                    \nDigite *2* para seguir com a contratação de Assistência Financeira\
-                    \nDigite *3* para cancelar\
+                    \n\nDigite *2* para seguir com a contratação de Assistência Financeira\
+                    \n\nDigite *3* para cancelar\
                     \n\nDigite *4* para falar com um de nossos Especialistas 😀",
                     async(response,flow,bot)=>{
                         if(response=="1"){
