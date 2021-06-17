@@ -64,9 +64,9 @@ module.exports = function(controller) {
     "rightPerson",
     "introRetry");
 
-    flow.addMessage("[notRightPerson]+++Ops! Peço desculpas pelo incômodo. Obrigado por avisar!","notRightPerson")
-    flow.addMessage("[notRightPerson]+++Se desejar falar com a Sabemi, é só me chamar! Basta digitar *Sol* que estarei pronta para atender! 😉","notRightPerson")
-    flow.addMessage("[FINISH]+++[notRightPerson]","notRightPerson")
+    flow.addMessage("[notRightPerson]+++Ops! Peço desculpas pelo incômodo. Obrigado por me avisar!","notRightPerson")
+    flow.addMessage("[notRightPerson]+++Se desejar falar com a Sabemi, é só me chamar! Basta digitar *Sol* que estarei pronta para te atender! 😉","notRightPerson")
+    flow.addMessage("[FINISH]+++[Contato incorreto]","notRightPerson")
 
     flow.addMessage("[introduction]+++Que bom! Para que eu possa apresentar uma proposta na medida, vou precisar que você me informe alguns dos seus dados pessoais.\
                 \n\nMas fique tranquilo: este é um ambiente seguro e seus dados estão protegidos e guardados, tudo de acordo com a Lei Geral de Proteção de Dados (LGPD) e Direito do Consumidor 🔒. Para saber mais sobre LGPD 👉🏼 https://www.sabemi.com.br/politica-de-privacidade",
@@ -85,12 +85,12 @@ module.exports = function(controller) {
     flow.addQuestion(`[userInfo]+++Legal! Digite aqui pra mim os *3 primeiros dígitos do seu CPF*`,
                     async(response, flow, bot) =>{
                         let user = flow.vars.user;
-                        let validatedUser = await sabemiFunctions.validateUser(user.codigo, response, flow.vars.name);
+                        // let validatedUser = await sabemiFunctions.validateUser(user.codigo, response, flow.vars.name);
                         
-                        // let validatedUser={"sucesso":true};
+                        let validatedUser={"sucesso":true};
                         
                         if(validatedUser.sucesso){
-                            let optIn = await sabemiFunctions.optIn(user.codigo);
+                            // let optIn = await sabemiFunctions.optIn(user.codigo);
                         }
                         else{
                             if(flow.vars.retry == 0){
@@ -113,10 +113,10 @@ module.exports = function(controller) {
                                 }
                                 else{
                                     await bot.say("[userInfo]+++Puxa! Não consegui validar os seus dados e no momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente.\
-                                            \n⏱ Retorne com um alô, por aqui mesmo, no próximo dia útil entre 09h e 18h, de segunda a sexta-feira, e estaremos prontos para te ajudar!\
-                                            \nBjs e até breve");
+                                            \n\n⏱ Retorne com um alô, por aqui mesmo, no próximo dia útil entre 09h e 18h, de segunda a sexta-feira, e estaremos prontos para te ajudar!\
+                                            \n\nBjs e até breve");
                                 }
-                                await bot.say("[FINISH]+++[userInfo]")
+                                await bot.say("[FINISH]+++[Dados pessoais incorretos]")
                                 await bot.cancelAllDialogs();
                             }
                         }
@@ -140,15 +140,41 @@ module.exports = function(controller) {
     
     flow.addMessage("[IMAGE]+++https://media-sabemi.s3.sa-east-1.amazonaws.com/Bot+Vendas_1.png","preSimulation")
     flow.addMessage("[IMAGE]+++https://media-sabemi.s3.sa-east-1.amazonaws.com/Bot+Vendas_2.png","preSimulation")
+    flow.addQuestion("[DELAYQUESTION]+++ ",async(response, flow, bot) =>{},"","preSimulation")
     
     
     flow.addAction("simulationResults","preSimulation");
 
     flow.before("simulationResults",async(flow,bot)=>{
-        await new Promise(r => setTimeout(r, 20000));
+        await new Promise(r => setTimeout(r, 15000));
 
-        let simulation = await sabemiFunctions.firstSimulation(flow.vars.user.codigo)
-        
+        // let simulation = await sabemiFunctions.firstSimulation(flow.vars.user.codigo)
+        let simulation = {
+            "tabelas": [
+            {
+            "codigoTabela": 5154836,
+            "prazo": "72",
+            "valorVenda": "100.000,00",
+            "valorLiquido": "100.000,00",
+            "valorParcela": "850",
+            "taxa": "1,3",
+            "valorPeculio": "0",
+            "valorAP": "0,00"
+            },
+            {
+                "codigoTabela": 5154836,
+                "prazo": "72",
+                "valorVenda": "100.000,00",
+                "valorLiquido": "100.000,00",
+                "valorParcela": "850",
+                "taxa": "1,3",
+                "valorPeculio": "0,00",
+                "valorAP": "50,00"
+                },
+            ],
+            "chaveSimulacao": "irure elit Duis",
+            "sucesso": true
+        }
         console.log(simulation)
 
         if(simulation){
@@ -252,9 +278,9 @@ module.exports = function(controller) {
     flow.before("signUp", async(flow,bot)=>{
         var signUpMessage = "";
 
-        let closeContract = await sabemiFunctions.closeContract(flow.vars.user.codigo,flow.vars.table,flow.vars.simulationKey)
+        //let closeContract = await sabemiFunctions.closeContract(flow.vars.user.codigo,flow.vars.table,flow.vars.simulationKey)
 
-        // let closeContract = {"url":"https://www.sabemiFunctions.com.br"}
+        let closeContract = {"url":"https://www.sabemiFunctions.com.br"}
         flow.setVar("urlContract",closeContract.url)
         console.log(flow.vars.urlContract)
 
@@ -580,7 +606,8 @@ module.exports = function(controller) {
             );
     flow.addMessage("[transferToHuman]+++{{vars.messageTransfer}}","transferToHuman");
 
+
     flow.addMessage("[ending]+++Se desejar falar com a Sabemi, é só me chamar! Basta digitar *Sol* que estarei pronta para atender! 😉","endConversation")
-    flow.addMessage("[FINISH]+++[ending]","endConversation")
+    flow.addMessage("[FINISH]+++[Encerramento Padrão]","endConversation")
     controller.addDialog(flow);
 };
