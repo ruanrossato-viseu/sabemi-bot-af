@@ -30,14 +30,48 @@ module.exports = function(controller) {
                 await flow.gotoThread("evaluation")             
             }
             else{
-                await bot.say("[PARAR]+++Essa opção não é válida. Digite de 1 a 4 para seguir adiante");
-                await flow.repeat()                
+                await flow.gotoThread("menuRetry")               
             }
 
         },
         "menuChoice",
         "menu"
     )
+
+    flow.addQuestion("[PARAR]+++Puxa 😕 Essa opção não é válida.\
+                        \nVamos tentar novamente?",
+                    async(response, flow, bot)=>{
+                        if(response == "1"){
+                            await flow.gotoThread("changeOfPlans")
+                        }
+                        else if(response == "2"){
+                            await flow.gotoThread("transferToHuman")                
+                        }
+                        else if(response == "3"){                
+                            flow.setVar("beforeEvaluation","Obrigada por compartilhar isso comigo!")
+                            await flow.gotoThread("evaluation")
+                        }
+                        else if(response == "4"){
+                            await bot.say("[BLACKLIST]+++Obrigada por me avisar!\nSe desejar falar com a Sabemi, é só me chamar! Basta digitar SOL que estarei pronta para te atender :)")  
+                            await sabemiFunctions.optIn(user.codigo, false); 
+                            flow.setVar("beforeEvaluation","")
+                            await flow.gotoThread("evaluation")             
+                        }
+                        else{
+                            if(await utils.workingHours()){
+                                bot.say("[SOL]+++Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
+                            }
+                            else{
+                                bot.say("[SOL]+++Puxa! ⏱ No momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente\
+                                            \nRetorne com um alô, por aqui mesmo, no próximo dia útil entre *09h e 18h*, de *segunda a sexta-feira* e estaremos prontos para te ajudar!\
+                                            \nBjs e até breve")
+                            }                
+                        }
+
+                    },
+                    "menuChoice",
+                    "menuRetry"
+                )
 
     flow.addQuestion("[PARAR]+++Puxa, o que mudou? 😔\
                     \n Me conta o motivo da sua mudança:\

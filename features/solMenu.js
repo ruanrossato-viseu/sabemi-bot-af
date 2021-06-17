@@ -21,7 +21,12 @@ module.exports = function(controller) {
                 await bot.say("[FINISH]+++[Encerramento Padrão]","notRightPerson")
             }
             else if(response == "2"){
-                await flow.gotoThread("proposalInfo")                
+                if(flow.vars.user.simulation){
+                    await flow.gotoThread("proposalInfo")                
+                }
+                else{
+                    await bot.say("[SOL]+++Você ainda não possui simulações realizadas")
+                }                
             }
             else if(response == "3"){
                 await bot.say("[SOL]+++Então, se você já fez o processo de formalização digital no APP Sabemi, meus colegas devem estar cuidando e analisando sua proposta agora mesmo!\
@@ -31,37 +36,99 @@ module.exports = function(controller) {
                 await flow.gotoThread("userQuestion");            
             }
             else{
-                await bot.say("[SOL]+++Essa opção não é válida. Digite de 1 a 4 para seguir adiante");
-                await flow.repeat()                
+                await flow.gotoThread("introRetry")             
             }
         },
         "menuChoice",
         "intro"
     )
 
+    flow.addQuestion("[SOL]+++Puxa 😕 Essa opção não é válida.\
+        \n Vamos tentar novamente?",
+        async(response, flow, bot)=>{
+            if(response == "1"){
+                await bot.say("[SOL]+++Ok! Aqui está o link do APP Sabemi Digital 📲 https://digital.dsv.sabemi.com.br/\
+                \n\nLembrando que é através dele que você dará continuidade na sua contratação e ficará ainda mais perto de realizar os seus sonhos!\
+                \n\n Ah, e lembrando que, se precisar, é só me chamar\
+                \nBasta digitar SOL que eu volto ☺")
+                await bot.say("[FINISH]+++[Encerramento Padrão]","notRightPerson")
+            }
+            else if(response == "2"){
+                if(flow.vars.user.simulation){
+                    await flow.gotoThread("proposalInfo")                
+                }
+                else{
+                    await bot.say("[SOL]+++Você ainda não possui simulações realizadas")
+                }
+            }
+            else if(response == "3"){
+                await bot.say("[SOL]+++Então, se você já fez o processo de formalização digital no APP Sabemi, meus colegas devem estar cuidando e analisando sua proposta agora mesmo!\
+                            \n\nE o legal é que no APP Sabemi você consegue acompanhar o status da sua proposta, mas, se desejar falar com algum dos nossos especialistas, você tem um jeito fácil: basta digitar 1 para que eles entrem em contato 😊")       
+            }
+            else if(response == "4"){
+                await flow.gotoThread("userQuestion");            
+            }
+            else{
+                if(await utils.workingHours()){
+                    bot.say("[SOL]+++Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
+                }
+                else{
+                    bot.say("[SOL]+++Puxa! ⏱ No momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente\
+                                \nRetorne com um alô, por aqui mesmo, no próximo dia útil entre *09h e 18h*, de *segunda a sexta-feira* e estaremos prontos para te ajudar!\
+                                \nBjs e até breve")
+                }                
+            }
+        },
+        "menuChoice",
+        "introRetry"
+    )
     
 
-    flow.addQuestion("[SOL]+++Vamos lá! Sobre sua proposta 12345:\
+    flow.addQuestion("[SOL]+++Vamos lá! Sobre sua proposta:\
                     \nDigite 1 se sua dúvida for sobre valores\
                     \nDigite 2 se você deseja falar com algum de nossos especialistas 😊",
                     async(response,flow,bot)=>{
                         if(response =="1"){
-
+                            flow.gotoThread("proposalValue")
                         }
                         else if(response == "2"){
                             await flow.gotoThread("transferToHuman");  
                         }
                         else{
-                            await bot.say("[SOL]+++Essa opção não é válida. Digite de 1 ou 2 para seguir adiante");
-                            await flow.repeat()  
+                            await flow.gotoThread("proposalInfoRetry") 
                         }
                     },
                     "proposalInfoChoice",
                     "proposalInfo"
     );
+
+    flow.addQuestion("[SOL]+++Puxa 😕 Essa opção não é válida.\
+                        \nVamos tentar novamente?",
+                    async(response,flow,bot)=>{
+                        if(response =="1"){
+                            flow.gotoThread("proposalValue")
+                        }
+                        else if(response == "2"){
+                            await flow.gotoThread("transferToHuman");  
+                        }
+                        else{
+                            if(await utils.workingHours()){
+                                bot.say("[SOL]+++Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
+                            }
+                            else{
+                                bot.say("[SOL]+++Puxa! ⏱ No momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente\
+                                            \nRetorne com um alô, por aqui mesmo, no próximo dia útil entre *09h e 18h*, de *segunda a sexta-feira* e estaremos prontos para te ajudar!\
+                                            \nBjs e até breve")
+                            }    
+                        }
+                    },
+                    "proposalInfoChoice",
+                    "proposalInfoRetry"
+    );
     
     flow.addQuestion("[SOL]+++Verifiquei aqui que o valor da sua proposta é de\
-                    \nR$xx.xxx,xx em y parcelas\
+                    \n\n👉🏼 *Assistência Financeira de R$ {{vars.user.simulation.simulationValueAP}}* em {{vars.user.simulation.simulationInstallmentsAP}} parcelas de R$ {{vars.user.simulation.simulationIntallmentsPriceAP}} + *Seguro de Acidente Pessoal* por R$ {{vars.user.simulation.simulationInsurancePriceAP}}\
+                    \n\n 👉🏼 *Assistência Financeira de R$ {{vars.user.simulation.simulationValue}}* em {{vars.user.simulation.simulationInstallments}} parcelas de R$ {{vars.user.simulation.simulationIntallmentsPrice}}\
                     \nDigite 1 para seguir a contratação de Empréstimo Pessoal\
                     \nDigite 2 para cancelar\
                     \nDigite 3 para falar com algum de nossos especialistas",
@@ -77,11 +144,39 @@ module.exports = function(controller) {
                             await flow.gotoThread("transferToHuman");  
                         }
                         else{
-
+                            flow.gotoThread("proposalValueRetry")
                         }
                     },
     "proposalInfoChoice",
-    "proposalInfo"
+    "proposalValue"
+    );
+
+    flow.addQuestion("[SOL]+++Puxa 😕 Essa opção não é válida.\
+                    \nVamos tentar novamente?",
+                    async(response,flow,bot)=>{
+                        if(response =="1"){
+                            await bot.cancelAllDialogs();
+                            await bot.beginDialog("simulacao");
+                        }
+                        else if(response == "2"){
+
+                        }
+                        else if(response == "3"){
+                            await flow.gotoThread("transferToHuman");  
+                        }
+                        else{
+                            if(await utils.workingHours()){
+                                bot.say("[SOL]+++Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
+                            }
+                            else{
+                                bot.say("[SOL]+++Puxa! ⏱ No momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente\
+                                            \nRetorne com um alô, por aqui mesmo, no próximo dia útil entre *09h e 18h*, de *segunda a sexta-feira* e estaremos prontos para te ajudar!\
+                                            \nBjs e até breve")
+                            }    
+                        }
+                    },
+    "proposalInfoChoice",
+    "proposalValueRetry"
     );
     
     flow.addQuestion("[SOL]+++Como sou uma Assistente Digital em treinamento, não consigo responder todas as dúvidas. Então vou te encaminhar para um de nossos especialistas, tudo bem?\
