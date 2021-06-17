@@ -179,7 +179,7 @@ module.exports = function(controller) {
     "proposalValueRetry"
     );
     
-    flow.addQuestion("[SOL]+++Como sou uma Assistente Digital em treinamento, não consigo responder todas as dúvidas. Então vou te encaminhar para um de nossos especialistas, tudo bem?\
+    flow.addQuestion("[SOL]+++Como sou uma Assistente Digital em treinamento, não consigo responder todas as dúvidas, vou te encaminhar para um de nossos especialistas, tudo bem?\
                     \n\nDigite aqui qual a sua dúvida, por favor:",
                     async(response,flow,bot)=>{
                         
