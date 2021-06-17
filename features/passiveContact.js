@@ -41,7 +41,7 @@ module.exports = function(controller) {
         async(flow,bot)=>{
             if(await utils.workingHours()){
                 flow.setVar("messageTransfer",
-                    `Estamos quase lá! Estou checando as informações e em breve você será atendido por um de nossos especialistas, tudo bem? 👩‍💻`)
+                    `Estamos quase lá! Estou checando as informações e em breve você será atendido por um de nossos especialistas, tudo bem? 👩🏻‍💻`)
             }
             else{
                 flow.setVar("messageTransfer",
