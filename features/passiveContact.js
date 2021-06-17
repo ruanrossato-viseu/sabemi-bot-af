@@ -16,7 +16,7 @@ module.exports = function(controller) {
     )
 
     flow.addMessage("[unregisteredUser]+++Legal! Para iniciar o seu atendimento com um Especialista, vou precisar que você me informe alguns dos seus dados pessoais\
-                    \n\nMas vale ressaltar: este é um ambiente seguro e seus dados estão protegios e guardados, tudo de acordo com a Lei Geral de Proteção de Dados (LGPD) e Direito do Consumidos 🔒",
+                    \n\nMas vale ressaltar: este é um ambiente seguro e seus dados estão protegidos e guardados, tudo de acordo com a Lei Geral de Proteção de Dados (LGPD) e Direito do Consumidor 🔒",
                     "intro"
     )
 

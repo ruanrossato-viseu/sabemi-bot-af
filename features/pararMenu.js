@@ -25,7 +25,7 @@ module.exports = function(controller) {
             }
             else if(response == "4"){
                 await bot.say("[BLACKLIST]+++Obrigada por me avisar!\nSe desejar falar com a Sabemi, é só me chamar! Basta digitar SOL que estarei pronta para te atender :)")  
-                await sabemiFunctions.optIn(user.codigo, false); 
+                await sabemiFunctions.optIn(flow.vars.user.codigo, false); 
                 flow.setVar("beforeEvaluation","")
                 await flow.gotoThread("evaluation")             
             }
@@ -79,6 +79,29 @@ module.exports = function(controller) {
                     \nDigite 2 para \"prefiro utilizar outra forma de crédito (exemplo: cartão de crédito)\"\
                     \nDigite 3 para \"não faz mais sentido contratar um Empréstimo Pessoal\"",
                     async(response,flow,bot)=>{
+                        if(response!="1" &&response!="2" &&response!="3" ){
+                            await flow.gotoThread("changeOfPlansRetry")
+                        }
+                        flow.setVar("beforeEvaluation","Obrigada por compartilhar isso comigo!")
+                        await flow.gotoThread("evaluation")
+                    },
+                    "changeOfPlanesChoice",
+                    "changeOfPlans"
+    );
+
+    flow.addQuestion("[PARAR]+++Puxa 😕 Essa opção não é válida.\
+                        \nVamos tentar novamente?",
+                    async(response,flow,bot)=>{
+                        if(response!="1" &&response!="2" &&response!="3" ){
+                            if(await utils.workingHours()){
+                                bot.say("[SOL]+++Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
+                            }
+                            else{
+                                bot.say("[SOL]+++Puxa! ⏱ No momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente\
+                                            \nRetorne com um alô, por aqui mesmo, no próximo dia útil entre *09h e 18h*, de *segunda a sexta-feira* e estaremos prontos para te ajudar!\
+                                            \nBjs e até breve")
+                            }
+                        }
                         flow.setVar("beforeEvaluation","Obrigada por compartilhar isso comigo!")
                         await flow.gotoThread("evaluation")
                     },
@@ -96,14 +119,41 @@ module.exports = function(controller) {
                     \nDigite 4 para: péssimo\
                     \n\nBj e até a próxima!",
                     async(response,flow,bot)=>{
+                        if(response!="1" &&response!="2" &&response!="3" &&response!="4" ){
+                            flow.gotoThread("evaluationRetry")
+                        }
+                        else{
+                            flow.gotoThread("evaluationEnd")
+                        }
                     },
                     "evaluation",
                     "evaluation"
     );
 
+    flow.addQuestion("[PARAR]+++Puxa 😕 Essa opção não é válida.\
+    \nVamos tentar novamente?",
+                    async(response,flow,bot)=>{
+                        if(response!="1" &&response!="2" &&response!="3" &&response!="4" ){
+                            if(await utils.workingHours()){
+                                bot.say("[SOL]+++Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
+                            }
+                            else{
+                                bot.say("[SOL]+++Puxa! ⏱ No momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente\
+                                            \nRetorne com um alô, por aqui mesmo, no próximo dia útil entre *09h e 18h*, de *segunda a sexta-feira* e estaremos prontos para te ajudar!\
+                                            \nBjs e até breve")
+                            }
+                        }
+                        else{
+                            flow.gotoThread("evaluationEnd")
+                        }
+                    },
+                    "evaluation",
+                    "evaluationRetry"
+    );
+
     flow.addMessage("[PARAR]+++Obrigada! Se precisar falar comigo, é só digitar \"Sol\"\
                     \nBj e até a próxima!",
-                    "evaluation"
+                    "evaluationEnd"
     );
     
     

@@ -49,7 +49,7 @@ module.exports = function(controller) {
             if(response == "1"){
                 await bot.say("[SOL]+++Ok! Aqui está o link do APP Sabemi Digital 📲 https://digital.dsv.sabemi.com.br/\
                 \n\nLembrando que é através dele que você dará continuidade na sua contratação e ficará ainda mais perto de realizar os seus sonhos!\
-                \n\n Ah, e lembrando que, se precisar, é só me chamar\
+                \n\nAh, e lembrando que, se precisar, é só me chamar!\
                 \nBasta digitar SOL que eu volto ☺")
                 await bot.say("[FINISH]+++[Encerramento Padrão]","notRightPerson")
             }
@@ -180,7 +180,7 @@ module.exports = function(controller) {
     );
     
     flow.addQuestion("[SOL]+++Como sou uma Assistente Digital em treinamento, não consigo responder todas as dúvidas. Então vou te encaminhar para um de nossos especialistas, tudo bem?\
-                    \n\nDigite aqui qual a sua dúvida, por favor",
+                    \n\nDigite aqui qual a sua dúvida, por favor:",
                     async(response,flow,bot)=>{
                         
                         await flow.gotoThread("transferToHuman");    
