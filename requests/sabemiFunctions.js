@@ -35,12 +35,12 @@ module.exports.validateUser = async function validateUser(CodigoPessoaFisica, Pr
     return addressInfo
 }
 
-module.exports.optIn = async function optIn(CodigoPessoaFisica){
+module.exports.optIn = async function optIn(CodigoPessoaFisica,choice){
 
 
     var data = JSON.stringify({
         "CodigoPessoaFisica": CodigoPessoaFisica,
-        "Optin": true
+        "Optin": choice
     });
 
     var config = {

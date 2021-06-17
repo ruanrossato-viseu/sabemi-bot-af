@@ -85,12 +85,12 @@ module.exports = function(controller) {
     flow.addQuestion(`[userInfo]+++Legal! Digite aqui pra mim os *3 primeiros dígitos do seu CPF*`,
                     async(response, flow, bot) =>{
                         let user = flow.vars.user;
-                        // let validatedUser = await sabemiFunctions.validateUser(user.codigo, response, flow.vars.name);
+                        let validatedUser = await sabemiFunctions.validateUser(user.codigo, response, flow.vars.name);
                         
-                        let validatedUser={"sucesso":true};
+                        // let validatedUser={"sucesso":true};
                         
                         if(validatedUser.sucesso){
-                            // let optIn = await sabemiFunctions.optIn(user.codigo);
+                            let optIn = await sabemiFunctions.optIn(user.codigo, true);
                         }
                         else{
                             if(flow.vars.retry == 0){
@@ -148,33 +148,33 @@ module.exports = function(controller) {
     flow.before("simulationResults",async(flow,bot)=>{
         await new Promise(r => setTimeout(r, 15000));
 
-        // let simulation = await sabemiFunctions.firstSimulation(flow.vars.user.codigo)
-        let simulation = {
-            "tabelas": [
-            {
-            "codigoTabela": 5154836,
-            "prazo": "72",
-            "valorVenda": "100.000,00",
-            "valorLiquido": "100.000,00",
-            "valorParcela": "850",
-            "taxa": "1,3",
-            "valorPeculio": "0",
-            "valorAP": "0,00"
-            },
-            {
-                "codigoTabela": 5154836,
-                "prazo": "72",
-                "valorVenda": "100.000,00",
-                "valorLiquido": "100.000,00",
-                "valorParcela": "850",
-                "taxa": "1,3",
-                "valorPeculio": "0,00",
-                "valorAP": "50,00"
-                },
-            ],
-            "chaveSimulacao": "irure elit Duis",
-            "sucesso": true
-        }
+        let simulation = await sabemiFunctions.firstSimulation(flow.vars.user.codigo)
+        // let simulation = {
+        //     "tabelas": [
+        //     {
+        //     "codigoTabela": 5154836,
+        //     "prazo": "72",
+        //     "valorVenda": "100.000,00",
+        //     "valorLiquido": "100.000,00",
+        //     "valorParcela": "850",
+        //     "taxa": "1,3",
+        //     "valorPeculio": "0",
+        //     "valorAP": "0,00"
+        //     },
+        //     {
+        //         "codigoTabela": 5154836,
+        //         "prazo": "72",
+        //         "valorVenda": "100.000,00",
+        //         "valorLiquido": "100.000,00",
+        //         "valorParcela": "850",
+        //         "taxa": "1,3",
+        //         "valorPeculio": "0,00",
+        //         "valorAP": "50,00"
+        //         },
+        //     ],
+        //     "chaveSimulacao": "irure elit Duis",
+        //     "sucesso": true
+        // }
         console.log(simulation)
 
         if(simulation){
@@ -278,9 +278,9 @@ module.exports = function(controller) {
     flow.before("signUp", async(flow,bot)=>{
         var signUpMessage = "";
 
-        //let closeContract = await sabemiFunctions.closeContract(flow.vars.user.codigo,flow.vars.table,flow.vars.simulationKey)
+        let closeContract = await sabemiFunctions.closeContract(flow.vars.user.codigo,flow.vars.table,flow.vars.simulationKey)
 
-        let closeContract = {"url":"https://www.sabemiFunctions.com.br"}
+        // let closeContract = {"url":"https://www.sabemiFunctions.com.br"}
         flow.setVar("urlContract",closeContract.url)
         console.log(flow.vars.urlContract)
 
