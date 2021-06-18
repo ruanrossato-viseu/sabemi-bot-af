@@ -46,7 +46,7 @@ module.exports = function(controller) {
                     "rightPerson",
                     "intro");
 
-    flow.addQuestion("[introduction]+++Puxa 😕 Essa opção não é válida.\
+    flow.addQuestion("[introduction]+++Ops, digitação invalida 🤔\
                     \n Vamos tentar novamente?",
         async(response, flow, bot) =>{
                     if(response =="1"){
@@ -108,15 +108,17 @@ module.exports = function(controller) {
                             }
                             else if(flow.vars.retry == 2){
                                 if(await utils.workingHours()){
-                                    bot.say("[userInfo]+++Puxa! Não consegui validar os seus dados.\
-                                            \nVou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗");
+                                    flow.setVar("messageTransfer",`Puxa! Não consegui validar os seus dados. Para falar com um de nossos atendentes, é só acessar nosso suporte no link https://api.whatsapp.com/send?phone=555131037420&text=Ol%C3%A1!%20Estava%20falando%20com%20a%20Sol%20e%20preciso%20de%20ajuda.%20C%C3%B3digo:${flow.vars.user.codigo} . Tudo será resolvido por lá 😁`)
+                        
+                                    // bot.say("[userInfo]+++Puxa! Não consegui validar os seus dados.\
+                                    //         \nVou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗");
                                 }
                                 else{
                                     await bot.say("[userInfo]+++Puxa! Não consegui validar os seus dados e no momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente.\
                                             \n\n⏱ Retorne com um alô, por aqui mesmo, no próximo dia útil entre 09h e 18h, de segunda a sexta-feira, e estaremos prontos para te ajudar!\
                                             \n\nBjs e até breve");
                                 }
-                                await bot.say("[FINISH]+++[Dados pessoais incorretos]")
+                                await bot.say("[TRANSFER]+++[Dados pessoais incorretos]")
                                 await bot.cancelAllDialogs();
                             }
                         }
@@ -263,7 +265,7 @@ module.exports = function(controller) {
                             await flow.gotoThread("signUp")
                         }
                         else if(response =="3"){
-                            await flow.gotoThread("clarifyInsurance");                
+                            await flow.gotoThread("transferToHuman");                
                         }
                         else if(response =="4"){
                             await flow.gotoThread("newSimulation");
@@ -575,9 +577,11 @@ module.exports = function(controller) {
                             await flow.gotoThread("signUp")
                         }
                         else if(response =="3"){
-                            await bot.say("[newSimulation]+++Puxa, que pena! 😕\nEspero que a gente converse em outro momento!\
-                            \nSe você desejar falar com algum colega Especialista, pode ligar no *0800 000 000*, e estaremos prontos para te atender!\
-                            \nAté a próxima!! 🙋🏻");             
+                            await bot.say("[newSimulation]+++Puxa, que pena! 😕\
+                            \n\nEspero que a gente converse em outro momento!\
+                            \nSe você desejar falar com algum colega Especialista, pode ligar no *0800 880 1900*, e estaremos prontos para te atender!\
+                            \n\nAté a próxima!! 🙋🏻");    
+                            await flow.gotoThread("evaluation")         
                         }
                         else if(response =="4"){
                             await flow.gotoThread("transferToHuman");
@@ -588,13 +592,13 @@ module.exports = function(controller) {
                 },
     "tableChoice",
     "newSimulationRetry");
-
+                
     flow.before("transferToHuman", 
                 async(flow,bot)=>{
                     if(await utils.workingHours()){
-                        // flow.setVar("messageTransfer",`Para falar com um de nossos atendentes, é só acessar nosso suporte no link https://api.whatsapp.com/send?phone=555131037420&text=Ol%C3%A1!%20Estava%20falando%20com%20a%20Sol%20e%20preciso%20de%20ajuda.%20C%C3%B3digo:${flow.vars.user.codigo} . Tudo será resolvido por lá 😁`)
-                        flow.setVar("messageTransfer",
-                                    "Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
+                        flow.setVar("messageTransfer",`Para falar com um de nossos atendentes, é só acessar nosso suporte no link https://api.whatsapp.com/send?phone=555131037420&text=Ol%C3%A1!%20Estava%20falando%20com%20a%20Sol%20e%20preciso%20de%20ajuda.%20C%C3%B3digo:${flow.vars.user.codigo} . Tudo será resolvido por lá 😁`)
+                        // flow.setVar("messageTransfer",
+                        //             "Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
                     }
                     else{
                         flow.setVar("messageTransfer",
@@ -605,14 +609,15 @@ module.exports = function(controller) {
                 }
             );
     flow.addMessage("[transferToHuman]+++{{vars.messageTransfer}}","transferToHuman");
+    flow.addMessage("[TRANSFER]+++[Transferência Prevista]","transferToHuman");
 
     flow.before("transferToHumanFail", 
                 async(flow,bot)=>{
                     if(await utils.workingHours()){
-                        // flow.setVar("messageTransfer",`Para falar com um de nossos atendentes, é só acessar nosso suporte no link https://api.whatsapp.com/send?phone=555131037420&text=Ol%C3%A1!%20Estava%20falando%20com%20a%20Sol%20e%20preciso%20de%20ajuda.%20C%C3%B3digo:${flow.vars.user.codigo} . Tudo será resolvido por lá 😁`)
-                        flow.setVar("messageTransfer",
-                                    "Puxa, a opção digitada é invalida! 😐\
-                                    \n\nMas fique tranquilo, vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
+                        flow.setVar("messageTransfer",`Para falar com um de nossos atendentes, é só acessar nosso suporte no link https://api.whatsapp.com/send?phone=555131037420&text=Ol%C3%A1!%20Estava%20falando%20com%20a%20Sol%20e%20preciso%20de%20ajuda.%20C%C3%B3digo:${flow.vars.user.codigo} . Tudo será resolvido por lá 😁`)
+                        // flow.setVar("messageTransfer",
+                        //             "Puxa, a opção digitada é invalida! 😐\
+                        //             \n\nMas fique tranquilo, vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
                     }
                     else{
                         flow.setVar("messageTransfer",
@@ -623,7 +628,46 @@ module.exports = function(controller) {
                 }
             );
     flow.addMessage("[transferToHuman]+++{{vars.messageTransfer}}","transferToHumanFail");
+    flow.addMessage("[TRANSFER]+++[Transferência Erro no fluxo]","transferToHumanFail");
 
+   flow.addQuestion("[simulation]+++\
+                    \n\n Posso te pedir uma ajudinha?\
+                    \nVocê poderia avaliar este atendimento?\
+                    \nJuro que é rapidinho e vai me ajudar a te atender cada vez melhor 😃\
+                    \n\nDigite 1 para: muito satisfeito\
+                    \nDigite 2 para: satisfeito\
+                    \nDigite 3 para: não me ajudou\
+                    \nDigite 4 para: péssimo\
+                    \n\nBj e até a próxima!",
+                    async(response,flow,bot)=>{
+                        if(response!="1" &&response!="2" &&response!="3" &&response!="4" ){
+                            flow.gotoThread("evaluationRetry")
+                        }
+                        else{
+                            flow.gotoThread("evaluationEnd")
+                        }
+                    },
+                    "evaluation",
+                    "evaluation"
+    );
+    flow.addQuestion("[simulation]+++Puxa 😕 Essa opção não é válida.\
+                    \nVamos tentar novamente?",
+                    async(response,flow,bot)=>{
+                        if(response!="1" &&response!="2" &&response!="3" &&response!="4" ){
+                            await flow.gotoThread("transferToHumanFail") 
+                        }
+                        else{
+                            flow.gotoThread("evaluationEnd")
+                        }
+                    },
+                    "evaluation",
+                    "evaluationRetry"
+    );
+
+    flow.addMessage("[simulation]+++Obrigada! Se precisar falar comigo, é só digitar \"Sol\"\
+        \nBj e até a próxima!",
+        "evaluationEnd"
+    );
 
     flow.addMessage("[ending]+++Se desejar falar com a Sabemi, é só me chamar! Basta digitar *Sol* que estarei pronta para atender! 😉","endConversation")
     flow.addMessage("[FINISH]+++[Encerramento Padrão]","endConversation")

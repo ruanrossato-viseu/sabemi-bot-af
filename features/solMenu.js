@@ -170,10 +170,10 @@ module.exports = function(controller) {
     flow.before("transferToHuman", 
                 async(flow,bot)=>{
                     if(await utils.workingHours()){
-                        // flow.setVar("messageTransfer",
-                        //     `Para falar com um de nossos atendentes, é só acessar nosso suporte no link https://api.whatsapp.com/send?phone=555131037420&text=Ol%C3%A1!%20Estava%20falando%20com%20a%20Sol%20e%20preciso%20de%20ajuda.%20C%C3%B3digo:${flow.vars.user.codigo} . Tudo será resolvido por lá 😁`)
                         flow.setVar("messageTransfer",
-                                    "[SOL]+++Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
+                            `Para falar com um de nossos atendentes, é só acessar nosso suporte no link https://api.whatsapp.com/send?phone=555131037420&text=Ol%C3%A1!%20Estava%20falando%20com%20a%20Sol%20e%20preciso%20de%20ajuda.%20C%C3%B3digo:${flow.vars.user.codigo} . Tudo será resolvido por lá 😁`)
+                        // flow.setVar("messageTransfer",
+                        //             "[SOL]+++Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
                     }
                     else{
                         flow.setVar("messageTransfer",
@@ -189,10 +189,10 @@ module.exports = function(controller) {
     flow.before("transferToHumanFail", 
                 async(flow,bot)=>{
                     if(await utils.workingHours()){
-                        // flow.setVar("messageTransfer",`Para falar com um de nossos atendentes, é só acessar nosso suporte no link https://api.whatsapp.com/send?phone=555131037420&text=Ol%C3%A1!%20Estava%20falando%20com%20a%20Sol%20e%20preciso%20de%20ajuda.%20C%C3%B3digo:${flow.vars.user.codigo} . Tudo será resolvido por lá 😁`)
-                        flow.setVar("messageTransfer",
-                                    "Puxa, a opção digitada é invalida! 😐\
-                                    \n\nMas fique tranquilo, vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
+                        flow.setVar("messageTransfer",`Para falar com um de nossos atendentes, é só acessar nosso suporte no link https://api.whatsapp.com/send?phone=555131037420&text=Ol%C3%A1!%20Estava%20falando%20com%20a%20Sol%20e%20preciso%20de%20ajuda.%20C%C3%B3digo:${flow.vars.user.codigo} . Tudo será resolvido por lá 😁`)
+                        // flow.setVar("messageTransfer",
+                        //             "Puxa, a opção digitada é invalida! 😐\
+                        //             \n\nMas fique tranquilo, vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
                     }
                     else{
                         flow.setVar("messageTransfer",
