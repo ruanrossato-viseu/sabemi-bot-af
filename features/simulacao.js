@@ -108,7 +108,7 @@ module.exports = function(controller) {
                             }
                             else if(flow.vars.retry == 2){
                                 if(await utils.workingHours()){
-                                    flow.setVar("messageTransfer",`Puxa! Não consegui validar os seus dados. Para falar com um de nossos atendentes, é só acessar nosso suporte no link https://api.whatsapp.com/send?phone=555131037420&text=Ol%C3%A1!%20Estava%20falando%20com%20a%20Sol%20e%20preciso%20de%20ajuda.%20C%C3%B3digo:${flow.vars.user.codigo} . Tudo será resolvido por lá 😁`)
+                                    await bot.say(`[userInfo]+++Puxa! Não consegui validar os seus dados. Para falar com um de nossos atendentes, é só acessar nosso suporte no link https://api.whatsapp.com/send?phone=555131037420&text=Ol%C3%A1!%20Estava%20falando%20com%20a%20Sol%20e%20preciso%20de%20ajuda.%20C%C3%B3digo:${flow.vars.user.codigo} . Tudo será resolvido por lá 😁`)
                         
                                     // bot.say("[userInfo]+++Puxa! Não consegui validar os seus dados.\
                                     //         \nVou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗");
