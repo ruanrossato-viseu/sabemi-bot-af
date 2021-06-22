@@ -43,7 +43,7 @@ const controller = new Botkit({
 controller.ready(() => {
     console.log("\n========================================== \
                 \n\nSabemi Bot is Running\n")
-    console.log(String(moment().toISOString()))
+    console.log(String(moment()))
     console.log("\n==========================================")
 
     // load traditional developer-created local custom feature modules
