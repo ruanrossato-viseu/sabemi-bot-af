@@ -380,7 +380,7 @@ module.exports = function(controller) {
 
 
     flow.addQuestion("[simulation]+++Entendi! Me conta qual *valor total que você precisa*? 😄\
-                    \nAh, para eu compreender, *digite somente os números, com os centavos separados por vírgula*, combinado!?",
+                    \n\nAh, para eu compreender, *digite somente os números, com os centavos separados por vírgula*, combinado!?",
                     async(response,flow,bot)=>{
                         value=response.replace(".", "")
 
@@ -554,9 +554,11 @@ module.exports = function(controller) {
                             await flow.gotoThread("signUp")
                         }
                         else if(response =="3"){
-                            await bot.say("[newSimulation]+++Puxa, que pena! 😕\nEspero que a gente converse em outro momento!\
-                            \nSe você desejar falar com algum colega Especialista, pode ligar no *0800 000 000*, e estaremos prontos para te atender!\
+                            await bot.say("[newSimulation]+++Puxa, que pena! 😕\
+                            \n\nEspero que a gente converse em outro momento!\
+                            \nSe você desejar falar com algum colega Especialista, pode ligar no *0800 880 1900*, e estaremos prontos para te atender!\
                             \nAté a próxima!! 🙋🏻")              
+                            await flow.gotoThread("evaluation")         
                         }
                         else if(response =="4"){
                             await flow.gotoThread("transferToHuman");
@@ -634,8 +636,7 @@ module.exports = function(controller) {
     flow.addMessage("[transferToHuman]+++{{vars.messageTransfer}}","transferToHumanFail");
     flow.addMessage("[TRANSFER]+++[Transferência Erro no fluxo]","transferToHumanFail");
 
-   flow.addQuestion("[simulation]+++\
-                    \n\nPosso te pedir uma ajudinha?\
+   flow.addQuestion("[simulation]+++Posso te pedir uma ajudinha?\
                     \nVocê poderia avaliar este atendimento?\
                     \nJuro que é rapidinho e vai me ajudar a te atender cada vez melhor 😃\
                     \n\nDigite 1 para: muito satisfeito\
