@@ -18,7 +18,7 @@ module.exports = function(controller) {
         //     "codigo":"45875076879"
         // }
         // flow.setVar("user",user)
-
+        console.log(flow.vars.user)
         flow.setVar("firstName",flow.vars.user.userName.split(" ")[0])
         flow.setVar("maskedCPF","xxx.xxx.xx"+flow.vars.user.cpf[flow.vars.user.cpf.length-3]+"-"+flow.vars.user.cpf.slice(-2))
         flow.setVar("retry",0)
@@ -31,6 +31,7 @@ module.exports = function(controller) {
                     \n\nDigite 1 para: Sim, sou eu\
                     \nDigite 2 para: Não conheço esta pessoa", 
                     async(response, flow, bot) =>{
+                        console.log(response)
                         if(response =="1"){
                         }
 
@@ -47,7 +48,7 @@ module.exports = function(controller) {
                     "intro");
 
     flow.addQuestion("[introduction]+++Ops, digitação invalida 🤔\
-                    \n Vamos tentar novamente?",
+                    \nVamos tentar novamente?",
         async(response, flow, bot) =>{
                     if(response =="1"){
                         flow.gotoThread("userInfo")
@@ -69,7 +70,8 @@ module.exports = function(controller) {
     flow.addMessage("[FINISH]+++[Contato incorreto]","notRightPerson")
 
     flow.addMessage("[introduction]+++Que bom! Para que eu possa apresentar uma proposta na medida, vou precisar que você me informe alguns dos seus dados pessoais.\
-                \n\nMas fique tranquilo: este é um ambiente seguro e seus dados estão protegidos e guardados, tudo de acordo com a Lei Geral de Proteção de Dados (LGPD) e Direito do Consumidor 🔒. Para saber mais sobre LGPD 👉🏼 https://www.sabemi.com.br/politica-de-privacidade",
+                \n\nMas fique tranquilo: este é um ambiente seguro e seus dados estão protegidos e guardados, tudo de acordo com a Lei Geral de Proteção de Dados (LGPD) e Direito do Consumidor 🔒. \
+                \nPara saber mais sobre LGPD 👉🏼 https://www.sabemi.com.br/politica-de-privacidade",
                 "intro")
     
     flow.addAction("userInfo","intro")

@@ -6,7 +6,7 @@ module.exports = function(controller) {
 
     flow.addAction("intro");
 
-    flow.addQuestion("[unregisteredUser]+++Olá! Eu sou a Sol, assistente digital da Sabemi 🙋🏻\
+    flow.addQuestion("[unregisteredUser]+++Olá! Eu sou a Sol, assistente digital da Sabemi 🙋🏻‍♀‍\
                     \n\nConsegue me contar, em uma única mensagem, qual é o assunto que você gostaria de tratar?",
         async(response, flow, bot)=>{
             console.log(response)
@@ -20,7 +20,8 @@ module.exports = function(controller) {
                     "intro"
     )
 
-    flow.addMessage("[unregisteredUser]+++Se quiser saber mais, é só clicar nesse link para acessar nossas políticas e termos sobre a Lei Geral de Proteção de Dados: 👉 https://www.sabemi.com.br/politica-de-privacidade","intro")
+    flow.addMessage("[unregisteredUser]+++Se quiser saber mais, é só clicar nesse link para acessar nossas políticas e termos sobre a Lei Geral de Proteção de Dados: \
+                    \n👉 https://www.sabemi.com.br/politica-de-privacidade","intro")
     
     flow.addQuestion("[unregisteredUser]+++Vamos lá!? Me conta qual é o seu nome completo?",
                     async(response,flow,bot)=>{
@@ -41,13 +42,15 @@ module.exports = function(controller) {
         async(flow,bot)=>{
             if(await utils.workingHours()){
                 flow.setVar("messageTransfer",
-                        `Para falar com um de nossos atendentes, é só acessar nosso suporte no link https://api.whatsapp.com/send?phone=555131037420&text=Ol%C3%A1!%20Estava%20falando%20com%20a%20Sol%20e%20preciso%20de%20ajuda.%20C%C3%B3digo:${flow.vars.user.codigo} . Tudo será resolvido por lá 😁`)
+                        `Estamos quase lá! É só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido por um de nossos Especialistas.
+
+                        Tudo será resolvido por lá, ok!? 👩🏻‍💻`)
             }
             else{
                 flow.setVar("messageTransfer",
-                            "Puxa! ⏱ No momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente\
-                            \nRetorne com um alô, por aqui mesmo, no próximo dia útil entre *09h e 18h*, de *segunda a sexta-feira* e estaremos prontos para te ajudar!\
-                            \nBjs e até breve")
+                            "Estamos quase lá! ⏱ Mas no momento meus colegas estão fora do horário de atendimento, a sua mensagem está aqui guardada com a gente.\
+                            \n\nRetorne com um alô, no link 👉🏼 https://bit.ly/3gNNcLH, no próximo dia útil entre 09h e 18h, de segunda a sexta-feira, e estaremos prontos para te ajudar!\
+                            \n\nBjs e até breve")
             }
         }
     );
