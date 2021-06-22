@@ -308,7 +308,7 @@ module.exports = function(controller) {
         else{
             signUpMessage = `Confira aqui o resumo do plano escolhido:\
             \n\n_Assistência Financeira_\
-            \nR$ ${flow.vars.simulationValue} em ${flow.vars.simulationInstallments}x parcelas de R$ ${flow.vars.simulationInstallments}\
+            \nR$ ${flow.vars.simulationValue} em ${flow.vars.simulationInstallments}x parcelas de R$ ${flow.vars.simulationIntallmentsPrice}\
             \n\nSem Seguro Proteção Pessoal`;
         }
         flow.setVar("signUpMessage",signUpMessage);
