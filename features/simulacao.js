@@ -69,10 +69,11 @@ module.exports = function(controller) {
     flow.addMessage("[notRightPerson]+++Se desejar falar com a Sabemi, é só me chamar! Basta digitar *Sol* que estarei pronta para te atender! 😉","notRightPerson")
     flow.addMessage("[FINISH]+++[Contato incorreto]","notRightPerson")
 
-    flow.addMessage("[introduction]+++Que bom! Para que eu possa apresentar uma proposta na medida, vou precisar que você me informe alguns dos seus dados pessoais.\
-                \n\nMas fique tranquilo: este é um ambiente seguro e seus dados estão protegidos e guardados, tudo de acordo com a Lei Geral de Proteção de Dados (LGPD) e Direito do Consumidor 🔒. \
-                \nPara saber mais sobre LGPD 👉🏼 https://www.sabemi.com.br/politica-de-privacidade",
-                "intro")
+    flow.addMessage("[introduction]+++Que bom! Para que eu possa apresentar uma proposta na medida, vou precisar que você me informe alguns dos seus dados pessoais","intro")
+    flow.addMessage("[introduction]+++Mas fique tranquilo: este é um ambiente seguro e seus dados estão protegidos e guardados, tudo de acordo com a Lei Geral de Proteção de Dados (LGPD) e Direito do Consumidor 🔒\
+                    \n\nPara saber mais sobre LGPD\
+                    \n👉🏼 https://www.sabemi.com.br/politica-de-privacidade",
+                    "intro")
     
     flow.addAction("userInfo","intro")
     flow.addQuestion("[userInfo]+++Vamos lá!? Me conta qual é o seu *nome completo*?", 
@@ -210,7 +211,7 @@ module.exports = function(controller) {
                 }
                 catch(error){
                     console.log(error)
-                    await bot.say("[preSimulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
+                    await bot.say("[preSimulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕\n Tente novamente mais tarde, ok?")
                     flow.gotoThread("endConversation")
                 }
             }
@@ -218,7 +219,7 @@ module.exports = function(controller) {
         }
         else{
             console.log("entrou 3")
-            bot.say("[preSimulation]+++Infelizmente, não foi possível gerar uma simulação para você agora. 😕 Tente novamente mais tarde, ok?")
+            bot.say("[preSimulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕\n Tente novamente mais tarde, ok?")
             flow.gotoThread("endConversation")
         }
     });
