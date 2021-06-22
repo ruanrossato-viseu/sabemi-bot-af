@@ -25,8 +25,8 @@ module.exports = function(controller) {
     })
 
     flow.addQuestion("[introduction]+++Antes de iniciar nossa conversa, para segurança dos seus dados, preciso garantir que estou falando com a pessoa certa:\
-                    \n\n *{{vars.firstName}}*\
-                    \n CPF: {{vars.maskedCPF}}\
+                    \n\n*{{vars.firstName}}*\
+                    \nCPF: {{vars.maskedCPF}}\
                     \n\nÉ você? 😊\
                     \n\nDigite 1 para: Sim, sou eu\
                     \nDigite 2 para: Não conheço esta pessoa", 
@@ -211,7 +211,7 @@ module.exports = function(controller) {
                 }
                 catch(error){
                     console.log(error)
-                    await bot.say("[preSimulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕\n Tente novamente mais tarde, ok?")
+                    await bot.say("[preSimulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕\nTente novamente mais tarde, ok?")
                     flow.gotoThread("endConversation")
                 }
             }
@@ -219,14 +219,14 @@ module.exports = function(controller) {
         }
         else{
             console.log("entrou 3")
-            bot.say("[preSimulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕\n Tente novamente mais tarde, ok?")
+            bot.say("[preSimulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕\nTente novamente mais tarde, ok?")
             flow.gotoThread("endConversation")
         }
     });
 
     flow.addQuestion("[simulation]+++Pronto! Agora que você já conhece um pouco mais nossos produtos, veja as condições que consegui para você 💁🏻‍♀‍ \
     \n\n👉🏼 *Assistência Financeira de R$ {{vars.simulationValueAP}}* em {{vars.simulationInstallmentsAP}} parcelas de R$ {{vars.simulationIntallmentsPriceAP}} + *Seguro de Acidente Pessoal* por R$ {{vars.simulationInsurancePriceAP}}\
-    \n\n 👉🏼 *Assistência Financeira de R$ {{vars.simulationValue}}* em {{vars.simulationInstallments}} parcelas de R$ {{vars.simulationIntallmentsPrice}}\
+    \n\n👉🏼 *Assistência Financeira de R$ {{vars.simulationValue}}* em {{vars.simulationInstallments}} parcelas de R$ {{vars.simulationIntallmentsPrice}}\
     \n\nDigite *1* para seguir com a contratação de Assistência Financeira + Seguro de Acidente Pessoal\
     \n\nDigite *2* para seguir com a contratação de Assistência Financeira\
     \n\nDigite *3* para saber mais sobre as vantagens do Seguro Sabemi\
@@ -256,7 +256,7 @@ module.exports = function(controller) {
                     "simulationResults");
 
     flow.addQuestion("[simulation]+++Puxa😕 Essa opção não é válida.\
-                    \n Vamos tentar novamente?",
+                    \nVamos tentar novamente?",
         async(response, flow, bot) =>{
                     if(response=="1"){
                             flow.setVar("table",flow.vars.simulationTableAP)
@@ -334,7 +334,8 @@ module.exports = function(controller) {
                     "signUp")
 
                     
-    flow.addMessage("[signUp]+++Ah! Você não tem cadastro no Sabemi Digital ou não lembra sua senha? Pode deixar que vou enviar seus dados de acesso por SMS 📩\
+    flow.addMessage("[signUp]+++Ah! Você não tem cadastro no Sabemi Digital ou não lembra sua senha? \
+                    \nPode deixar que vou enviar seus dados de acesso por SMS 📩\
                     \n\nE se precisar é só me chamar! Basta digitar *SOL* que eu volto 😊",
                     "signUp")
 
@@ -534,7 +535,7 @@ module.exports = function(controller) {
     });
     flow.addQuestion("[newSimulation]+++{{vars.firstName}}, analisando aqui, verifiquei as possíveis opções para você 💁🏻‍♀‍ \
                     \n\n👉🏼 *Assistência Financeira de R$ {{vars.simulationValueAP}}* em {{vars.simulationInstallmentsAP}} parcelas de R$ {{vars.simulationIntallmentsPriceAP}} + *Seguro de Acidente Pessoal* por R$ {{vars.simulationInsurancePriceAP}}\
-                    \n\n 👉🏼 *Assistência Financeira de R$ {{vars.simulationValue}}* em {{vars.simulationInstallments}} parcelas de R$ {{vars.simulationIntallmentsPrice}}\
+                    \n\n👉🏼 *Assistência Financeira de R$ {{vars.simulationValue}}* em {{vars.simulationInstallments}} parcelas de R$ {{vars.simulationIntallmentsPrice}}\
                     \n\nDigite *1* para seguir com a contratação de Assistência Financeira + Seguro de Acidente Pessoal\
                     \n\nDigite *2* para seguir com a contratação de Assistência Financeira\
                     \n\nDigite *3* para cancelar\
@@ -634,7 +635,7 @@ module.exports = function(controller) {
     flow.addMessage("[TRANSFER]+++[Transferência Erro no fluxo]","transferToHumanFail");
 
    flow.addQuestion("[simulation]+++\
-                    \n\n Posso te pedir uma ajudinha?\
+                    \n\nPosso te pedir uma ajudinha?\
                     \nVocê poderia avaliar este atendimento?\
                     \nJuro que é rapidinho e vai me ajudar a te atender cada vez melhor 😃\
                     \n\nDigite 1 para: muito satisfeito\

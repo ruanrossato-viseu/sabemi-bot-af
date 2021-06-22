@@ -9,8 +9,8 @@ module.exports = function(controller) {
     flow.addQuestion("[SOL]+++Olá 🙋🏻 \
                     \nOlha, por aqui eu posso te ajudar com:\
                     \n\nDigite 1 para Link do APP Sabemi\
-                    \nDigite 2 para dúvida sobre minha simulação \
-                    \nDigite 3 para já executei o processo no APP Sabemi\
+                    \nDigite 2 para Dúvida sobre minha simulação \
+                    \nDigite 3 para Já executei o processo no APP Sabemi\
                     \nDigite 4 para Outras dúvidas / Falar com atendente",
         async(response, flow, bot)=>{
             if(response == "1"){
@@ -158,8 +158,8 @@ module.exports = function(controller) {
     "proposalValueRetry"
     );
     
-    flow.addQuestion("[SOL]+++Como sou uma Assistente Digital em treinamento, não consigo responder todas as dúvidas, vou te encaminhar para um de nossos especialistas, tudo bem?\
-                    \n\nDigite aqui qual a sua dúvida, por favor:",
+    flow.addQuestion("[SOL]+++Entendi! Como sou uma Assistente Digital em treinamento, vou te encaminhar para um de nossos especialistas, tudo bem?\
+                    \n\nPor favor, me conte em uma única mensagem qual é o assunto que você gostaria de tratar:",
                     async(response,flow,bot)=>{
                         
                         await flow.gotoThread("transferToHuman");    
@@ -177,13 +177,13 @@ module.exports = function(controller) {
                     }
                     else{
                         flow.setVar("messageTransfer",
-                                    "[SOL]+++Puxa! ⏱ No momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente\
+                                    "Puxa! ⏱ No momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente\
                                     \nRetorne com um alô, por aqui mesmo, no próximo dia útil entre *09h e 18h*, de *segunda a sexta-feira* e estaremos prontos para te ajudar!\
                                     \nBjs e até breve")
                     }
                 }
             );
-    flow.addMessage("{{vars.messageTransfer}}","transferToHuman");
+    flow.addMessage("[SOL]+++{{vars.messageTransfer}}","transferToHuman");
 
     
     flow.before("transferToHumanFail", 
@@ -202,7 +202,7 @@ module.exports = function(controller) {
                     }
                 }
             );
-    flow.addMessage("[transferToHuman]+++{{vars.messageTransfer}}","transferToHumanFail");
+    flow.addMessage("[SOL]+++{{vars.messageTransfer}}","transferToHumanFail");
 
     flow.after(async (results, bot) => {
         
