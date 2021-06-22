@@ -8,5 +8,5 @@ module.exports.workingHours = async function workingHours() {
 
 function utilDay(hour) {
     console.log(hour)
-    return (hour >= 12 && hour <= 21);
+    return (hour >= 12 && hour < 21);
 }
