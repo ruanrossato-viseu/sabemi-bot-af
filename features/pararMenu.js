@@ -7,6 +7,32 @@ module.exports = function(controller) {
 
     flow.addAction("menu");
 
+    flow.before("menu",async(flow,bot)=>{
+        console.log(flow.vars.user)
+
+
+        const{MongoClient} = require('mongodb');
+        var url = "mongodb+srv://ruanrossato:rmcr211096@sabemi.kvwlz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+        
+        const client = new MongoClient(url,{ useUnifiedTopology: true });
+        try{
+            await client.connect();
+            var  database =  client.db("sabemi")
+            var collection = database.collection("users")
+            var user  = await collection.findOne({"phoneNumber": flow.vars.user })
+            console.log(user)
+
+            flow.setVar("userDB",user)
+        }
+        catch (err){
+            console.log(err)
+        }
+        finally {
+            await client.close();
+        }
+    })
+    
+
     flow.addQuestion("[PARAR]+++Certo! Tudo bem! Me conta o que você prefere fazer agora:\
         \n\nDigite 1 para \"mudei meus planos\"\
         \nDigite 2 para \"quero falar com um especialista\" \
@@ -25,7 +51,7 @@ module.exports = function(controller) {
             }
             else if(response == "4"){
                 await bot.say("[BLACKLIST]+++Obrigada por me avisar!\nSe desejar falar com a Sabemi, é só me chamar! Basta digitar SOL que estarei pronta para te atender :)")  
-                await sabemiFunctions.optIn(flow.vars.user.codigo, false); 
+                await sabemiFunctions.optIn(flow.vars.userDB.codigo, false); 
                 flow.setVar("beforeEvaluation","")
                 await flow.gotoThread("evaluation")             
             }

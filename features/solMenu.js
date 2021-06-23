@@ -5,6 +5,30 @@ module.exports = function(controller) {
     const utils = require('../requests/utils.js');
 
     flow.addAction("intro");
+    flow.before("intro",async(flow,bot)=>{
+        console.log(flow.vars.user)
+
+
+        const{MongoClient} = require('mongodb');
+        var url = "mongodb+srv://ruanrossato:rmcr211096@sabemi.kvwlz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+        
+        const client = new MongoClient(url,{ useUnifiedTopology: true });
+        try{
+            await client.connect();
+            var  database =  client.db("sabemi")
+            var collection = database.collection("users")
+            var user  = await collection.findOne({"phoneNumber": flow.vars.user })
+            console.log(user)
+
+            flow.setVar("userDB",user)
+        }
+        catch (err){
+            console.log(err)
+        }
+        finally {
+            await client.close();
+        }
+    })
 
     flow.addQuestion("[SOL]+++Olá 🙋🏻 \
                     \nOlha, por aqui eu posso te ajudar com:\
@@ -21,7 +45,7 @@ module.exports = function(controller) {
                 await bot.say("[FINISH]+++[Encerramento Padrão]","notRightPerson")
             }
             else if(response == "2"){
-                if(flow.vars.user.hasOwnProperty("simulation")){
+                if(flow.vars.userDB.hasOwnProperty("simulation")){
                     await flow.gotoThread("proposalInfo")                
                 }
                 else{
@@ -54,7 +78,7 @@ module.exports = function(controller) {
                 await bot.say("[FINISH]+++[Encerramento Padrão]","notRightPerson")
             }
             else if(response == "2"){
-                if(flow.vars.user.hasOwnProperty("simulation")){
+                if(flow.vars.userDB.hasOwnProperty("simulation")){
                     await flow.gotoThread("proposalInfo")                
                 }
                 else{
@@ -112,7 +136,7 @@ module.exports = function(controller) {
                     "proposalInfoRetry"
     );
     flow.before("proposalValue", async(flow,bot)=>{
-        for (let tabela of flow.vars.user.simulation.tabelas){
+        for (let tabela of flow.vars.userDB.simulation.tabelas){
             if(tabela.valorAP == "0,00"){
                 flow.setVar("simulationValue", tabela.valorLiquido );
                 flow.setVar("simulationInstallments", tabela.prazo);

@@ -62,9 +62,33 @@ module.exports = function(controller) {
         //     "codigo":"45875076879"
         // }
         // flow.setVar("user",user)
+
         console.log(flow.vars.user)
-        flow.setVar("firstName",flow.vars.user.userName.split(" ")[0])
-        flow.setVar("maskedCPF","xxx.xxx.xx"+flow.vars.user.cpf[flow.vars.user.cpf.length-3]+"-"+flow.vars.user.cpf.slice(-2))
+
+
+        const{MongoClient} = require('mongodb');
+        var url = "mongodb+srv://ruanrossato:rmcr211096@sabemi.kvwlz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+        
+        const client = new MongoClient(url,{ useUnifiedTopology: true });
+        try{
+            await client.connect();
+            var  database =  client.db("sabemi")
+            var collection = database.collection("users")
+            var user  = await collection.findOne({"phoneNumber": flow.vars.user })
+            console.log(user)
+
+            flow.setVar("userDB",user)
+        }
+        catch (err){
+            console.log(err)
+        }
+        finally {
+            await client.close();
+        }
+
+
+        flow.setVar("firstName",flow.vars.userDB.name.split(" ")[0])
+        flow.setVar("maskedCPF","xxx.xxx.xx"+flow.vars.userDB.cpf[flow.vars.userDB.cpf.length-3]+"-"+flow.vars.userDB.cpf.slice(-2))
         flow.setVar("retry",0)
     })
 
@@ -131,7 +155,7 @@ module.exports = function(controller) {
     
     flow.addQuestion(`[userInfo]+++Legal! Digite aqui pra mim os *3 primeiros dígitos do seu CPF*`,
                     async(response, flow, bot) =>{
-                        let user = flow.vars.user;
+                        let user = flow.vars.userDB;
                         let validatedUser = await sabemiFunctions.validateUser(user.codigo, response, flow.vars.name);
                         
                         // let validatedUser={"sucesso":true};
@@ -155,7 +179,7 @@ module.exports = function(controller) {
                             }
                             else if(flow.vars.retry == 2){
                                 if(await utils.workingHours()){
-                                    await bot.say(`[userInfo]+++Puxa! Não consegui validar os seus dados. Para falar com um de nossos atendentes, é só acessar nosso suporte no link https://api.whatsapp.com/send?phone=555131037420&text=Ol%C3%A1!%20Estava%20falando%20com%20a%20Sol%20e%20preciso%20de%20ajuda.%20C%C3%B3digo:${flow.vars.user.codigo} . Tudo será resolvido por lá 😁`)
+                                    await bot.say(`[userInfo]+++Puxa! Não consegui validar os seus dados. Para falar com um de nossos atendentes, é só acessar nosso suporte no link https://api.whatsapp.com/send?phone=555131037420&text=Ol%C3%A1!%20Estava%20falando%20com%20a%20Sol%20e%20preciso%20de%20ajuda.%20C%C3%B3digo:${flow.vars.userDB.codigo} . Tudo será resolvido por lá 😁`)
                         
                                     // bot.say("[userInfo]+++Puxa! Não consegui validar os seus dados.\
                                     //         \nVou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗");
@@ -197,7 +221,7 @@ module.exports = function(controller) {
     flow.before("simulationResults",async(flow,bot)=>{
         await new Promise(r => setTimeout(r, 15000));
 
-        let simulation = await sabemiFunctions.firstSimulation(flow.vars.user.codigo)
+        let simulation = await sabemiFunctions.firstSimulation(flow.vars.userDB.codigo)
         // let simulation = {
         //     "tabelas": [
         //     {
@@ -327,7 +351,7 @@ module.exports = function(controller) {
     flow.before("signUp", async(flow,bot)=>{
         var signUpMessage = "";
 
-        let closeContract = await sabemiFunctions.closeContract(flow.vars.user.codigo,flow.vars.table,flow.vars.simulationKey)
+        let closeContract = await sabemiFunctions.closeContract(flow.vars.userDB.codigo,flow.vars.table,flow.vars.simulationKey)
 
         // let closeContract = {"url":"https://www.sabemiFunctions.com.br"}
         flow.setVar("urlContract",closeContract.url)
@@ -472,7 +496,7 @@ module.exports = function(controller) {
                         if(response=="1"){
                             await bot.say("[newSimulation]+++Ok! Estou checando se conseguimos outro cenário para te apresentar 👩🏻‍💻")
                             var valor  = parseFloat(flow.vars.beautifiedValue.replace(",",".").replace(".",""))
-                            let simulation = await sabemiFunctions.newSimulation(flow.vars.user.codigo,valor)
+                            let simulation = await sabemiFunctions.newSimulation(flow.vars.userDB.codigo,valor)
                             console.log(simulation)
                             if(simulation){
                                 if(simulation.sucesso){
@@ -527,7 +551,7 @@ module.exports = function(controller) {
                     if(response=="1"){
                         await bot.say("[newSimulation]+++Ok! Estou checando se conseguimos outro cenário para te apresentar 👩🏻‍💻")
                         var valor  = parseFloat(flow.vars.beautifiedValue.replace(",",".").replace(".",""))
-                        let simulation = await sabemiFunctions.newSimulation(flow.vars.user.codigo,valor)
+                        let simulation = await sabemiFunctions.newSimulation(flow.vars.userDB.codigo,valor)
                         console.log(simulation)
                         if(simulation){
                             if(simulation.sucesso){
