@@ -10,6 +10,50 @@ module.exports = function(controller) {
 
     flow.before("intro",async(flow,bot)=>{
         
+        // var user = {'_id': ObjectId('60d25b9ef2e6ea3c63e0ffd6'), 
+        // 'name': 'Francisca', 
+        // 'cpf': '263',
+        // 'codigo': '1231964',
+        // 'phoneNumber': '5551994679838', 
+        // 'datetimeStart': '2021-06-22T18:52:30.253974', 
+        // 'datetimeFinish': '2021-06-22T18:52:30.253990',
+        // 'hasSimulation': True,
+        // 'convertFinancialAssistance': False,
+        // 'convertInsurance': False,
+        // 'simulation':
+        //         {
+        //         'tabelas': [
+        //             {'codigoTabela': 22010,
+        //                 'prazo': '72', 
+        //                 'valorVenda': '11.990,91', 
+        //                 'valorLiquido': '11.990,91', 
+        //                 'valorParcela': '285,00', 
+        //                 'taxa': '1,53', 
+        //                 'valorPeculio': '0,00', 
+        //                 'valorAP': '0,00'}, 
+        //             {'codigoTabela': 22018, 
+        //             'prazo': '72', 
+        //             'valorVenda': '11.423,28', 
+        //             'valorLiquido': '11.423,28', 
+        //             'valorParcela': '265,10', 
+        //             'taxa': '1,45', 
+        //             'valorPeculio': '0,00', 
+        //             'valorAP': '19,90'}
+        //         ], 
+        //         'chaveSimulacao': '62657160263', 
+        //         'sucesso': True, 
+        //         'mensagem': 'OK'
+        //         }, 
+        // 'transfered': False, 
+        // 'lgpd': False, 
+        // 'flowPosition': 0, 
+        // 'interactionCount': 24, 
+        // 'hsmSent': True, 
+        // 'lastInteraction': '2021-06-22T18:54:52.051281'}
+
+
+
+
         
         // var user = {
         //     "userName": "Ruan Rossato",
@@ -557,7 +601,7 @@ module.exports = function(controller) {
                             await bot.say("[newSimulation]+++Puxa, que pena! 😕\
                             \n\nEspero que a gente converse em outro momento!\
                             \nSe você desejar falar com algum colega Especialista, pode ligar no *0800 880 1900*, e estaremos prontos para te atender!\
-                            \nAté a próxima!! 🙋🏻")              
+                            \n\nAté a próxima!! 🙋🏻")              
                             await flow.gotoThread("evaluation")         
                         }
                         else if(response =="4"){
