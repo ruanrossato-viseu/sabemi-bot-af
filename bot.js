@@ -21,11 +21,11 @@ const moment = require("moment");
 let request = require("request");
 
 let storage = null;
-if (process.env.MONGO_URI) {
-    storage = mongoStorage = new MongoDbStorage({
-        url : process.env.MONGO_URI,
-    });
-}
+// if (process.env.MONGO_URI) {
+//     storage = mongoStorage = new MongoDbStorage({
+//         url : process.env.MONGO_URI,
+//     });
+// }
 
 
 const adapter = new WebAdapter({});

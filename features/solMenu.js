@@ -10,7 +10,7 @@ module.exports = function(controller) {
 
 
         const{MongoClient} = require('mongodb');
-        var url = "mongodb+srv://ruanrossato:rmcr211096@sabemi.kvwlz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+        var url = process.env.MONGO_URI
         
         const client = new MongoClient(url,{ useUnifiedTopology: true });
         try{
