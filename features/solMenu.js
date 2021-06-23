@@ -12,7 +12,7 @@ module.exports = function(controller) {
                     \nDigite 2 para Dúvida sobre minha simulação \
                     \nDigite 3 para Já executei o processo no APP Sabemi\
                     \nDigite 4 para Outras dúvidas / Falar com atendente",
-        async(response, flow, bot)=>{
+        async(response, flow, bot)=>{        
             if(response == "1"){
                 await bot.say("[SOL]+++Ok! Aqui está o link do APP Sabemi Digital 📲 https://digital.dsv.sabemi.com.br/\
                 \n\nLembrando que é através dele que você dará continuidade na sua contratação e ficará ainda mais perto de realizar os seus sonhos!\
@@ -21,7 +21,7 @@ module.exports = function(controller) {
                 await bot.say("[FINISH]+++[Encerramento Padrão]","notRightPerson")
             }
             else if(response == "2"){
-                if(flow.vars.user.simulation){
+                if(flow.vars.user.hasOwnProperty("simulation")){
                     await flow.gotoThread("proposalInfo")                
                 }
                 else{
@@ -54,7 +54,7 @@ module.exports = function(controller) {
                 await bot.say("[FINISH]+++[Encerramento Padrão]","notRightPerson")
             }
             else if(response == "2"){
-                if(flow.vars.user.simulation){
+                if(flow.vars.user.hasOwnProperty("simulation")){
                     await flow.gotoThread("proposalInfo")                
                 }
                 else{
@@ -111,11 +111,27 @@ module.exports = function(controller) {
                     "proposalInfoChoice",
                     "proposalInfoRetry"
     );
-    
+    flow.before("proposalValue", async(flow,bot)=>{
+        for (let tabela of flow.vars.user.simulation.tabelas){
+            if(tabela.valorAP == "0,00"){
+                flow.setVar("simulationValue", tabela.valorLiquido );
+                flow.setVar("simulationInstallments", tabela.prazo);
+                flow.setVar("simulationIntallmentsPrice", tabela.valorParcela);
+                flow.setVar("simulationTable", tabela);
+            }
+            else{
+                flow.setVar("simulationValueAP", tabela.valorLiquido );
+                flow.setVar("simulationInstallmentsAP", tabela.prazo);
+                flow.setVar("simulationIntallmentsPriceAP", tabela.valorParcela);
+                flow.setVar("simulationInsurancePriceAP", tabela.valorAP);
+                flow.setVar("simulationTableAP", tabela);
+            }
+        }
+    })
     flow.addQuestion("[SOL]+++Verifiquei aqui que o valor da sua proposta é de\
-                    \n\n👉🏼 *Assistência Financeira de R$ {{vars.user.simulation.simulationValueAP}}* em {{vars.user.simulation.simulationInstallmentsAP}} parcelas de R$ {{vars.user.simulation.simulationIntallmentsPriceAP}} + *Seguro de Acidente Pessoal* por R$ {{vars.user.simulation.simulationInsurancePriceAP}}\
-                    \n\n 👉🏼 *Assistência Financeira de R$ {{vars.user.simulation.simulationValue}}* em {{vars.user.simulation.simulationInstallments}} parcelas de R$ {{vars.user.simulation.simulationIntallmentsPrice}}\
-                    \nDigite 1 para seguir a contratação de Empréstimo Pessoal\
+                    \n\n👉🏼 *Assistência Financeira de R$ {{vars.simulationValueAP}}* em {{vars.simulationInstallmentsAP}} parcelas de R$ {{vars.simulationIntallmentsPriceAP}} + *Seguro de Acidente Pessoal* por R$ {{vars.simulationInsurancePriceAP}}\
+                    \n\n 👉🏼 *Assistência Financeira de R$ {{vars.simulationValue}}* em {{vars.simulationInstallments}} parcelas de R$ {{vars.simulationIntallmentsPrice}}\
+                    \n\nDigite 1 para seguir a contratação de Empréstimo Pessoal\
                     \nDigite 2 para cancelar\
                     \nDigite 3 para falar com algum de nossos especialistas",
                     async(response,flow,bot)=>{
@@ -184,7 +200,6 @@ module.exports = function(controller) {
                 }
             );
     flow.addMessage("[SOL]+++{{vars.messageTransfer}}","transferToHuman");
-
     
     flow.before("transferToHumanFail", 
                 async(flow,bot)=>{
