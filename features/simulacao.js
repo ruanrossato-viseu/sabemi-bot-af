@@ -35,7 +35,6 @@ module.exports = function(controller) {
             await client.close();
         }
 
-        console.log(flow.vars.userDB)
         flow.setVar("firstName",flow.vars.userDB.name.split(" ")[0])
         flow.setVar("maskedCPF","xxx.xxx.xx"+flow.vars.userDB.cpf[flow.vars.userDB.cpf.length-3]+"-"+flow.vars.userDB.cpf.slice(-2))
         flow.setVar("retry",0)
@@ -50,6 +49,7 @@ module.exports = function(controller) {
                     async(response, flow, bot) =>{
                         console.log(response)
                         if(response =="1"){
+                            flow.gotoThread("userInfo")
                         }
 
                         else if(response == "2"){
@@ -92,7 +92,6 @@ module.exports = function(controller) {
                     \n👉🏼 https://www.sabemi.com.br/politica-de-privacidade",
                     "intro")
     
-    flow.addAction("userInfo","intro")
     flow.addQuestion("[userInfo]+++Vamos lá!? Me conta qual é o seu *nome completo*?", 
                     async(response, flow, bot) =>{
                         flow.setVar("firstName",response.split(" ")[0])
@@ -200,14 +199,11 @@ module.exports = function(controller) {
         console.log(simulation)
 
         if(simulation){
-            console.log("entrou 1")
             if(simulation.sucesso){
-                console.log("entrou 2")
                 flow.setVar("simulacao",simulation)
                 flow.setVar("simulationKey", simulation.chaveSimulacao);
         
                 try{
-                    console.log(simulation.tabelas)
                     for (let tabela of simulation.tabelas){
                         if(tabela.valorAP == "0,00"){
                             flow.setVar("simulationValue", tabela.valorLiquido );
@@ -235,7 +231,6 @@ module.exports = function(controller) {
             
         }
         else{
-            console.log("entrou 3")
             bot.say("[preSimulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕\nTente novamente mais tarde, ok?")
             flow.gotoThread("endConversation")
         }
@@ -252,7 +247,6 @@ module.exports = function(controller) {
                     async(response,flow,bot) =>{
                         if(response=="1"){
                             flow.setVar("table",flow.vars.simulationTableAP)
-                            console.log(flow.vars)
                             await flow.gotoThread("signUp")
                         }
                         else if(response =="2"){
@@ -277,7 +271,6 @@ module.exports = function(controller) {
         async(response, flow, bot) =>{
                     if(response=="1"){
                             flow.setVar("table",flow.vars.simulationTableAP)
-                            console.log(flow.vars)
                             await flow.gotoThread("signUp")
                         }
                         else if(response =="2"){
@@ -592,7 +585,7 @@ module.exports = function(controller) {
         async(response, flow, bot) =>{
                     if(response=="1"){
                             flow.setVar("table",flow.vars.simulationTableAP)
-                            console.log(flow.vars)
+                            
                             await flow.gotoThread("signUp")
                         }
                         else if(response =="2"){
