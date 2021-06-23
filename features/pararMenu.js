@@ -93,7 +93,7 @@ module.exports = function(controller) {
                 )
 
     flow.addQuestion("[PARAR]+++Puxa, o que mudou? 😔\
-                    \n Me conta o motivo da sua mudança:\
+                    \nMe conta o motivo da sua mudança:\
                     \n\nDigite 1 para \"já contratei um Empréstimo Pessoal\"\
                     \nDigite 2 para \"prefiro utilizar outra forma de crédito (exemplo: cartão de crédito)\"\
                     \nDigite 3 para \"não faz mais sentido contratar um Empréstimo Pessoal\"",
@@ -122,7 +122,7 @@ module.exports = function(controller) {
     );
 
     flow.addQuestion("[PARAR]+++{{vars.beforeEvaluation}}\
-                    \n\n Posso te pedir uma ajudinha?\
+                    \n\nPosso te pedir uma ajudinha?\
                     \nVocê poderia avaliar este atendimento?\
                     \nJuro que é rapidinho e vai me ajudar a te atender cada vez melhor 😃\
                     \n\nDigite 1 para: muito satisfeito\
@@ -178,7 +178,7 @@ module.exports = function(controller) {
                     }
                 }
             );
-    flow.addMessage("{{vars.messageTransfer}}","transferToHuman");
+    flow.addMessage("[transferToHuman]+++{{vars.messageTransfer}}","transferToHuman");
 
     
     

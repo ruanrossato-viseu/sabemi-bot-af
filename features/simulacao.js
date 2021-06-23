@@ -35,10 +35,17 @@ module.exports = function(controller) {
             await client.close();
         }
 
+        if(user.transfered){
+            await flow.gotoThread("returnTransfer");
+        }
+
         flow.setVar("firstName",flow.vars.userDB.name.split(" ")[0])
         flow.setVar("maskedCPF","xxx.xxx.xx"+flow.vars.userDB.cpf[flow.vars.userDB.cpf.length-3]+"-"+flow.vars.userDB.cpf.slice(-2))
         flow.setVar("retry",0)
     })
+
+    flow.addMessage("[ReturnTransfer]+++Lembrando que para falar com um de nossos Especialista é só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗","returnTransfer")
+    flow.addMessage("[FINISH]+++Retorno ao bot depois de transbordo","returnTransfer")
 
     flow.addQuestion("[introduction]+++Antes de iniciar nossa conversa, para segurança dos seus dados, preciso garantir que estou falando com a pessoa certa:\
                     \n\n*{{vars.firstName}}*\
@@ -260,10 +267,12 @@ module.exports = function(controller) {
                     async(response,flow,bot) =>{
                         if(response=="1"){
                             flow.setVar("table",flow.vars.simulationTableAP)
+                            await bot.say("[CHOICE]+++1")
                             await flow.gotoThread("signUp")
                         }
                         else if(response =="2"){
                             flow.setVar("table",flow.vars.simulationTable)
+                            await bot.say("[CHOICE]+++2")
                             await flow.gotoThread("signUp")
                         }
                         else if(response =="3"){
@@ -284,10 +293,12 @@ module.exports = function(controller) {
         async(response, flow, bot) =>{
                     if(response=="1"){
                             flow.setVar("table",flow.vars.simulationTableAP)
+                            await bot.say("[CHOICE]+++1")
                             await flow.gotoThread("signUp")
                         }
                         else if(response =="2"){
                             flow.setVar("table",flow.vars.simulationTable)
+                            await bot.say("[CHOICE]+++2")
                             await flow.gotoThread("signUp")
                         }
                         else if(response =="3"){
@@ -307,7 +318,7 @@ module.exports = function(controller) {
         var signUpMessage = "";
 
         let closeContract = await sabemiFunctions.closeContract(flow.vars.userDB.codigo,flow.vars.table,flow.vars.simulationKey)
-
+        await bot.say("[URL]+++"+closeContract.url)
         // let closeContract = {"url":"https://www.sabemiFunctions.com.br"}
         flow.setVar("urlContract",closeContract.url)
         console.log(flow.vars.urlContract)
@@ -565,15 +576,13 @@ module.exports = function(controller) {
                     \n\nDigite *4* para falar com um de nossos Especialistas 😀",
                     async(response,flow,bot)=>{
                         if(response=="1"){
-                            flow.setVar("af",true);
-                            flow.setVar("seguro",true)
                             flow.setVar("table",flow.vars.simulationTableAP)
+                            await bot.say("[CHOICE]+++1")
                             await flow.gotoThread("signUp")
                         }
                         else if(response =="2"){
-                            flow.setVar("af",true);
-                            flow.setVar("seguro",false)
                             flow.setVar("table",flow.vars.simulationTable)
+                            await bot.say("[CHOICE]+++2")
                             await flow.gotoThread("signUp")
                         }
                         else if(response =="3"){
@@ -598,11 +607,12 @@ module.exports = function(controller) {
         async(response, flow, bot) =>{
                     if(response=="1"){
                             flow.setVar("table",flow.vars.simulationTableAP)
-                            
+                            await bot.say("[CHOICE]+++1")                            
                             await flow.gotoThread("signUp")
                         }
                         else if(response =="2"){
                             flow.setVar("table",flow.vars.simulationTable)
+                            await bot.say("[CHOICE]+++2")
                             await flow.gotoThread("signUp")
                         }
                         else if(response =="3"){

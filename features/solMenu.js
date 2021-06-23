@@ -42,7 +42,7 @@ module.exports = function(controller) {
                 \n\nLembrando que é através dele que você dará continuidade na sua contratação e ficará ainda mais perto de realizar os seus sonhos!\
                 \n\nAh, e lembrando que, se precisar, é só me chamar!\
                 \nBasta digitar SOL que eu volto ☺")
-                await bot.say("[FINISH]+++[Encerramento Padrão]","notRightPerson")
+                await bot.say("[FINISH]+++[Encerramento Padrão]")
             }
             else if(response == "2"){
                 if(flow.vars.userDB.hasSimulation){
@@ -75,7 +75,7 @@ module.exports = function(controller) {
                 \n\nLembrando que é através dele que você dará continuidade na sua contratação e ficará ainda mais perto de realizar os seus sonhos!\
                 \n\nAh, e lembrando que, se precisar, é só me chamar!\
                 \nBasta digitar SOL que eu volto ☺")
-                await bot.say("[FINISH]+++[Encerramento Padrão]","notRightPerson")
+                await bot.say("[FINISH]+++[Encerramento Padrão]")
             }
             else if(response == "2"){
                 if(flow.vars.userDB.hasSimulation){
@@ -102,7 +102,7 @@ module.exports = function(controller) {
     
 
     flow.addQuestion("[SOL]+++Vamos lá! Sobre sua proposta:\
-                    \nDigite 1 se sua dúvida for sobre valores\
+                    \n\nDigite 1 se sua dúvida for sobre valores\
                     \nDigite 2 se você deseja falar com algum de nossos especialistas 😊",
                     async(response,flow,bot)=>{
                         if(response =="1"){
@@ -136,35 +136,40 @@ module.exports = function(controller) {
                     "proposalInfoRetry"
     );
     flow.before("proposalValue", async(flow,bot)=>{
-        for (let tabela of flow.vars.userDB.simulation.tabelas){
-            if(tabela.valorAP == "0,00"){
-                flow.setVar("simulationValue", tabela.valorLiquido );
-                flow.setVar("simulationInstallments", tabela.prazo);
-                flow.setVar("simulationIntallmentsPrice", tabela.valorParcela);
-                flow.setVar("simulationTable", tabela);
+
+        if(flow.vars.userDB.convertInsurance){
+            for (let tabela of flow.vars.userDB.simulation.tabelas){
+                if(tabela.valorAP != "0,00"){
+                    flow.setVar("simulationText",
+                    `\n\n👉🏼 *Assistência Financeira de R$ ${tabela.valorLiquido}* em ${tabela.prazo} parcelas de R$ ${tabela.valorParcela} + *Seguro de Acidente Pessoal* por R$ ${tabela.valorAP}`)
+                }
             }
-            else{
-                flow.setVar("simulationValueAP", tabela.valorLiquido );
-                flow.setVar("simulationInstallmentsAP", tabela.prazo);
-                flow.setVar("simulationIntallmentsPriceAP", tabela.valorParcela);
-                flow.setVar("simulationInsurancePriceAP", tabela.valorAP);
-                flow.setVar("simulationTableAP", tabela);
+        }
+
+        else if(!flow.vars.userDB.convertInsurance){
+            for (let tabela of flow.vars.userDB.simulation.tabelas){
+                if(tabela.valorAP == "0,00"){
+                    flow.setVar("simulationText",
+                    `\n\n👉🏼 *Assistência Financeira de R$ ${tabela.valorLiquido}* em ${tabela.prazo} parcelas de R$ ${tabela.valorParcela}`)   
+                }
             }
         }
     })
     flow.addQuestion("[SOL]+++Verifiquei aqui que o valor da sua proposta é de\
-                    \n\n👉🏼 *Assistência Financeira de R$ {{vars.simulationValueAP}}* em {{vars.simulationInstallmentsAP}} parcelas de R$ {{vars.simulationIntallmentsPriceAP}} + *Seguro de Acidente Pessoal* por R$ {{vars.simulationInsurancePriceAP}}\
-                    \n\n 👉🏼 *Assistência Financeira de R$ {{vars.simulationValue}}* em {{vars.simulationInstallments}} parcelas de R$ {{vars.simulationIntallmentsPrice}}\
+                    {{vars.simulationText}}\
                     \n\nDigite 1 para seguir a contratação de Empréstimo Pessoal\
                     \nDigite 2 para cancelar\
                     \nDigite 3 para falar com algum de nossos especialistas",
                     async(response,flow,bot)=>{
                         if(response =="1"){
-                            await bot.cancelAllDialogs();
-                            await bot.beginDialog("simulacao");
+                            await bot.say(`[SOL]+++Aqui está o link que eu te falei ${flow.vars.userDB.simulationURL}\
+                                            \n\nAtravés dele, você dará continuidade na sua contratação e ficará ainda mais perto de realizar os seus sonhos`);
+                            
+                            await bot.say("[FINISH]+++[Encerramento Padrão]")
                         }
                         else if(response == "2"){
-
+                            await bot.cancelAllDialogs();
+                            await bot.beginDialog("pararMenu");
                         }
                         else if(response == "3"){
                             await flow.gotoThread("transferToHuman");  
@@ -181,11 +186,14 @@ module.exports = function(controller) {
                     \nVamos tentar novamente?",
                     async(response,flow,bot)=>{
                         if(response =="1"){
-                            await bot.cancelAllDialogs();
-                            await bot.beginDialog("simulacao");
+                            await bot.say(`[SOL]+++Aqui está o link que eu te falei ${flow.vars.userDB.simulationURL}\
+                                            \n\nAtravés dele, você dará continuidade na sua contratação e ficará ainda mais perto de realizar os seus sonhos`);
+                            
+                            await bot.say("[FINISH]+++[Encerramento Padrão]")
                         }
                         else if(response == "2"){
-
+                            await bot.cancelAllDialogs();
+                            await bot.beginDialog("pararMenu");
                         }
                         else if(response == "3"){
                             await flow.gotoThread("transferToHuman");  
