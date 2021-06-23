@@ -69,8 +69,10 @@ controller.ready(() => {
         await bot.beginDialog("passiveContact");
     });
 
-    controller.on("message", async (bot) => {  
+    controller.on("message", async (bot,message) => {  
+        
         console.log("Início")      
+        console.log(message)
         await bot.beginDialog("simulacao",{
         });
     }); 
