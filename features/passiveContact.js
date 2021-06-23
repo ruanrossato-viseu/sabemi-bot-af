@@ -9,7 +9,6 @@ module.exports = function(controller) {
     flow.addQuestion("[unregisteredUser]+++Olá! Eu sou a Sol, assistente digital da Sabemi 🙋🏻‍♀‍\
                     \n\nConsegue me contar, em uma única mensagem, qual é o assunto que você gostaria de tratar?",
         async(response, flow, bot)=>{
-            console.log(response)
         },
         "subject",
         "intro"
