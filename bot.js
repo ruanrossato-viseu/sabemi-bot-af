@@ -65,7 +65,6 @@ controller.ready(() => {
     });
 
     controller.interrupts("PASSIVE-CONTACT", "message", async (bot, message) => {
-        console.log("Receptivo")
         await bot.cancelAllDialogs();
         await bot.beginDialog("passiveContact");
     });
