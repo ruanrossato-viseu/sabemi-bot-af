@@ -50,7 +50,7 @@ controller.ready(() => {
     controller.loadModules(__dirname + '/features');
 
     controller.interrupts("CLOSED", "message", async (bot, message) => {
-        await bot.reply(message, "[STOP]+++Interação interrompida");
+        await bot.reply(message, "[FINISH]+++Interação interrompida");
         await bot.cancelAllDialogs();
     });
 
@@ -76,5 +76,4 @@ controller.ready(() => {
         await bot.beginDialog("simulacao",{
         });
     }); 
-
 });

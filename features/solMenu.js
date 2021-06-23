@@ -45,7 +45,7 @@ module.exports = function(controller) {
                 await bot.say("[FINISH]+++[Encerramento Padrão]","notRightPerson")
             }
             else if(response == "2"){
-                if(flow.vars.userDB.hasOwnProperty("simulation")){
+                if(flow.vars.userDB.hasSimulation){
                     await flow.gotoThread("proposalInfo")                
                 }
                 else{
@@ -78,7 +78,7 @@ module.exports = function(controller) {
                 await bot.say("[FINISH]+++[Encerramento Padrão]","notRightPerson")
             }
             else if(response == "2"){
-                if(flow.vars.userDB.hasOwnProperty("simulation")){
+                if(flow.vars.userDB.hasSimulation){
                     await flow.gotoThread("proposalInfo")                
                 }
                 else{
@@ -228,8 +228,7 @@ module.exports = function(controller) {
     flow.before("transferToHumanFail", 
                 async(flow,bot)=>{
                     if(await utils.workingHours()){
-                        flow.setVar("messageTransfer",`Puxa não consegui validar os seus dados.\
-                                    \n\nÉ só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗\
+                        flow.setVar("messageTransfer",`Entendi! É só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗\
                                     \n\nTudo será resolvido por lá, ok!? 👩🏻‍💻`)
                         // flow.setVar("messageTransfer",
                         //             "Puxa, a opção digitada é invalida! 😐\
@@ -237,7 +236,7 @@ module.exports = function(controller) {
                     }
                     else{
                         flow.setVar("messageTransfer",
-                                    "Puxa não consegui validar os seus dados e, no momento, meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente\
+                                    "Puxa!⏱ No momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente\
                                     \n\nRetorne com um alô, no link 👉🏼 https://bit.ly/3gNNcLH , no próximo dia útil entre *09h e 18h*, de *segunda a sexta-feira* e estaremos prontos para te ajudar!\
                                     \nBjs e até breve")
                     }

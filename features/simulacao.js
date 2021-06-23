@@ -75,7 +75,18 @@ module.exports = function(controller) {
                         await flow.gotoThread("notRightPerson");
                     }
                     else{
-                        await flow.gotoThread("transferToHumanFail")
+                        if(await utils.workingHours()){
+                            await bot.say(`[userInfo]+++Puxa! Não consegui validar os seus dados.\
+                                            \n\nÉ só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗\
+                                            \n\nTudo será resolvido por lá, ok!? 👩🏻‍💻`)
+                        }
+                        else{
+                            await bot.say("[userInfo]+++Puxa! Não consegui validar os seus dados e no momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente.\
+                                    \n\n⏱ Retorne com um alô, no link 👉🏼 https://bit.ly/3gNNcLH, no próximo dia útil entre 09h e 18h, de segunda a sexta-feira, e estaremos prontos para te ajudar!\
+                                    \n\nBjs e até breve");
+                        }
+                        await bot.say("[TRANSFER]+++[Dados pessoais incorretos]")
+                        await bot.cancelAllDialogs();
                     }
                     
                 },
@@ -127,14 +138,16 @@ module.exports = function(controller) {
                             }
                             else if(flow.vars.retry == 2){
                                 if(await utils.workingHours()){
-                                    await bot.say(`[userInfo]+++Puxa! Não consegui validar os seus dados. Para falar com um de nossos atendentes, é só acessar nosso suporte no link https://api.whatsapp.com/send?phone=555131037420&text=Ol%C3%A1!%20Estava%20falando%20com%20a%20Sol%20e%20preciso%20de%20ajuda.%20C%C3%B3digo:${flow.vars.userDB.codigo} . Tudo será resolvido por lá 😁`)
+                                    await bot.say(`[userInfo]+++Puxa! Não consegui validar os seus dados.\
+                                                    \n\nÉ só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗\
+                                                    \n\nTudo será resolvido por lá, ok!? 👩🏻‍💻`)
                         
                                     // bot.say("[userInfo]+++Puxa! Não consegui validar os seus dados.\
                                     //         \nVou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗");
                                 }
                                 else{
                                     await bot.say("[userInfo]+++Puxa! Não consegui validar os seus dados e no momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente.\
-                                            \n\n⏱ Retorne com um alô, por aqui mesmo, no próximo dia útil entre 09h e 18h, de segunda a sexta-feira, e estaremos prontos para te ajudar!\
+                                            \n\n⏱ Retorne com um alô, no link 👉🏼 https://bit.ly/3gNNcLH, no próximo dia útil entre 09h e 18h, de segunda a sexta-feira, e estaremos prontos para te ajudar!\
                                             \n\nBjs e até breve");
                                 }
                                 await bot.say("[TRANSFER]+++[Dados pessoais incorretos]")
@@ -631,8 +644,7 @@ module.exports = function(controller) {
     flow.before("transferToHumanFail", 
                 async(flow,bot)=>{
                     if(await utils.workingHours()){
-                        flow.setVar("messageTransfer",`Puxa não consegui validar os seus dados.\
-                                    \n\nÉ só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗\
+                        flow.setVar("messageTransfer",`Entendi! É só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗\
                                     \n\nTudo será resolvido por lá, ok!? 👩🏻‍💻`)
                         // flow.setVar("messageTransfer",
                         //             "Puxa, a opção digitada é invalida! 😐\
@@ -640,7 +652,7 @@ module.exports = function(controller) {
                     }
                     else{
                         flow.setVar("messageTransfer",
-                                    "Puxa não consegui validar os seus dados e, no momento, meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente\
+                                    "Puxa! ⏱ ´Mas no momento meus colegas estão fora do horário de atendimento, a sua mensagem está aqui guardada com a gente\
                                     \n\nRetorne com um alô, no link 👉🏼 https://bit.ly/3gNNcLH , no próximo dia útil entre *09h e 18h*, de *segunda a sexta-feira* e estaremos prontos para te ajudar!\
                                     \nBjs e até breve")
                     }
@@ -649,7 +661,7 @@ module.exports = function(controller) {
     flow.addMessage("[transferToHuman]+++{{vars.messageTransfer}}","transferToHumanFail");
     flow.addMessage("[TRANSFER]+++[Transferência Erro no fluxo]","transferToHumanFail");
 
-   flow.addQuestion("[simulation]+++Posso te pedir uma ajudinha?\
+    flow.addQuestion("[simulation]+++Posso te pedir uma ajudinha?\
                     \nVocê poderia avaliar este atendimento?\
                     \nJuro que é rapidinho e vai me ajudar a te atender cada vez melhor 😃\
                     \n\nDigite 1 para: muito satisfeito\
