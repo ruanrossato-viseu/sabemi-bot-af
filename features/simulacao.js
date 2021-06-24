@@ -318,6 +318,7 @@ module.exports = function(controller) {
         var signUpMessage = "";
 
         let closeContract = await sabemiFunctions.closeContract(flow.vars.userDB.codigo,flow.vars.table,flow.vars.simulationKey)
+        console.log(closeContract)
         await bot.say("[URL]+++"+closeContract.url)
         // let closeContract = {"url":"https://www.sabemiFunctions.com.br"}
         flow.setVar("urlContract",closeContract.url)
