@@ -154,6 +154,7 @@ module.exports.closeContract = async function closeContract(CodigoPessoaFisica,t
         })
         .catch((error) => {
             console.log(error)
+            console.log(response.data)
             return (false);
         });
         return addressInfo
