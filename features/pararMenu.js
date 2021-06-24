@@ -166,7 +166,7 @@ module.exports = function(controller) {
                 async(flow,bot)=>{
                     if(await utils.workingHours()){
                         flow.setVar("messageTransfer",`Entendi! É só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗\
-                                    \n\nTudo será resolvido por lá, ok!? 👩🏻‍💻`)
+                                    \n\nTudo será resolvido por lá! 👩🏻‍💻`)
                         // flow.setVar("messageTransfer",
                         //             "Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
                     }
@@ -186,7 +186,7 @@ module.exports = function(controller) {
                 async(flow,bot)=>{
                     if(await utils.workingHours()){
                         flow.setVar("messageTransfer",`Entendi! É só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗\
-                                    \n\nTudo será resolvido por lá, ok!? 👩🏻‍💻`)
+                                    \n\nTudo será resolvido por lá! 👩🏻‍💻`)
                         // flow.setVar("messageTransfer",
                         //             "Puxa, a opção digitada é invalida! 😐\
                         //             \n\nMas fique tranquilo, vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")

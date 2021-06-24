@@ -71,8 +71,7 @@ controller.ready(() => {
 
     controller.on("message", async (bot,message) => {  
         
-        console.log("Início")      
-        console.log(message)
+        console.log("Início")  
         await bot.beginDialog("simulacao",{
         });
     }); 

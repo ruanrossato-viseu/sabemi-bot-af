@@ -85,7 +85,7 @@ module.exports = function(controller) {
                         if(await utils.workingHours()){
                             await bot.say(`[userInfo]+++Puxa! Não consegui validar os seus dados.\
                                             \n\nÉ só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗\
-                                            \n\nTudo será resolvido por lá, ok!? 👩🏻‍💻`)
+                                            \n\nTudo será resolvido por lá! 👩🏻‍💻`)
                         }
                         else{
                             await bot.say("[userInfo]+++Puxa! Não consegui validar os seus dados e no momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente.\
@@ -132,14 +132,14 @@ module.exports = function(controller) {
                         else{
                             if(flow.vars.retry == 0){
                                 await bot.say("[userInfo]+++Ops! Não foi possível validar esta informação.\
-                                            \nDigite seu *nome completo*, sem abreviações e *apenas os 3 primeiros dígitos do seu CPF*, ok!?");
+                                            \nDigite seu *nome completo*, sem abreviações e *apenas os 3 primeiros dígitos do seu CPF*!");
                                 flow.setVar("retry",1);
                                 await flow.gotoThread("userInfo");
                             }
                             else if(flow.vars.retry == 1){
                                 await bot.say("[userInfo]+++Ops! Não foi possível validar esta informação de novo.\
                                             \nVamos tentar mais uma vez?\
-                                            \nDigite seu *nome completo*, sem abreviações e *apenas os 3 primeiros dígitos do seu CPF*, ok!?");
+                                            \nDigite seu *nome completo*, sem abreviações e *apenas os 3 primeiros dígitos do seu CPF*!");
                                 flow.setVar("retry",2);
                                 await flow.gotoThread("userInfo");
                             }
@@ -147,7 +147,7 @@ module.exports = function(controller) {
                                 if(await utils.workingHours()){
                                     await bot.say(`[userInfo]+++Puxa! Não consegui validar os seus dados.\
                                                     \n\nÉ só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗\
-                                                    \n\nTudo será resolvido por lá, ok!? 👩🏻‍💻`)
+                                                    \n\nTudo será resolvido por lá! 👩🏻‍💻`)
                         
                                     // bot.say("[userInfo]+++Puxa! Não consegui validar os seus dados.\
                                     //         \nVou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗");
@@ -169,7 +169,7 @@ module.exports = function(controller) {
     flow.before("preSimulation", async(flow,bot)=>{
     });
 
-    flow.addMessage("[preSimulation]+++Ah, se você preferir finalizar nossa conversa, basta digitar *PARAR* a qualquer momento, ok!? 🛑",
+    flow.addMessage("[preSimulation]+++Ah, se você preferir finalizar nossa conversa, basta digitar *PARAR* a qualquer momento! 🛑",
                     "preSimulation");
 
     flow.addMessage("[preSimulation]+++Estamos quase lá! Estou checando as informações e validando a melhor proposta para você! 👩🏻‍💻",
@@ -637,7 +637,7 @@ module.exports = function(controller) {
                 async(flow,bot)=>{
                     if(await utils.workingHours()){
                         flow.setVar("messageTransfer",`Entendi! É só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗\
-                                    \n\nTudo será resolvido por lá, ok!? 👩🏻‍💻`)
+                                    \n\nTudo será resolvido por lá! 👩🏻‍💻`)
                         // flow.setVar("messageTransfer",
                         //             "Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
                     }
@@ -656,7 +656,7 @@ module.exports = function(controller) {
                 async(flow,bot)=>{
                     if(await utils.workingHours()){
                         flow.setVar("messageTransfer",`Entendi! É só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗\
-                                    \n\nTudo será resolvido por lá, ok!? 👩🏻‍💻`)
+                                    \n\nTudo será resolvido por lá! 👩🏻‍💻`)
                         // flow.setVar("messageTransfer",
                         //             "Puxa, a opção digitada é invalida! 😐\
                         //             \n\nMas fique tranquilo, vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")

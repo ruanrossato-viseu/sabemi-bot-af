@@ -42,7 +42,7 @@ module.exports = function(controller) {
             if(await utils.workingHours()){
                 flow.setVar("messageTransfer",
                         `Estamos quase lá! É só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido por um de nossos Especialistas.\
-                        \n\nTudo será resolvido por lá, ok!? 👩🏻‍💻`)
+                        \n\nTudo será resolvido por lá! 👩🏻‍💻`)
             }
             else{
                 flow.setVar("messageTransfer",
