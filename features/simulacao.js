@@ -54,7 +54,6 @@ module.exports = function(controller) {
                     \n\nDigite 1 para: Sim, sou eu\
                     \nDigite 2 para: Não conheço esta pessoa", 
                     async(response, flow, bot) =>{
-                        console.log(response)
                         if(response =="1"){
                             flow.gotoThread("userInfo")
                         }
@@ -319,10 +318,17 @@ module.exports = function(controller) {
 
         let closeContract = await sabemiFunctions.closeContract(flow.vars.userDB.codigo,flow.vars.table,flow.vars.simulationKey)
         console.log(closeContract)
-        await bot.say("[URL]+++"+closeContract.url)
-        // let closeContract = {"url":"https://www.sabemiFunctions.com.br"}
-        flow.setVar("urlContract",closeContract.url)
-        console.log(flow.vars.urlContract)
+        if(!closeContract){
+            await bot.say("[URL]+++"+"http://digital.dsv.sabemi.com.br/")
+            flow.setVar("urlContract","http://digital.dsv.sabemi.com.br/")
+            console.log("URL BACKUP")
+        }
+        else{
+            await bot.say("[URL]+++"+closeContract.url)
+            flow.setVar("urlContract",closeContract.url)
+            console.log(flow.vars.urlContract)
+        }
+        
 
         if(flow.vars.tableChoice == "1"){
             signUpMessage = `Confira aqui o resumo do plano escolhido:\
