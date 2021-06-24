@@ -146,15 +146,16 @@ module.exports.closeContract = async function closeContract(CodigoPessoaFisica,t
             },
             data : data
     };
-
+    resposta=null
     let addressInfo = await axios(config)
         .then((response) => {
+            resposta  = response.data
             console.log(response.data)
             return response.data;
         })
         .catch((error) => {
             console.log(error)
-            console.log(response.data)
+            console.log(resposta)
             return (false);
         });
         return addressInfo
