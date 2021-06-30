@@ -39,7 +39,7 @@ module.exports = function(controller) {
                     \nDigite 4 para Outras dúvidas / Falar com atendente",
         async(response, flow, bot)=>{        
             if(response == "1"){
-                await bot.say("[SOL]+++Ok! Aqui está o link do APP Sabemi Digital 📲 https://digital.dsv.sabemi.com.br/\
+                await bot.say("[SOL]+++Ok! Aqui está o link do APP Sabemi Digital 📲 https://digital.sabemi.com.br/\
                 \n\nLembrando que é através dele que você dará continuidade na sua contratação e ficará ainda mais perto de realizar os seus sonhos!\
                 \n\nAh, e lembrando que, se precisar, é só me chamar!\
                 \nBasta digitar SOL que eu volto ☺")
@@ -57,8 +57,8 @@ module.exports = function(controller) {
             }
             else if(response == "3"){
                 await bot.say("[SOL]+++Então, se você já fez o processo de formalização digital no APP Sabemi, meus colegas devem estar cuidando e analisando sua proposta agora mesmo!\
-                            \n\nE o legal é que no APP Sabemi você consegue acompanhar o status da sua proposta, mas, se desejar falar com algum dos nossos especialistas, você tem um jeito fácil: basta digitar 1 para que eles entrem em contato 😊")       
-                await bot.say("[FINISH]+++[Encerramento Padrão]")
+                            \n\nE o legal é que no APP Sabemi você consegue acompanhar o status da sua proposta, mas, se desejar falar com algum dos nossos especialistas, basta digitar a opção [4] no menu 😊")       
+                await flow.gotoThread("introSecondTime")
             }
             else if(response == "4"){
                 await flow.gotoThread("userQuestion");            
@@ -71,11 +71,51 @@ module.exports = function(controller) {
         "intro"
     )
 
+    flow.addQuestion("[SOL]+++Lembrando que por aqui eu posso te ajudar com:\
+                    \n\nDigite 1 para Link do APP Sabemi\
+                    \nDigite 2 para Dúvida sobre minha simulação \
+                    \nDigite 3 para Já executei o processo no APP Sabemi\
+                    \nDigite 4 para Outras dúvidas / Falar com atendente",
+        async(response, flow, bot)=>{        
+            if(response == "1"){
+                await bot.say("[SOL]+++Ok! Aqui está o link do APP Sabemi Digital 📲 https://digital.sabemi.com.br/\
+                \n\nLembrando que é através dele que você dará continuidade na sua contratação e ficará ainda mais perto de realizar os seus sonhos!\
+                \n\nAh, e lembrando que, se precisar, é só me chamar!\
+                \nBasta digitar SOL que eu volto ☺")
+                await bot.say("[FINISH]+++[Encerramento Padrão]")
+            }
+            
+            else if(response == "2"){
+                if(flow.vars.userDB.hasSimulation){
+                    await flow.gotoThread("proposalInfo")                
+                }
+                else{
+                    await bot.say("[SOL]+++Você ainda não possui simulações realizadas")
+                    await bot.say("[FINISH]+++[Encerramento Padrão]")
+                }                
+            }
+            else if(response == "3"){
+                await bot.say("[SOL]+++Então, se você já fez o processo de formalização digital no APP Sabemi, meus colegas devem estar cuidando e analisando sua proposta agora mesmo!\
+                            \n\nE o legal é que no APP Sabemi você consegue acompanhar o status da sua proposta, mas, se desejar falar com algum dos nossos especialistas, basta digitar a opção [4] no menu 😊")       
+                await flow.repeat()
+            }
+            else if(response == "4"){
+                await flow.gotoThread("userQuestion");            
+            }
+            else{
+                await bot.say("[SOL]+++Essa opção não é válida. Digite um número de 1 a 4.")
+                await flow.repeat()           
+            }
+        },
+        "menuChoice",
+        "introSecondTime"
+    )
+
     flow.addQuestion("[SOL]+++Puxa 😕 Essa opção não é válida.\
         \nVamos tentar novamente?",
         async(response, flow, bot)=>{
             if(response == "1"){
-                await bot.say("[SOL]+++Ok! Aqui está o link do APP Sabemi Digital 📲 https://digital.dsv.sabemi.com.br/\
+                await bot.say("[SOL]+++Ok! Aqui está o link do APP Sabemi Digital 📲 https://digital.sabemi.com.br/\
                 \n\nLembrando que é através dele que você dará continuidade na sua contratação e ficará ainda mais perto de realizar os seus sonhos!\
                 \n\nAh, e lembrando que, se precisar, é só me chamar!\
                 \nBasta digitar SOL que eu volto ☺")
@@ -87,11 +127,13 @@ module.exports = function(controller) {
                 }
                 else{
                     await bot.say("[SOL]+++Você ainda não possui simulações realizadas")
+                    await bot.say("[FINISH]+++[Encerramento Padrão]")
                 }
             }
             else if(response == "3"){
                 await bot.say("[SOL]+++Então, se você já fez o processo de formalização digital no APP Sabemi, meus colegas devem estar cuidando e analisando sua proposta agora mesmo!\
-                            \n\nE o legal é que no APP Sabemi você consegue acompanhar o status da sua proposta, mas, se desejar falar com algum dos nossos especialistas, você tem um jeito fácil: basta digitar 1 para que eles entrem em contato 😊")       
+                            \n\nE o legal é que no APP Sabemi você consegue acompanhar o status da sua proposta, mas, se desejar falar com algum dos nossos especialistas, basta digitar a opção [4] no menu 😊")       
+                await flow.gotoThread("introSecondTime")
             }
             else if(response == "4"){
                 await flow.gotoThread("userQuestion");            
