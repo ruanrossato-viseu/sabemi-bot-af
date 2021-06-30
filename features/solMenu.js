@@ -5,6 +5,7 @@ module.exports = function(controller) {
     const utils = require('../requests/utils.js');
 
     flow.addAction("intro");
+
     flow.before("intro",async(flow,bot)=>{
         console.log(flow.vars.user)
 
@@ -44,17 +45,20 @@ module.exports = function(controller) {
                 \nBasta digitar SOL que eu volto ☺")
                 await bot.say("[FINISH]+++[Encerramento Padrão]")
             }
+            
             else if(response == "2"){
                 if(flow.vars.userDB.hasSimulation){
                     await flow.gotoThread("proposalInfo")                
                 }
                 else{
                     await bot.say("[SOL]+++Você ainda não possui simulações realizadas")
+                    await bot.say("[FINISH]+++[Encerramento Padrão]")
                 }                
             }
             else if(response == "3"){
                 await bot.say("[SOL]+++Então, se você já fez o processo de formalização digital no APP Sabemi, meus colegas devem estar cuidando e analisando sua proposta agora mesmo!\
                             \n\nE o legal é que no APP Sabemi você consegue acompanhar o status da sua proposta, mas, se desejar falar com algum dos nossos especialistas, você tem um jeito fácil: basta digitar 1 para que eles entrem em contato 😊")       
+                await bot.say("[FINISH]+++[Encerramento Padrão]")
             }
             else if(response == "4"){
                 await flow.gotoThread("userQuestion");            

@@ -2,6 +2,7 @@ module.exports = function(controller) {
 
     const { BotkitConversation } = require("botkit");
     const flow = new BotkitConversation("simulacao", controller);
+
     const utils = require('../requests/utils.js');
     const sabemiFunctions = require('../requests/sabemiFunctions.js');
 
@@ -10,10 +11,7 @@ module.exports = function(controller) {
 
     flow.before("intro",async(flow,bot)=>{
         
-        
-
         console.log(flow.vars.user)
-
 
         const{MongoClient} = require('mongodb');
         var url = process.env.MONGO_URI
@@ -319,10 +317,11 @@ module.exports = function(controller) {
         let closeContract = await sabemiFunctions.closeContract(flow.vars.userDB.codigo,flow.vars.table,flow.vars.simulationKey)
         console.log(closeContract)
         if(!closeContract){
-            await bot.say("[URL]+++"+"http://digital.dsv.sabemi.com.br/")
-            flow.setVar("urlContract","http://digital.dsv.sabemi.com.br/")
+            await bot.say("[URL]+++"+"https://digital.sabemi.com.br")
+            flow.setVar("urlContract","https://digital.sabemi.com.br")
             console.log("URL BACKUP")
         }
+
         else{
             await bot.say("[URL]+++"+closeContract.url)
             flow.setVar("urlContract",closeContract.url)
@@ -330,6 +329,8 @@ module.exports = function(controller) {
         }
         
 
+        flow.setVar("urlContract","https://digital.sabemi.com.br")
+        
         if(flow.vars.tableChoice == "1"){
             signUpMessage = `Confira aqui o resumo do plano escolhido:\
             \n\n_Assistência Financeira_\

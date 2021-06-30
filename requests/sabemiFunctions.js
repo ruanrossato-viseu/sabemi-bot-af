@@ -16,7 +16,7 @@ module.exports.validateUser = async function validateUser(CodigoPessoaFisica, Pr
 
     var config = {
             method: 'post',
-            url: 'https://api.sabemi.com.br/dsv/ApiIntegracaoSol/v1/usuario/validar',
+            url: 'https://api.sabemi.com.br/ApiIntegracaoSol/v1/usuario/validar',
             headers: { 
                     'Content-Type': 'application/json'
             },
@@ -45,7 +45,7 @@ module.exports.optIn = async function optIn(CodigoPessoaFisica,choice){
 
     var config = {
             method: 'post',
-            url: 'https://api.sabemi.com.br/dsv/ApiIntegracaoSol/v1/optin',
+            url: 'https://api.sabemi.com.br/ApiIntegracaoSol/v1/optin',
             headers: { 
                     'Content-Type': 'application/json'
             },
@@ -73,7 +73,7 @@ module.exports.firstSimulation = async function firstSimulation(CodigoPessoaFisi
 
     var config = {
             method: 'post',
-            url: 'https://api.sabemi.com.br/dsv/ApiIntegracaoSol/v1/simulacao/inicial',
+            url: 'https://api.sabemi.com.br/ApiIntegracaoSol/v1/simulacao/inicial',
             headers: { 
                     'Content-Type': 'application/json'
             },
@@ -102,7 +102,7 @@ module.exports.newSimulation = async function newSimulation(CodigoPessoaFisica,v
 
     var config = {
             method: 'post',
-            url: 'https://api.sabemi.com.br/dsv/ApiIntegracaoSol/v1/simulacao/',
+            url: 'https://api.sabemi.com.br/ApiIntegracaoSol/v1/simulacao/',
             headers: { 
                     'Content-Type': 'application/json'
             },
@@ -140,7 +140,7 @@ module.exports.closeContract = async function closeContract(CodigoPessoaFisica,t
 
     var config = {
             method: 'post',
-            url: 'https://api.sabemi.com.br/dsv/ApiIntegracaoSol/v1/finalizacao/',
+            url: 'https://api.sabemi.com.br/ApiIntegracaoSol/v1/finalizacao/',
             headers: { 
                     'Content-Type': 'application/json'
             },
