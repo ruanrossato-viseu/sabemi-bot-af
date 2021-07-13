@@ -23,17 +23,34 @@ module.exports.validateUser = async function validateUser(CodigoPessoaFisica, Pr
             data : data
     };
 
-    let addressInfo = await axios(config)
+    var success = false;
+    var requestCounter = 0;
+    let addressInfo = false;
+
+    while(!sucess && requestCounter < 3){
+        addressInfo = await axios(config)
         .then((response) => {
             console.log(response.data)
-            return response.data;
+            if(response.data.Sucesso){
+                success = true;
+                return response.data;
+            }            
         })
         .catch((error) => {
             console.log(error)
             return (false);
         });
+
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        requestCounter+=1
+    }
+
     return addressInfo
 }
+
+
+
 
 module.exports.optIn = async function optIn(CodigoPessoaFisica,choice){
 
