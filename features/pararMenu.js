@@ -118,7 +118,7 @@ module.exports = function(controller) {
                         await flow.gotoThread("evaluation")
                     },
                     "changeOfPlanesChoice",
-                    "changeOfPlans"
+                    "changeOfPlansRetry"
     );
 
     flow.addQuestion("[PARAR]+++{{vars.beforeEvaluation}}\
