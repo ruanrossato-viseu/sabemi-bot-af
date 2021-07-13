@@ -97,6 +97,7 @@ module.exports = function(controller) {
     "rightPerson",
     "introRetry");
 
+    flow.addMessage("[WRONGPERSON]+++")
     flow.addMessage("[notRightPerson]+++Ops! Peço desculpas pelo incômodo. Obrigado por me avisar!","notRightPerson")
     flow.addMessage("[notRightPerson]+++Se desejar falar com a Sabemi, é só me chamar! Basta digitar *Sol* que estarei pronta para te atender! 😉","notRightPerson")
     flow.addMessage("[FINISH]+++[Contato incorreto]","notRightPerson")
@@ -118,19 +119,23 @@ module.exports = function(controller) {
     
     flow.addQuestion(`[userInfo]+++Legal! Digite aqui pra mim os *3 primeiros dígitos do seu CPF*`,
                     async(response, flow, bot) =>{
+                        await bot.say("[userInfo]+++Aguarde um segundinho enquanto valido seus dados")
                         let user = flow.vars.userDB;
                         let validatedUser = await sabemiFunctions.validateUser(user.codigo, response, flow.vars.name);
                         
                         // let validatedUser={"sucesso":true};
                         
-                        if(validatedUser.sucesso){
+                        if(validatedUser){
                             let optIn = await sabemiFunctions.optIn(user.codigo, true);
+                            await bot.say("[VALIDATION]+++true")
                         }
-                        else{
+                        else{                            
+                            await bot.say("[VALIDATION]+++false")
                             if(flow.vars.retry == 0){
                                 await bot.say("[userInfo]+++Ops! Não foi possível validar esta informação.\
                                             \nDigite seu *nome completo*, sem abreviações e *apenas os 3 primeiros dígitos do seu CPF*!");
                                 flow.setVar("retry",1);
+                                
                                 await flow.gotoThread("userInfo");
                             }
                             else if(flow.vars.retry == 1){
