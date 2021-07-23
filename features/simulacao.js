@@ -126,7 +126,7 @@ module.exports = function(controller) {
                         // let validatedUser={"sucesso":true};
                         
                         if(validatedUser){
-                            let optIn = await sabemiFunctions.optIn(user.codigo, true);
+                            let optIn = await sabemiFunctions.optIn(user.codigo, true, user.phoneNumber);
                             await bot.say("[VALIDATION]+++true")
                         }
                         else{                            
@@ -190,8 +190,8 @@ module.exports = function(controller) {
 
     flow.before("simulationResults",async(flow,bot)=>{
         await new Promise(r => setTimeout(r, 15000));
-
-        let simulation = await sabemiFunctions.firstSimulation(flow.vars.userDB.codigo)
+        let user = flow.vars.userDB;
+        let simulation = await sabemiFunctions.firstSimulation(flow.vars.userDB.codigo, user.phoneNumber)
         // let simulation = {
         //     "tabelas": [
         //     {
@@ -318,8 +318,8 @@ module.exports = function(controller) {
     
     flow.before("signUp", async(flow,bot)=>{
         var signUpMessage = "";
-
-        let closeContract = await sabemiFunctions.closeContract(flow.vars.userDB.codigo,flow.vars.table,flow.vars.simulationKey)
+        let user = flow.vars.userDB;
+        let closeContract = await sabemiFunctions.closeContract(flow.vars.userDB.codigo,flow.vars.table,flow.vars.simulationKey, user.phoneNumber)
         console.log(closeContract)
         if(!closeContract){
             await bot.say("[URL]+++"+"https://digital.sabemi.com.br")
@@ -475,7 +475,8 @@ module.exports = function(controller) {
                         if(response=="1"){
                             await bot.say("[newSimulation]+++Ok! Estou checando se conseguimos outro cenário para te apresentar 👩🏻‍💻")
                             var valor  = parseFloat(flow.vars.beautifiedValue.replace(",",".").replace(".",""))
-                            let simulation = await sabemiFunctions.newSimulation(flow.vars.userDB.codigo,valor)
+                            let user = flow.vars.userDB;
+                            let simulation = await sabemiFunctions.newSimulation(flow.vars.userDB.codigo,valor, user.phoneNumber)
                             console.log(simulation)
                             if(simulation){
                                 if(simulation.sucesso){
@@ -530,7 +531,8 @@ module.exports = function(controller) {
                     if(response=="1"){
                         await bot.say("[newSimulation]+++Ok! Estou checando se conseguimos outro cenário para te apresentar 👩🏻‍💻")
                         var valor  = parseFloat(flow.vars.beautifiedValue.replace(",",".").replace(".",""))
-                        let simulation = await sabemiFunctions.newSimulation(flow.vars.userDB.codigo,valor)
+                        let user = flow.vars.userDB;
+                        let simulation = await sabemiFunctions.newSimulation(flow.vars.userDB.codigo,valor, user.phoneNumber)
                         console.log(simulation)
                         if(simulation){
                             if(simulation.sucesso){

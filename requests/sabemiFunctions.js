@@ -52,12 +52,13 @@ module.exports.validateUser = async function validateUser(CodigoPessoaFisica, Pr
 
 
 
-module.exports.optIn = async function optIn(CodigoPessoaFisica,choice){
+module.exports.optIn = async function optIn(CodigoPessoaFisica,choice, phoneNumber){
 
 
     var data = JSON.stringify({
         "CodigoPessoaFisica": CodigoPessoaFisica,
-        "Optin": choice
+        "Optin": choice,
+        "Telefone":phoneNumber
     });
 
     var config = {
@@ -81,11 +82,12 @@ module.exports.optIn = async function optIn(CodigoPessoaFisica,choice){
 
 }
 
-module.exports.firstSimulation = async function firstSimulation(CodigoPessoaFisica){
+module.exports.firstSimulation = async function firstSimulation(CodigoPessoaFisica, phoneNumber){
 
 
     var data = JSON.stringify({
-        "CodigoPessoaFisica": CodigoPessoaFisica
+        "CodigoPessoaFisica": CodigoPessoaFisica,
+        "Telefone":phoneNumber
     });
 
     var config = {
@@ -109,12 +111,13 @@ module.exports.firstSimulation = async function firstSimulation(CodigoPessoaFisi
         return addressInfo
 }
 
-module.exports.newSimulation = async function newSimulation(CodigoPessoaFisica,valor){
+module.exports.newSimulation = async function newSimulation(CodigoPessoaFisica,valor, phoneNumber){
 
 
     var data = JSON.stringify({
         "CodigoPessoaFisica": CodigoPessoaFisica,
-        "Valor":valor
+        "Valor":valor,
+        "Telefone":phoneNumber
     });
 
     var config = {
@@ -139,7 +142,7 @@ module.exports.newSimulation = async function newSimulation(CodigoPessoaFisica,v
 }
 
 
-module.exports.closeContract = async function closeContract(CodigoPessoaFisica,tabela,simulationKey){
+module.exports.closeContract = async function closeContract(CodigoPessoaFisica,tabela,simulationKey, phoneNumber){
 
 
     var data = JSON.stringify({
@@ -152,7 +155,8 @@ module.exports.closeContract = async function closeContract(CodigoPessoaFisica,t
         "ValorParcela": parseFloat(tabela.valorParcela.replace(".","").replace(",",".")),
         "ValorPlano": parseFloat(tabela.valorAP.replace(".","").replace(",",".")),
         "ValorTaxa": parseFloat(tabela.taxa.replace(".","").replace(",",".")),
-        "DataSimulacao": String(moment().toISOString())
+        "DataSimulacao": String(moment().toISOString()),
+        "Telefone":phoneNumber
       });
 
     var config = {
