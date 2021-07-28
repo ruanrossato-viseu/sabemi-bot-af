@@ -27,7 +27,7 @@ module.exports.validateUser = async function validateUser(CodigoPessoaFisica, Pr
     var requestCounter = 0;
     let addressInfo = false;
 
-    while(!sucess && requestCounter < 3){
+    while(!success && requestCounter < 3){
         addressInfo = await axios(config)
         .then((response) => {
             console.log(response.data)
