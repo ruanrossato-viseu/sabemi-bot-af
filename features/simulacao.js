@@ -102,11 +102,11 @@ module.exports = function(controller) {
     flow.addMessage("[notRightPerson]+++Se desejar falar com a Sabemi, é só me chamar! Basta digitar *Sol* que estarei pronta para te atender! 😉","notRightPerson")
     flow.addMessage("[FINISH]+++[Contato incorreto]","notRightPerson")
 
-    flow.addMessage("[introduction]+++Que bom! Para que eu possa apresentar uma proposta na medida, vou precisar que você me informe alguns dos seus dados pessoais","intro")
+    flow.addMessage("[introduction]+++Que bom! Para que eu possa apresentar uma proposta na medida, vou precisar que você me informe alguns dos seus dados pessoais","userInfo")
     flow.addMessage("[introduction]+++Mas fique tranquilo: este é um ambiente seguro e seus dados estão protegidos e guardados, tudo de acordo com a Lei Geral de Proteção de Dados (LGPD) e Direito do Consumidor 🔒\
                     \n\nPara saber mais sobre LGPD\
                     \n👉🏼 https://www.sabemi.com.br/politica-de-privacidade",
-                    "intro")
+                    "userInfo")
     
     flow.addQuestion("[userInfo]+++Vamos lá!? Me conta qual é o seu *nome completo*?", 
                     async(response, flow, bot) =>{
