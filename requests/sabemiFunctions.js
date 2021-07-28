@@ -38,7 +38,7 @@ module.exports.validateUser = async function validateUser(CodigoPessoaFisica, Pr
         })
         .catch((error) => {
             console.log(error)
-            return {sucesso:true};
+            return {sucesso:false};
         });
 
         await new Promise(resolve => setTimeout(resolve, 1000));
