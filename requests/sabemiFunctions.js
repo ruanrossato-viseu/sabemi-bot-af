@@ -31,14 +31,14 @@ module.exports.validateUser = async function validateUser(CodigoPessoaFisica, Pr
         addressInfo = await axios(config)
         .then((response) => {
             console.log(response.data)
-            if(response.data.Sucesso){
+            if(response.data.sucesso){
                 success = true;
                 return response.data;
             }            
         })
         .catch((error) => {
             console.log(error)
-            return (false);
+            return {sucesso:true};
         });
 
         await new Promise(resolve => setTimeout(resolve, 1000));

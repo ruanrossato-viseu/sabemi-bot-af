@@ -123,9 +123,9 @@ module.exports = function(controller) {
                         let user = flow.vars.userDB;
                         let validatedUser = await sabemiFunctions.validateUser(user.codigo, response, flow.vars.name);
                         
-                        // let validatedUser={"sucesso":true};
+                        console.log(validatedUser)
                         
-                        if(validatedUser){
+                        if(validatedUser.sucesso){
                             let optIn = await sabemiFunctions.optIn(user.codigo, true, user.phoneNumber);
                             await bot.say("[VALIDATION]+++true")
                         }
