@@ -35,6 +35,9 @@ module.exports.validateUser = async function validateUser(CodigoPessoaFisica, Pr
                 success = true;
                 return response.data;
             }            
+            else{
+                return {sucesso:false};
+            }
         })
         .catch((error) => {
             console.log(error)
