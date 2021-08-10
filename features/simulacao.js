@@ -6,6 +6,9 @@ module.exports = function(controller) {
     const utils = require('../requests/utils.js');
     const sabemiFunctions = require('../requests/sabemiFunctions.js');
 
+    function isNumeric(num){
+        return !isNaN(num)
+      }
 
     flow.addAction("intro")
 
@@ -121,6 +124,18 @@ module.exports = function(controller) {
                     async(response, flow, bot) =>{
                         await bot.say("[userInfo]+++Aguarde um segundinho enquanto valido seus dados")
                         let user = flow.vars.userDB;
+                        if(isNumeric(response) ) {
+                            let response = response.substring(0,2)
+
+                            if(validatedUser.sucesso){
+                                let optIn = await sabemiFunctions.optIn(user.codigo, true, user.phoneNumber);
+                                await bot.say("[VALIDATION]+++true")
+                                let user = flow.vars.userDB;
+                                let validatedUser = await sabemiFunctions.validateUser(user.codigo, response, flow.vars.name);
+                                
+                                console.log(validatedUser)
+                            }
+                        }          
                         let validatedUser = await sabemiFunctions.validateUser(user.codigo, response, flow.vars.name);
                         
                         console.log(validatedUser)
@@ -246,14 +261,14 @@ module.exports = function(controller) {
                 }
                 catch(error){
                     console.log(error)
-                    await bot.say("[preSimulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕\nTente novamente mais tarde, ok?")
+                    await bot.say("[failSimulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕\nTente novamente mais tarde, ok?")
                     flow.gotoThread("endConversation")
                 }
             }
             
         }
         else{
-            bot.say("[preSimulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕\nTente novamente mais tarde, ok?")
+            bot.say("[failSimulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕\nTente novamente mais tarde, ok?")
             flow.gotoThread("endConversation")
         }
     });
@@ -429,8 +444,57 @@ module.exports = function(controller) {
     flow.addQuestion("[simulation]+++Entendi! Me conta qual *valor total que você precisa*? 😄\
                     \n\nAh, para eu compreender, *digite somente os números, com os centavos separados por vírgula*, combinado!?",
                     async(response,flow,bot)=>{
+                        
                         value=response.replace(".", "")
+                        if(isNumeric(value.replace(",",""))){
+                            await flow.gotoThread("lowerValueRetry")
+                        }
 
+                        var beautifiedValue=""
+                        if(!value.includes(",")){
+                            value=value+",00"
+                            
+                        }
+                        else{
+                            if(value.split(",")[1].length<1){
+                                value = value +"00"
+                            }
+                            else if(value.split(",")[1].length<2){
+                                value = value +"0"
+                            }
+                        }
+
+
+                        var index=0
+
+                        for (var i = value.length - 4; i >= 0; i--) {
+                            if(index%3==0 && index != 0){
+                                beautifiedValue="."+beautifiedValue
+                            }
+                            beautifiedValue = value[i] +beautifiedValue
+                            index+=1
+                        }     
+                            
+                        beautifiedValue = beautifiedValue+","+value.slice(-2)
+                        
+                        
+                        flow.setVar("beautifiedValue",beautifiedValue)                           
+                        await flow.gotoThread("lowerValueSimulation")
+                        
+                    },
+                    "neededValue",
+                    "lowerValue"
+    );
+
+    flow.addQuestion("[simulation]+++Puxa😕 Esse valor não é válido. \
+                    \nVamos tentar novamente? _Envie apenas números, com os centavos separados por vírgula_",
+                    async(response,flow,bot)=>{
+                        
+                        value=response.replace(".", "")
+                        if(isNumeric(value.replace(",",""))){
+                            await bot.say("Essa opção não é válida. Vou precisar transferir para um atendente, para seguir com seu atendimento")
+                            await flow.gotoThread("transferToHumanFail")
+                        }
                         var beautifiedValue=""
                         if(!value.includes(",")){
                             value=value+",00"
@@ -459,14 +523,13 @@ module.exports = function(controller) {
                         beautifiedValue = beautifiedValue+","+value.slice(-2)
                         
                         flow.setVar("beautifiedValue",beautifiedValue)                           
-                        
+                        await flow.gotoThread("lowerValueSimulation")
                         
                     },
                     "neededValue",
-                    "lowerValue"
+                    "lowerValueRetry"
     );
 
-    flow.addAction("lowerValueSimulation","lowerValue")
             
     flow.addQuestion("[simulation]+++Você confirma que quer uma nova simulação com o valor de *R$ {{vars.beautifiedValue}}*?\
                     \n\nDigite *1* para seguir com a simulação nesse valor\
@@ -500,14 +563,14 @@ module.exports = function(controller) {
                                         }
                                     }
                                     catch(error){
-                                        await bot.say("[simulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
+                                        await bot.say("[failSimulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
                                         flow.gotoThread("endConversation")
                                     }
                                     flow.gotoThread("newSimulationResults")
                                 }
                             }
                             else{
-                                await bot.say("[simulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
+                                await bot.say("[failSimulation]+++Infelizmente, não foi possível gerar uma simulação para você agora 😕. Tente novamente mais tarde, ok?")
                                 flow.gotoThread("endConversation")
                             }
                         }
@@ -556,14 +619,14 @@ module.exports = function(controller) {
                                     }
                                 }
                                 catch(error){
-                                    await bot.say("[simulation]+++Infelizmente, não foi possível gerar uma simulação para você agora. 😕 Tente novamente mais tarde, ok?")
+                                    await bot.say("[failSimulation]+++Infelizmente, não foi possível gerar uma simulação para você agora. 😕 Tente novamente mais tarde, ok?")
                                     flow.gotoThread("endConversation")
                                 }
                                 flow.gotoThread("newSimulationResults")
                             }
                         }
                         else{
-                            await bot.say("[simulation]+++Infelizmente, não foi possível gerar uma simulação para você agora. 😕 Tente novamente mais tarde, ok?")
+                            await bot.say("[failSimulation]+++Infelizmente, não foi possível gerar uma simulação para você agora. 😕 Tente novamente mais tarde, ok?")
                             flow.gotoThread("endConversation")
                         }
                     }
