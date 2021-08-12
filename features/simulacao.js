@@ -22,7 +22,7 @@ module.exports = function(controller) {
         const client = new MongoClient(url,{ useUnifiedTopology: true });
         try{
             await client.connect();
-            var  database =  client.db("sabemi")
+            var  database =  client.db("sabemiDEV")
             var collection = database.collection("users")
             var user  = await collection.findOne({"phoneNumber": flow.vars.user })
             console.log(user)
@@ -85,7 +85,7 @@ module.exports = function(controller) {
                         if(await utils.workingHours()){
                             await bot.say(`[userInfo]+++Puxa! Não consegui validar os seus dados.\
                                             \n\nÉ só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗\
-                                            \n\nTudo será resolvido por lá! 👩🏻‍💻`)
+                                            \n\nTudo será resolvido por lá! 👩🏻‍💻`);
                         }
                         else{
                             await bot.say("[userInfo]+++Puxa! Não consegui validar os seus dados e no momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente.\
@@ -95,7 +95,6 @@ module.exports = function(controller) {
                         await bot.say("[TRANSFER]+++[Dados pessoais incorretos]")
                         await bot.cancelAllDialogs();
                     }
-                    
                 },
     "rightPerson",
     "introRetry");
@@ -476,7 +475,6 @@ module.exports = function(controller) {
                         }     
                             
                         beautifiedValue = beautifiedValue+","+value.slice(-2)
-                        
                         
                         flow.setVar("beautifiedValue",beautifiedValue)                           
                         await flow.gotoThread("lowerValueSimulation")
