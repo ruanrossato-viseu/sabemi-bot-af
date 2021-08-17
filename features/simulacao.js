@@ -124,25 +124,49 @@ module.exports = function(controller) {
                         await bot.say("[userInfo]+++Aguarde um segundinho enquanto valido seus dados")
                         let user = flow.vars.userDB;
                         if(isNumeric(response) ) {
-                            let response = response.substring(0,2)
-
+                            let cpf = response.substring(0,2)
+                            let validatedUser = await sabemiFunctions.validateUser(user.codigo, cpf, flow.vars.name);                              
+                            console.log(validatedUser)
                             if(validatedUser.sucesso){
                                 let optIn = await sabemiFunctions.optIn(user.codigo, true, user.phoneNumber);
-                                await bot.say("[VALIDATION]+++true")
-                                let user = flow.vars.userDB;
-                                let validatedUser = await sabemiFunctions.validateUser(user.codigo, response, flow.vars.name);
-                                
-                                console.log(validatedUser)
+                                await bot.say("[VALIDATION]+++true");
                             }
-                        }          
-                        let validatedUser = await sabemiFunctions.validateUser(user.codigo, response, flow.vars.name);
-                        
-                        console.log(validatedUser)
-                        
-                        if(validatedUser.sucesso){
-                            let optIn = await sabemiFunctions.optIn(user.codigo, true, user.phoneNumber);
-                            await bot.say("[VALIDATION]+++true")
+                            else{                            
+                                await bot.say("[VALIDATION]+++false")
+                                if(flow.vars.retry == 0){
+                                    await bot.say("[userInfo]+++Ops! Não foi possível validar esta informação.\
+                                                \nDigite seu *nome completo*, sem abreviações e *apenas os 3 primeiros dígitos do seu CPF*!");
+                                    flow.setVar("retry",1);
+                                    
+                                    await flow.gotoThread("userInfo");
+                                }
+                                else if(flow.vars.retry == 1){
+                                    await bot.say("[userInfo]+++Ops! Não foi possível validar esta informação de novo.\
+                                                \nVamos tentar mais uma vez?\
+                                                \nDigite seu *nome completo*, sem abreviações e *apenas os 3 primeiros dígitos do seu CPF*!");
+                                    flow.setVar("retry",2);
+                                    await flow.gotoThread("userInfo");
+                                }
+                                else if(flow.vars.retry == 2){
+                                    if(await utils.workingHours()){
+                                        await bot.say(`[userInfo]+++Puxa! Não consegui validar os seus dados.\
+                                                        \n\nÉ só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗\
+                                                        \n\nTudo será resolvido por lá! 👩🏻‍💻`)
+                            
+                                        // bot.say("[userInfo]+++Puxa! Não consegui validar os seus dados.\
+                                        //         \nVou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗");
+                                    }
+                                    else{
+                                        await bot.say("[userInfo]+++Puxa! Não consegui validar os seus dados e no momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente.\
+                                                \n\n⏱ Retorne com um alô, no link 👉🏼 https://bit.ly/3gNNcLH, no próximo dia útil entre 09h e 18h, de segunda a sexta-feira, e estaremos prontos para te ajudar!\
+                                                \n\nBjs e até breve");
+                                    }
+                                    await bot.say("[TRANSFER]+++[Dados pessoais incorretos]")
+                                    await bot.cancelAllDialogs();
+                                }
+                            }
                         }
+
                         else{                            
                             await bot.say("[VALIDATION]+++false")
                             if(flow.vars.retry == 0){
