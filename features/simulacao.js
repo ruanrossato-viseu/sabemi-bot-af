@@ -126,7 +126,9 @@ module.exports = function(controller) {
                         await bot.say("[userInfo]+++Aguarde um segundinho enquanto valido seus dados")
                         let user = flow.vars.userDB;
                         if(isNumeric(response) ) {
-                            let cpf = response.substring(0,2)
+                            console.log(response)
+                            let cpf = response.substring(0,3)
+                            console.log(cpf)
                             let validatedUser = await sabemiFunctions.validateUser(user.codigo, cpf, flow.vars.name);                              
                             console.log(validatedUser)
                             if(validatedUser.sucesso){
