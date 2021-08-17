@@ -56,7 +56,7 @@ module.exports = function(controller) {
                     \nDigite 2 para: Não conheço esta pessoa", 
                     async(response, flow, bot) =>{
                         if(response =="1"){
-                            flow.gotoThread("userInfo")
+                            flow.gotoThread("LGPD")
                         }
 
                         else if(response == "2"){
@@ -75,7 +75,7 @@ module.exports = function(controller) {
                     \nVamos tentar novamente?",
         async(response, flow, bot) =>{
                     if(response =="1"){
-                        flow.gotoThread("userInfo")
+                        flow.gotoThread("LGPD")
                     }
 
                     else if(response == "2"){
@@ -104,12 +104,14 @@ module.exports = function(controller) {
     flow.addMessage("[notRightPerson]+++Se desejar falar com a Sabemi, é só me chamar! Basta digitar *Sol* que estarei pronta para te atender! 😉","notRightPerson")
     flow.addMessage("[FINISH]+++[Contato incorreto]","notRightPerson")
 
-    flow.addMessage("[introduction]+++Que bom! Para que eu possa apresentar uma proposta na medida, vou precisar que você me informe alguns dos seus dados pessoais","userInfo")
-    flow.addMessage("[introduction]+++Mas fique tranquilo: este é um ambiente seguro e seus dados estão protegidos e guardados, tudo de acordo com a Lei Geral de Proteção de Dados (LGPD) e Direito do Consumidor 🔒\
+    flow.addMessage("[LGPD]+++Que bom! Para que eu possa apresentar uma proposta na medida, vou precisar que você me informe alguns dos seus dados pessoais","LGPD")
+    flow.addMessage("[LGPD]+++Mas fique tranquilo: este é um ambiente seguro e seus dados estão protegidos e guardados, tudo de acordo com a Lei Geral de Proteção de Dados (LGPD) e Direito do Consumidor 🔒\
                     \n\nPara saber mais sobre LGPD\
                     \n👉🏼 https://www.sabemi.com.br/politica-de-privacidade",
-                    "userInfo")
+                    "LGPD")
     
+    flow.addAction("userInfo","LGPD")
+
     flow.addQuestion("[userInfo]+++Vamos lá!? Me conta qual é o seu *nome completo*?", 
                     async(response, flow, bot) =>{
                         flow.setVar("firstName",response.split(" ")[0])
