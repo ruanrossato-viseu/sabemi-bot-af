@@ -50,6 +50,8 @@ controller.ready(() => {
     controller.loadModules(__dirname + '/features');
 
     controller.interrupts("CLOSED", "message", async (bot, message) => {
+        console.log("Interação Interrompida")
+        await bot.reply("[manualFinish]+++Interação Interrompida")
         await bot.reply(message, "[FINISH]+++Interação interrompida");
         await bot.cancelAllDialogs();
     });
