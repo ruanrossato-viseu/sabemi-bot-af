@@ -278,6 +278,7 @@ module.exports = function(controller) {
                 }
             );
     flow.addMessage("[SOL]+++{{vars.messageTransfer}}","transferToHuman");
+    flow.addMessage("[TRANSFER]+++[Transferência Prevista]","transferToHuman");
     
     flow.before("transferToHumanFail", 
                 async(flow,bot)=>{
@@ -297,6 +298,7 @@ module.exports = function(controller) {
                 }
             );
     flow.addMessage("[SOL]+++{{vars.messageTransfer}}","transferToHumanFail");
+    flow.addMessage("[TRANSFER]+++[Transferência Erro no fluxo]","transferToHumanFail");
 
     flow.after(async (results, bot) => {
         
