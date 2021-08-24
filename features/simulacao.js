@@ -36,8 +36,9 @@ module.exports = function(controller) {
             await client.close();
         }
 
-        if(user.transfered){
-            await flow.gotoThread("returnTransfer");
+        if(user.activeConversation == false || user.transfered){
+            await bot.cancelAllDialogs();
+            await bot.beginDialog("solMenu");
         }
 
         flow.setVar("firstName",flow.vars.userDB.name.split(" ")[0])
