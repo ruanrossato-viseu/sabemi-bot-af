@@ -8,7 +8,7 @@ module.exports = function(controller) {
 
     flow.before("intro",async(flow,bot)=>{
         console.log("Passive")
-        console.log(user)
+        console.log(flow.vars.user)
     })
 
     flow.addQuestion("[unregisteredUser]+++Olá! Eu sou a Sol, assistente digital da Sabemi 🙋🏻‍♀‍\
