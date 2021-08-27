@@ -22,7 +22,7 @@ module.exports = function(controller) {
     flow.addMessage("[unregisteredUser]+++Se quiser saber mais, é só clicar nesse link para acessar nossas políticas e termos sobre a Lei Geral de Proteção de Dados: \
                     \n👉 https://www.sabemi.com.br/politica-de-privacidade","intro")
     
-    flow.addQuestion("[unregisteredUser]+++Vamos lá!? Me conta qual é o seu nome completo?",
+    flow.addQuestion("[unregisteredUserName]+++Vamos lá!? Me conta qual é o seu nome completo?",
                     async(response,flow,bot)=>{
                         
                     },
@@ -30,7 +30,7 @@ module.exports = function(controller) {
                     "intro"
     );
 
-    flow.addQuestion("[unregisteredUser]+++Legal! Digita aqui pra mim o seu CPF",
+    flow.addQuestion("[unregisteredUserID]+++Legal! Digita aqui pra mim o seu CPF",
                     async(response,flow,bot)=>{
                         await flow.gotoThread("transferToHuman")
                     },
