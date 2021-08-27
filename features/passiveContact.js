@@ -6,6 +6,11 @@ module.exports = function(controller) {
 
     flow.addAction("intro");
 
+    flow.before("intro",async(flow,bot)=>{
+        console.log("Passive")
+        console.log(user)
+    })
+
     flow.addQuestion("[unregisteredUser]+++Olá! Eu sou a Sol, assistente digital da Sabemi 🙋🏻‍♀‍\
                     \n\nConsegue me contar, em uma única mensagem, qual é o assunto que você gostaria de tratar?",
         async(response, flow, bot)=>{
@@ -24,7 +29,8 @@ module.exports = function(controller) {
     
     flow.addQuestion("[unregisteredUserName]+++Vamos lá!? Me conta qual é o seu nome completo?",
                     async(response,flow,bot)=>{
-                        bot.say("[UPDATEUSERNAME]+++",response)
+                        console.log(response)
+                        bot.say(```[UPDATEUSERNAME]+++${response}```)
                     },
                     "nome",
                     "intro"
