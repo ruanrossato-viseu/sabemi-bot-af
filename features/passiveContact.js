@@ -24,7 +24,7 @@ module.exports = function(controller) {
     
     flow.addQuestion("[unregisteredUserName]+++Vamos lá!? Me conta qual é o seu nome completo?",
                     async(response,flow,bot)=>{
-                        
+                        bot.say("[UPDATEUSERNAME]+++",response)
                     },
                     "nome",
                     "intro"
