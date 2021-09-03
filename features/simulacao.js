@@ -85,12 +85,11 @@ module.exports = function(controller) {
                     else{
                         if(await utils.workingHours()){
                             await bot.say(`[userInfo]+++Puxa! Não consegui validar os seus dados.\
-                                            \n\nÉ só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗\
-                                            \n\nTudo será resolvido por lá! 👩🏻‍💻`);
+                                            \n\nEntendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗`);
                         }
                         else{
-                            await bot.say("[userInfo]+++Puxa! Não consegui validar os seus dados e no momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente.\
-                                    \n\n⏱ Retorne com um alô, no link 👉🏼 https://bit.ly/3gNNcLH, no próximo dia útil entre 09h e 18h, de segunda a sexta-feira, e estaremos prontos para te ajudar!\
+                            await bot.say("[userInfo]+++Puxa! ⏱ No momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente.\
+                                    \n\nRetorne com um alô, por aqui mesmo, no próximo dia útil entre *09h e 18h*, de *segunda a sexta-feira*, e estaremos prontos para te ajudar!\
                                     \n\nBjs e até breve");
                         }
                         await bot.say("[TRANSFER]+++[Dados pessoais incorretos]")
@@ -155,15 +154,14 @@ module.exports = function(controller) {
                                 else if(flow.vars.retry == 2){
                                     if(await utils.workingHours()){
                                         await bot.say(`[userInfo]+++Puxa! Não consegui validar os seus dados.\
-                                                        \n\nÉ só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗\
-                                                        \n\nTudo será resolvido por lá! 👩🏻‍💻`)
+                                                        \n\nVou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗`)
                             
                                         // bot.say("[userInfo]+++Puxa! Não consegui validar os seus dados.\
                                         //         \nVou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗");
                                     }
                                     else{
-                                        await bot.say("[userInfo]+++Puxa! Não consegui validar os seus dados e no momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente.\
-                                                \n\n⏱ Retorne com um alô, no link 👉🏼 https://bit.ly/3gNNcLH, no próximo dia útil entre 09h e 18h, de segunda a sexta-feira, e estaremos prontos para te ajudar!\
+                                        await bot.say("[userInfo]+++Puxa! ⏱ No momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente.\
+                                                \n\nRetorne com um alô, por aqui mesmo, no próximo dia útil entre *09h e 18h*, de *segunda a sexta-feira*, e estaremos prontos para te ajudar!\
                                                 \n\nBjs e até breve");
                                     }
                                     await bot.say("[TRANSFER]+++[Dados pessoais incorretos]")
@@ -191,15 +189,14 @@ module.exports = function(controller) {
                             else if(flow.vars.retry == 2){
                                 if(await utils.workingHours()){
                                     await bot.say(`[userInfo]+++Puxa! Não consegui validar os seus dados.\
-                                                    \n\nÉ só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗\
-                                                    \n\nTudo será resolvido por lá! 👩🏻‍💻`)
+                                                    \n\nVou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗`)
                         
                                     // bot.say("[userInfo]+++Puxa! Não consegui validar os seus dados.\
                                     //         \nVou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗");
                                 }
                                 else{
-                                    await bot.say("[userInfo]+++Puxa! Não consegui validar os seus dados e no momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente.\
-                                            \n\n⏱ Retorne com um alô, no link 👉🏼 https://bit.ly/3gNNcLH, no próximo dia útil entre 09h e 18h, de segunda a sexta-feira, e estaremos prontos para te ajudar!\
+                                    await bot.say("[userInfo]+++Puxa! ⏱ No momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente.\
+                                            \n\nRetorne com um alô, por aqui mesmo, no próximo dia útil entre *09h e 18h*, de *segunda a sexta-feira*, e estaremos prontos para te ajudar!\
                                             \n\nBjs e até breve");
                                 }
                                 await bot.say("[TRANSFER]+++[Dados pessoais incorretos]")
@@ -428,7 +425,7 @@ module.exports = function(controller) {
                     \nPode deixar que vou enviar seus dados de acesso por SMS 📩\
                     \n\nE se precisar é só me chamar! Basta digitar *SOL* que eu volto 😊",
                     "signUp")
-
+                
 
     flow.addMessage("[clarifyInsurance]+++<inserir informações do seguro incluso>","clarifyInsurance");
     flow.addMessage("[clarifyInsurance]+++Agora que ficou mais claro, vou reapresentar a proposta e você me diz o que achou","clarifyInsurance");
@@ -740,16 +737,15 @@ module.exports = function(controller) {
     flow.before("transferToHuman", 
                 async(flow,bot)=>{
                     if(await utils.workingHours()){
-                        flow.setVar("messageTransfer",`Entendi! É só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗\
-                                    \n\nTudo será resolvido por lá! 👩🏻‍💻`)
+                        flow.setVar("messageTransfer",`Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗`)
                         // flow.setVar("messageTransfer",
                         //             "Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
                     }
                     else{
                         flow.setVar("messageTransfer",
-                                    "Puxa! ⏱ No momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente\
-                                    \n\nRetorne com um alô, no link 👉🏼 https://bit.ly/3gNNcLH , no próximo dia útil entre *09h e 18h*, de *segunda a sexta-feira* e estaremos prontos para te ajudar!\
-                                    \nBjs e até breve")
+                                    `Puxa! ⏱ No momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente.\
+                                    \n\nRetorne com um alô, por aqui mesmo, no próximo dia útil entre *09h e 18h*, de *segunda a sexta-feira*, e estaremos prontos para te ajudar!\
+                                    \nBjs e até breve`)
                     }
                 }
             );
@@ -759,16 +755,15 @@ module.exports = function(controller) {
     flow.before("transferToHumanFail", 
                 async(flow,bot)=>{
                     if(await utils.workingHours()){
-                        flow.setVar("messageTransfer",`Entendi! É só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗\
-                                    \n\nTudo será resolvido por lá! 👩🏻‍💻`)
+                        flow.setVar("messageTransfer",`Entendi! Vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗`)
                         // flow.setVar("messageTransfer",
                         //             "Puxa, a opção digitada é invalida! 😐\
                         //             \n\nMas fique tranquilo, vou conectar você com um especialista e em breve você será atendido com todo cuidado e qualidade possível 🤗")
                     }
                     else{
                         flow.setVar("messageTransfer",
-                                    "Puxa! ⏱ ´Mas no momento meus colegas estão fora do horário de atendimento, a sua mensagem está aqui guardada com a gente\
-                                    \n\nRetorne com um alô, no link 👉🏼 https://bit.ly/3gNNcLH , no próximo dia útil entre *09h e 18h*, de *segunda a sexta-feira* e estaremos prontos para te ajudar!\
+                                    "Puxa! ⏱ No momento meus colegas estão fora do horário de atendimento, mas a sua mensagem está aqui guardada com a gente.\
+                                    \n\nRetorne com um alô, por aqui mesmo, no próximo dia útil entre *09h e 18h*, de *segunda a sexta-feira*, e estaremos prontos para te ajudar!\
                                     \nBjs e até breve")
                     }
                 }
