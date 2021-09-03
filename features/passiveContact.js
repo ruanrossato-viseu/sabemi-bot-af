@@ -64,8 +64,11 @@ module.exports = function(controller) {
                                 \n\nBjs e até breve");
                     }  
                     
-                    await bot.say("[TRANSFER]+++[Transferência Prevista]");
+                    await bot.say("[TRANSFER]+++[Transferência Erro no fluxo]");
                 }  
+            }
+            else{
+                flow.gotoThread("transferToHuman")
             }
         },
         "cpf",
