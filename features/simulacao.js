@@ -49,7 +49,7 @@ module.exports = function(controller) {
     flow.addMessage("[ReturnTransfer]+++Lembrando que para falar com um de nossos Especialista é só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗","returnTransfer")
     flow.addMessage("[FINISH]+++Retorno ao bot depois de transbordo","returnTransfer")
 
-    flow.addQuestion("[introduction]+++Antes de iniciar nossa conversa, para segurança dos seus dados, preciso garantir que estou falando com a pessoa certa:\
+    flow.addQuestion("[introduction]+++TesteAntes de iniciar nossa conversa, para segurança dos seus dados, preciso garantir que estou falando com a pessoa certa:\
                     \n\n*{{vars.firstName}}*\
                     \nCPF: {{vars.maskedCPF}}\
                     \n\nÉ você? 😊\
