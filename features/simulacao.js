@@ -49,7 +49,7 @@ module.exports = function(controller) {
     flow.addMessage("[ReturnTransfer]+++Lembrando que para falar com um de nossos Especialista é só clicar no link 👉🏼 https://bit.ly/3gNNcLH e em breve você será atendido com todo cuidado e qualidade possível 🤗","returnTransfer")
     flow.addMessage("[FINISH]+++Retorno ao bot depois de transbordo","returnTransfer")
 
-    flow.addQuestion("[introduction]+++TesteAntes de iniciar nossa conversa, para segurança dos seus dados, preciso garantir que estou falando com a pessoa certa:\
+    flow.addQuestion("[introduction]+++Antes de iniciar nossa conversa, para segurança dos seus dados, preciso garantir que estou falando com a pessoa certa:\
                     \n\n*{{vars.firstName}}*\
                     \nCPF: {{vars.maskedCPF}}\
                     \n\nÉ você? 😊\
@@ -471,39 +471,46 @@ module.exports = function(controller) {
                     async(response,flow,bot)=>{
                         
                         value=response.replace(".", "")
+                        console.log(response);
+                        console.log(value)
+                        console.log(!isNumeric(value.replace(",","")))
+
                         if(!isNumeric(value.replace(",",""))){
+                            console.log("Entrou no if de não numérico")
                             await flow.gotoThread("lowerValueRetry")
                         }
-
-                        var beautifiedValue=""
-                        if(!value.includes(",")){
-                            value=value+",00"
-                            
-                        }
                         else{
-                            if(value.split(",")[1].length<1){
-                                value = value +"00"
+                            console.log("entrou no else")
+                            var beautifiedValue=""
+                            if(!value.includes(",")){
+                                value=value+",00"
+                                
                             }
-                            else if(value.split(",")[1].length<2){
-                                value = value +"0"
+                            else{
+                                if(value.split(",")[1].length<1){
+                                    value = value +"00"
+                                }
+                                else if(value.split(",")[1].length<2){
+                                    value = value +"0"
+                                }
                             }
-                        }
-
-
-                        var index=0
-
-                        for (var i = value.length - 4; i >= 0; i--) {
-                            if(index%3==0 && index != 0){
-                                beautifiedValue="."+beautifiedValue
-                            }
-                            beautifiedValue = value[i] +beautifiedValue
-                            index+=1
-                        }     
+    
+    
+                            var index=0
+    
+                            for (var i = value.length - 4; i >= 0; i--) {
+                                if(index%3==0 && index != 0){
+                                    beautifiedValue="."+beautifiedValue
+                                }
+                                beautifiedValue = value[i] +beautifiedValue
+                                index+=1
+                            }     
+                                
+                            beautifiedValue = beautifiedValue+","+value.slice(-2)
                             
-                        beautifiedValue = beautifiedValue+","+value.slice(-2)
-                        
-                        flow.setVar("beautifiedValue",beautifiedValue)                           
-                        await flow.gotoThread("lowerValueSimulation")
+                            flow.setVar("beautifiedValue",beautifiedValue)                           
+                            await flow.gotoThread("lowerValueSimulation")
+                        }
                         
                     },
                     "neededValue",
@@ -519,36 +526,37 @@ module.exports = function(controller) {
                             await bot.say("Essa opção não é válida. Vou precisar transferir para um atendente, para seguir com seu atendimento")
                             await flow.gotoThread("transferToHumanFail")
                         }
-                        var beautifiedValue=""
-                        if(!value.includes(",")){
-                            value=value+",00"
-                            
-                        }
                         else{
-                            if(value.split(",")[1].length<1){
-                                value = value +"00"
+                            var beautifiedValue=""
+                            if(!value.includes(",")){
+                                value=value+",00"
+                                
                             }
-                            else if(value.split(",")[1].length<2){
-                                value = value +"0"
+                            else{
+                                if(value.split(",")[1].length<1){
+                                    value = value +"00"
+                                }
+                                else if(value.split(",")[1].length<2){
+                                    value = value +"0"
+                                }
                             }
-                        }
-                        
-                        var index=0
-
-                        for (var i = value.length - 4; i >= 0; i--) {
-                            if(index%3==0 && index != 0){
-                                beautifiedValue="."+beautifiedValue
-                            }
-                            beautifiedValue = value[i] +beautifiedValue
-                            index+=1
-                        }     
                             
-                        beautifiedValue = beautifiedValue+","+value.slice(-2)
-                        
-                        flow.setVar("beautifiedValue",beautifiedValue)                           
-                        await flow.gotoThread("lowerValueSimulation")
-                        
-                    },
+                            var index=0
+
+                            for (var i = value.length - 4; i >= 0; i--) {
+                                if(index%3==0 && index != 0){
+                                    beautifiedValue="."+beautifiedValue
+                                }
+                                beautifiedValue = value[i] +beautifiedValue
+                                index+=1
+                            }     
+                                
+                            beautifiedValue = beautifiedValue+","+value.slice(-2)
+                            
+                            flow.setVar("beautifiedValue",beautifiedValue)                           
+                            await flow.gotoThread("lowerValueSimulation")
+                        }
+                        },
                     "neededValue",
                     "lowerValueRetry"
     );
