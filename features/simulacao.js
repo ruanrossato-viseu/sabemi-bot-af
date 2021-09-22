@@ -8,7 +8,7 @@ module.exports = function(controller) {
 
     function isNumeric(num){
         return !isNaN(num)
-      }
+    }
 
     flow.addAction("intro")
 
@@ -523,7 +523,7 @@ module.exports = function(controller) {
                         
                         value=response.replace(".", "")
                         if(!isNumeric(value.replace(",",""))){
-                            await bot.say("Essa opção não é válida. Vou precisar transferir para um atendente, para seguir com seu atendimento")
+                            await bot.say("[simulation]+++Essa opção não é válida. Vou precisar transferir para um atendente, para seguir com seu atendimento")
                             await flow.gotoThread("transferToHumanFail")
                         }
                         else{
