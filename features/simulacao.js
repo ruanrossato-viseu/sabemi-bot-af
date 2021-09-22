@@ -56,7 +56,7 @@ module.exports = function(controller) {
                     \n\nDigite 1 para: Sim, sou eu\
                     \nDigite 2 para: Não conheço esta pessoa", 
                     async(response, flow, bot) =>{
-                        if(response =="1"){
+                        if(response =="1"){ 
                             flow.gotoThread("LGPD")
                         }
 
@@ -471,7 +471,7 @@ module.exports = function(controller) {
                     async(response,flow,bot)=>{
                         
                         value=response.replace(".", "")
-                        if(isNumeric(value.replace(",",""))){
+                        if(!isNumeric(value.replace(",",""))){
                             await flow.gotoThread("lowerValueRetry")
                         }
 
@@ -515,7 +515,7 @@ module.exports = function(controller) {
                     async(response,flow,bot)=>{
                         
                         value=response.replace(".", "")
-                        if(isNumeric(value.replace(",",""))){
+                        if(!isNumeric(value.replace(",",""))){
                             await bot.say("Essa opção não é válida. Vou precisar transferir para um atendente, para seguir com seu atendimento")
                             await flow.gotoThread("transferToHumanFail")
                         }
@@ -533,7 +533,6 @@ module.exports = function(controller) {
                             }
                         }
                         
-
                         var index=0
 
                         for (var i = value.length - 4; i >= 0; i--) {

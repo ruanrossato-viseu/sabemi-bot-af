@@ -7,7 +7,6 @@ require("dotenv").config();
 
 module.exports.validateUser = async function validateUser(CodigoPessoaFisica, PrimeirosDigitos, Nome){
 
-
     var data = JSON.stringify({
         "CodigoPessoaFisica": CodigoPessoaFisica,
         "PrimeirosDigitos": String(PrimeirosDigitos),
@@ -57,7 +56,6 @@ module.exports.validateUser = async function validateUser(CodigoPessoaFisica, Pr
 
 module.exports.optIn = async function optIn(CodigoPessoaFisica,choice, phoneNumber){
 
-
     var data = JSON.stringify({
         "CodigoPessoaFisica": CodigoPessoaFisica,
         "Optin": choice,
@@ -87,7 +85,6 @@ module.exports.optIn = async function optIn(CodigoPessoaFisica,choice, phoneNumb
 
 module.exports.firstSimulation = async function firstSimulation(CodigoPessoaFisica, phoneNumber){
 
-
     var data = JSON.stringify({
         "CodigoPessoaFisica": CodigoPessoaFisica,
         "Telefone":phoneNumber
@@ -115,7 +112,6 @@ module.exports.firstSimulation = async function firstSimulation(CodigoPessoaFisi
 }
 
 module.exports.newSimulation = async function newSimulation(CodigoPessoaFisica,valor, phoneNumber){
-
 
     var data = JSON.stringify({
         "CodigoPessoaFisica": CodigoPessoaFisica,
@@ -146,7 +142,6 @@ module.exports.newSimulation = async function newSimulation(CodigoPessoaFisica,v
 
 
 module.exports.closeContract = async function closeContract(CodigoPessoaFisica,tabela,simulationKey, phoneNumber){
-
 
     var data = JSON.stringify({
         "CodigoPessoaFisica": parseInt(CodigoPessoaFisica),
